@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import '../app/globals.css'
 import {
     Navbar,
     NavbarBrand,
@@ -33,12 +34,9 @@ export default function App() {
     ];
 
     return (
-        <Navbar className="bg-blue-300" onMenuOpenChange={setIsMenuOpen}>
-            <NavbarContent justify='start'>
-                <NavbarMenuToggle
-                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-                    className="sm:hidden"
-                />
+        <Navbar id ="nav_conatiner" className="flex justify-between bg-blue-300 max-w-full w-full" onMenuOpenChange={setIsMenuOpen}>
+            
+            <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>
                     <Image
                         src="/images/logo.png"
@@ -49,17 +47,35 @@ export default function App() {
                     <p className="font-bold text-2xl">TrUNews</p>
                 </NavbarBrand>
 
-                <NavbarItem mr-8>
+                {/* <NavbarItem mr-8>
                     <Input startContent={
                         <AiOutlineSearch size="1.5rem" />
                     } placeholder="Buscar artículos..." />
+                </NavbarItem> */}
+            </NavbarContent>
+            
+            <NavbarContent className="hidden md:flex  gap-4" justify="center">
+                <NavbarItem>
+                <Link color="foreground" href="#">
+                    Features
+                </Link>
+                </NavbarItem>
+                <NavbarItem isActive>
+                <Link href="#" aria-current="page">
+                    Customers
+                </Link>
+                </NavbarItem>
+                <NavbarItem>
+                <Link color="foreground" href="#">
+                    Integrations
+                </Link>
                 </NavbarItem>
             </NavbarContent>
 
             {/* <NavbarContent className="hidden sm:flex gap-4" justify="center">
             </NavbarContent> */}
 
-            <NavbarContent className="hidden sm:flex gap-4" justify='center'>
+            {/* <NavbarContent className="hidden sm:flex gap-4" justify='center'>
 
                 <Dropdown>
                     <NavbarItem>
@@ -121,11 +137,11 @@ export default function App() {
                     </DropdownMenu>
                 </Dropdown>
 
-            </NavbarContent>
-
-            <NavbarContent justify='end'>
-                <NavbarItem className="hidden lg:flex">
-                    <Button as={Link} className='bg-white' href="#" variant="flat">
+            </NavbarContent> */}
+            
+            <NavbarContent className='hidden md:flex  ' justify='end'>
+                <NavbarItem>
+                    <Button as={Link} className='bg-white' href="/login" variant="flat">
                         Iniciar sesión
                     </Button>
                 </NavbarItem>
@@ -135,24 +151,25 @@ export default function App() {
                     </Button>
                 </NavbarItem>
             </NavbarContent>
-            <NavbarMenu>
+            <NavbarContent className="flex md:hidden " justify="end">
+                <NavbarMenuToggle
+                    aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                />
+            </NavbarContent>
+             <NavbarMenu>
                 {menuItems.map((item, index) => (
-                    <NavbarMenuItem key={`${item}-${index}`}>
-                        <Link
-                            color={
-                                index === 2
-                                    ? "primary"
-                                    : index === menuItems.length - 1
-                                        ? "danger"
-                                        : "foreground"
-                            }
-                            className="w-full"
-                            href="#"
-                            size="lg"
-                        >
-                            {item}
-                        </Link>
-                    </NavbarMenuItem>
+                <NavbarMenuItem key={`${item}-${index}`} >
+                    <Link
+                    className="w-full justify-end"
+                    color={
+                        index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+                    }
+                    href="#"
+                    size="lg"
+                    >
+                    {item}
+                    </Link>
+                </NavbarMenuItem>
                 ))}
             </NavbarMenu>
         </Navbar>

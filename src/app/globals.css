@@ -7,3 +7,7 @@
     @apply rounded-xl border border-blue-400 bg-blue-300 text-blue-900 shadow-sm hover:bg-blue-400 transition-colors ease-linear duration-200 p-2;
   }
 }
+
+header{
+  max-width: 100% !important;
+}
