@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function LoginWelcome() {
     return (
-        <div className='flex flex-col justify-center items-center mx-7 my-[1.5rem]'>
+        <div className='flex flex-col justify-center items-center mx-7 my-[1.5rem] hidden md:flex '>
             <div className='text-center'>
                 <Image
                     src="/images/login-image.png"
@@ -19,6 +19,7 @@ export default function LoginWelcome() {
             </div>
             <div className='text-center'>
                 <p>¿Ya tienes una cuenta? <Link href = "/" className='text-cyan-600'>Registrate</Link></p>
+                <p><Link href = "/" className='text-cyan-600'>Volver</Link></p>
             </div>
             
             
