@@ -75,6 +75,7 @@ export default function CrearArticulo() {
           key='bordered'
           variant='bordered'
           minRows={10}
+          maxRows = {50}
           labelPlacement="outside"
           placeholder="Empieza a escribir tu artículo..."
           className="w-full"
