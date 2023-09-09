@@ -48,7 +48,7 @@ export default function CrearArticulo() {
           </div>
 
           <div>
-            <p className='text-base text-zinc-600'>
+            <p id = "image-filename" className='text-base text-zinc-600'>
               sample.png
             </p>
           </div>
