@@ -6,17 +6,11 @@ import {
     NavbarBrand,
     NavbarContent,
     NavbarItem,
-    Link,
     Button,
     Input,
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
-    Dropdown,
-    DropdownTrigger,
-    DropdownMenu,
-    DropdownSection,
-    DropdownItem
 } from "@nextui-org/react";
 
 import { AiOutlineSearch } from "react-icons/ai";
@@ -24,6 +18,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import Image from "next/image";
 
 import { IconContext } from "react-icons";
+import Link from 'next/link'
 
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -141,13 +136,13 @@ export default function App() {
             
             <NavbarContent className='hidden md:flex  ' justify='end'>
                 <NavbarItem>
-                    <Button as={Link} className='bg-white' href="/login" variant="flat">
-                        Iniciar sesión
+                    <Button className='bg-white' variant="flat">
+                        <Link className='text-black' href="/login">Iniciar sesión</Link>
                     </Button>
                 </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} className='bg-white' href="#" variant="flat">
-                        Registrarse
+                    <Button className='bg-white' variant="flat">
+                        <Link className='text-black' href="/register">Registrarse</Link>
                     </Button>
                 </NavbarItem>
             </NavbarContent>
@@ -165,7 +160,7 @@ export default function App() {
                         index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
                     }
                     href="#"
-                    size="lg"
+                    /* size="lg" */
                     >
                     {item}
                     </Link>
