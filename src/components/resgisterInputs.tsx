@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { createUserSchema } from "@/schemas/schemas";
 import { createUserType } from "@/dto/users";
 import { useRouter } from "next/navigation";
+import { json } from "node:stream/consumers";
 
 const RegisterInputs=()=>{
     
@@ -32,30 +33,31 @@ const RegisterInputs=()=>{
             )
             return
         }
-        console.log(JSON.stringify(createUserSchema.parse(formData)));
+        let datos;
         const res = await fetch('http://localhost:3005/users/create',{
             method: 'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify(formData),
-         })
-     
-        if (!res.ok) {
+         }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+         if (res.err) {
             // This will activate the closest `error.js` Error Boundary
             // throw new Error('Failed to fetch data')
             Swal.fire(
-            'Failed register user!',
-            'Verify your data',
+            'Registro de usuario fallido!',
+            res.err,
             'error'
             )
         }else{
+            localStorage.setItem('token',res.token)
             Swal.fire(
             'Creación de usuario exitoso!',
-            'Verify your data',
+            '',
             'success'
             ).then(function(){router.push("/")})
         }
         
-        return res.json()
+        return
     }
 
     const handleChange = (e:any) => {
@@ -75,12 +77,12 @@ const RegisterInputs=()=>{
     return <>
         <div className='flex flex-col justify-center mx-7 w-full gap-4'>
             <div className="flex flex-wrap gap-4  md:gap-2 md:flex-nowrap">
-                <Input className="border-2 border-sky-600 rounded-[13px]" name="name" radius = {"md"} placeholder='Nombres' onChange={handleChange} isRequired />
-                <Input className="border-2 border-sky-600 rounded-[13px]" name="lastname" placeholder='Apellidos' onChange={handleChange} isRequired />
+                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="name" radius = {"md"} placeholder='Nombres' onChange={handleChange} isRequired />
+                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="lastname" placeholder='Apellidos' onChange={handleChange} isRequired />
             </div>
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" name="username" radius = {"md"} placeholder='Usuario' onChange={handleChange} isRequired />
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" name="password" placeholder='Contraseña' onChange={handleChange} isRequired />
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" name="cpassword" placeholder='Confirmar contraseña' onChange={handleChangeConfirm} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='text' name="username" radius = {"md"} placeholder='Usuario' onChange={handleChange} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="password" placeholder='Contraseña' onChange={handleChange} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="cpassword" placeholder='Confirmar contraseña' onChange={handleChangeConfirm} isRequired />
             <Select 
                 label="Seleccione el rol" 
                 name='rol'

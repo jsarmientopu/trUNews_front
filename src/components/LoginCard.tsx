@@ -2,6 +2,7 @@ import LoginInputs from "./LoginInputs";
 import LoginWelcome from "./LoginWelcome";
 
 export default function LoginCard() {
+
     return (
         
         <div id = "login-container" className=" bg-white p-16 rounded-[17px] h-4/5 grid place-items-center">
