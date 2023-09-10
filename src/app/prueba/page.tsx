@@ -3,7 +3,7 @@ import LoginCard from "@/components/LoginCard"
 
 export default function prueba () {
     return (
-        <div className="bg-sky-200 flex justify-center items-center h-screen">
+        <div className=" grid place-items-center bg-sky-200 h-screen w-screen">
             <LoginCard />
         </div>
     )
