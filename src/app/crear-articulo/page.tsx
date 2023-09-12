@@ -6,8 +6,50 @@ import { GrUpdate } from 'react-icons/gr'
 import {MdOutlineCreate} from 'react-icons/md'
 import { Button } from '@nextui-org/react'
 import { Textarea } from '@nextui-org/react'
+import { useState, useRef } from 'react'
+import mammoth from 'mammoth'
 
 export default function CrearArticulo() {
+
+  const [file, setFile] = useState<String>('Añadir archivo nuevo (.txt, .docx, .md)');
+  const [nameImage, setNameImage] = useState<String>('Archivo.png');
+  const [image,setImage] = useState();
+  const [plainText, setPlainText] = useState<string>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (event:any) => {
+    const f = event.target.files[0];
+    // console.log(f)
+    if(f){
+      const reader = new FileReader();
+      if(f.type.includes('text')){
+        reader.readAsText(f);
+        reader.onload = () => {
+          const text = reader.result as string;
+          setPlainText(text);
+        }
+      }else if(f.type.includes('application/vnd.openxmlformats-officedocument.wordproces')){
+        reader.onload = async() => {
+          const arrayBuffer  = reader.result as ArrayBuffer;
+          const result =  await mammoth.extractRawText({ arrayBuffer  });
+          setPlainText(result.value);
+        };
+        reader.readAsArrayBuffer(f);
+      }
+      setFile(f.name);
+    }
+  // console.log(plainText)      
+  };
+
+  const handleImageChange = (event:any) => {
+    const image = event.target.files[0];
+    setNameImage(image.name)
+    setImage(image);
+  };
+
+
+
   return (
     <div className='p-7'>
 
@@ -38,7 +80,8 @@ export default function CrearArticulo() {
         <div className='flex items-center'>
 
           <div>
-            <Button className='bg-blue-400 h-9 w-[6.5rem] mr-4'>
+            <Button className='bg-blue-400 h-9 w-[6.5rem] mr-4' onClick={()=>{imageInputRef.current?.click()}}>
+              <input type='file' className='hidden' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
               Subir imagen
             </Button>
           </div>
@@ -49,7 +92,7 @@ export default function CrearArticulo() {
 
           <div>
             <p id = "image-filename" className='text-base text-zinc-600'>
-              sample.png
+              {nameImage}
             </p>
           </div>
 
@@ -63,15 +106,17 @@ export default function CrearArticulo() {
         <p className='text-base mb-2'>
           Añadir contenido para el artículo que será creado. Puede importarse como archivo .txt o escribirse en el campo de texto
         </p>
-        <div className='mb-2'>
-          <Button className='bg-gray-300'>
-            <FaFileUpload /> Añadir archivo nuevo (.txt)
+        <div className='mb-2' >
+          <Button className='bg-gray-300' onClick={()=>{fileInputRef.current?.click()}}>
+            <input type='file' className='hidden' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
+            <FaFileUpload  /> {file}
           </Button>
         </div>
       </div>
 
       <div className='mb-5'>
         <Textarea
+          name='txtArea'
           key='bordered'
           variant='bordered'
           minRows={10}
@@ -79,7 +124,8 @@ export default function CrearArticulo() {
           labelPlacement="outside"
           placeholder="Empieza a escribir tu artículo..."
           className="w-full"
-
+          value={plainText}
+          onChange={(e)=>{setPlainText(e.target.value)}}
         />
       </div>
       <div>
