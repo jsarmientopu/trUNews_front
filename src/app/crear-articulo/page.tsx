@@ -99,7 +99,7 @@ export default function CrearArticulo() {
         </div>
       </div>
 
-      <div className='justify-start w-2/4'>
+      <div className='justify-start'>
         <p className='font-bold text-lg'>
           Contenido
         </p>
