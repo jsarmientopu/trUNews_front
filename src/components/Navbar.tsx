@@ -29,7 +29,7 @@ export default function App() {
     ];
 
     return (
-        <Navbar id ="nav_conatiner" className="flex justify-between bg-blue-300 max-w-full w-full" onMenuOpenChange={setIsMenuOpen}>
+        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full" onMenuOpenChange={setIsMenuOpen}>
             
             <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>
@@ -51,17 +51,17 @@ export default function App() {
             
             <NavbarContent className="hidden md:flex  gap-4" justify="center">
                 <NavbarItem>
-                <Link color="foreground" href="#">
+                <Link className='text-white font-bold' href="#">
                     Features
                 </Link>
                 </NavbarItem>
                 <NavbarItem isActive>
-                <Link href="#" aria-current="page">
+                <Link className='text-white' href="#" aria-current="page">
                     Customers
                 </Link>
                 </NavbarItem>
                 <NavbarItem>
-                <Link color="foreground" href="#">
+                <Link className='text-white' color="foreground" href="#">
                     Integrations
                 </Link>
                 </NavbarItem>
