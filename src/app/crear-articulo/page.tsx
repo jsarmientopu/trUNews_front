@@ -8,6 +8,10 @@ import { Button } from '@nextui-org/react'
 import { Textarea } from '@nextui-org/react'
 import { useState, useRef } from 'react'
 import mammoth from 'mammoth'
+import { useRouter } from 'next/navigation'
+import Swal from 'sweetalert2'
+import { createArticleType } from '@/dto/article'
+import verifyToken from '@/utils/utils'
 
 export default function CrearArticulo() {
 
@@ -17,6 +21,8 @@ export default function CrearArticulo() {
   const [plainText, setPlainText] = useState<string>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  
+  verifyToken({token:localStorage.token})
 
   const handleFileChange = (event:any) => {
     const f = event.target.files[0];
@@ -45,9 +51,67 @@ export default function CrearArticulo() {
   const handleImageChange = (event:any) => {
     const image = event.target.files[0];
     setNameImage(image.name)
-    setImage(image);
+    if (image) {
+  const reader = new FileReader();
+    reader.onload = function(evt:any) { 
+      const metadata = `name: ${image.name}, type: ${image.type}, size: ${image.size}, contents:`;
+      const contents = evt.target.result;
+    setImage(contents);
+    };
+    reader.readAsDataURL(image);
+  }
+    console.log(image);
   };
 
+  const router = useRouter()
+
+  const [formData, setFormData] = useState<createArticleType>({
+        title: '',
+        date: '',
+        views:0,
+        id_writer: 1,
+        text:'',
+        image_url:''
+    });
+
+    async function sendData() {
+      formData.date=new Date().toString();
+      formData.image_url=image;
+      
+      console.log(formData)
+        let datos;
+        const res = await fetch('http://localhost:3005/articles/create',{
+            method: 'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(formData),
+         }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+         if (res.err) {
+            // This will activate the closest `error.js` Error Boundary
+            // throw new Error('Failed to fetch data')
+            Swal.fire(
+            'Creación de artículo fallido!',
+            res.err,
+            'error'
+            )
+        }else{
+            Swal.fire(
+            'Creación de artículo exitoso!',
+            '',
+            'success'
+            ).then(function(){router.push("/")})
+        }
+        
+        return
+    }
+  
+    const handleChange = (e:any) => {
+        if(e.target.name=='text'){
+          setPlainText(e.target.value)
+        }
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+        
+    };
 
 
   return (
@@ -81,7 +145,7 @@ export default function CrearArticulo() {
 
           <div>
             <Button className='bg-blue-400 h-9 w-[6.5rem] mr-4' onClick={()=>{imageInputRef.current?.click()}}>
-              <input type='file' className='hidden' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
+              <input key='1' type='file' className='hidden' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
               Subir imagen
             </Button>
           </div>
@@ -108,7 +172,7 @@ export default function CrearArticulo() {
         </p>
         <div className='mb-2' >
           <Button className='bg-gray-300' onClick={()=>{fileInputRef.current?.click()}}>
-            <input type='file' className='hidden' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
+            <input key='2' type='file' className='hidden' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
             <FaFileUpload  /> {file}
           </Button>
         </div>
@@ -116,7 +180,7 @@ export default function CrearArticulo() {
 
       <div className='mb-5'>
         <Textarea
-          name='txtArea'
+          name='text'
           key='bordered'
           variant='bordered'
           minRows={10}
@@ -125,7 +189,7 @@ export default function CrearArticulo() {
           placeholder="Empieza a escribir tu artículo..."
           className="w-full"
           value={plainText}
-          onChange={(e)=>{setPlainText(e.target.value)}}
+          onChange={handleChange}
         />
       </div>
       <div>
@@ -134,15 +198,16 @@ export default function CrearArticulo() {
         </Button>
 
         <Textarea
-          key='bordered'
           variant='bordered'
           minRows={1}
           labelPlacement="outside"
           className="w-full mb-2"
+          name='title'
+          onChange={handleChange}
 
         />
 
-        <Button className='bg-blue-400 mb-2 w-36'>
+        <Button className='bg-blue-400 mb-2 w-36' onClick={sendData}>
           <MdOutlineCreate /> Crear artículo
         </Button>
 

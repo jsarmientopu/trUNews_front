@@ -16,20 +16,37 @@ import {
 import { AiOutlineSearch } from "react-icons/ai";
 
 import Image from "next/image";
-
+import verifyToken from '@/utils/utils'
 import { IconContext } from "react-icons";
 import Link from 'next/link'
+import { decryptedJWT } from '@/dto/users';
 
 export default function App() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-1,rol:-1})
+    
+    async function token(){
+        const rol =await verifyToken({token:localStorage.token});
+        setInfoUser(rol);
+        console.log(setInfoUser);
+    }
+
+    const menuButtons = [
+        {"rol":-1,"label":"Iniciar Sesión","ref":"/login"},
+        {"rol":-1,"label":"Registrarse","ref":"/register"},
+        {"rol":1,"label":"Perfil","ref":"/#"},
+        {"rol":1,"label":"Perfil","ref":"/#"}        
+    ]
 
     const menuItems = [
         "Categorías",
         "Cerrar sesión"
     ];
 
+    token();
+    
     return (
-        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full" onMenuOpenChange={setIsMenuOpen}>
+        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full" onLoad={token} onMenuOpenChange={setIsMenuOpen}>
             
             <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>
@@ -135,16 +152,13 @@ export default function App() {
             </NavbarContent> */}
             
             <NavbarContent className='hidden md:flex  ' justify='end'>
-                <NavbarItem>
-                    <Button className='bg-white' variant="flat">
-                        <Link className='text-black' href="/login">Iniciar sesión</Link>
-                    </Button>
-                </NavbarItem>
-                <NavbarItem>
-                    <Button className='bg-white' variant="flat">
-                        <Link className='text-black' href="/register">Registrarse</Link>
-                    </Button>
-                </NavbarItem>
+                {menuButtons.filter(item => item.rol===userInfo.rol).map((item, index) => (
+                        <NavbarItem key={`${item.label}-${index}`}>
+                            <Button className='bg-white' variant="flat">
+                                <Link className='text-black' href={item.ref}>{item.label}</Link>
+                            </Button>
+                        </NavbarItem>
+                ))}
             </NavbarContent>
             <NavbarContent className="flex md:hidden " justify="end">
                 <NavbarMenuToggle

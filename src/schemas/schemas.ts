@@ -17,6 +17,17 @@ export const checkPasswordSchema = z.object({
     password: z.string({required_error:"debe haber username"})
 }).strict()
 
+export const decryptJWTSchema = z.object({
+  token: z.string({required_error:"debe haber token"})
+
+})
+
+export const decryptedJWTSchema = z.object({
+  userId: z.number({required_error:"debe haber userId"}),
+  rol: z.number({required_error:"debe haber rol"})
+
+})
+
 export const createArticleSchema = z.object({
     title: z.string({ required_error: "Debe haber un título" }),
     date: z.string({required_error: "Debe haber una fecha"}),
