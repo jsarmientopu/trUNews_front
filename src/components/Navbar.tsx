@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import '../app/globals.css'
 import {
     Navbar,
@@ -22,20 +22,27 @@ import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 
 export default function App() {
+    
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-1,rol:-1})
     
     async function token(){
         const rol =await verifyToken({token:localStorage.token});
         setInfoUser(rol);
-        console.log(setInfoUser);
     }
+    
+    useEffect(()=>{
+        token();
+    },[]);
+
+
+    // token(); 
 
     const menuButtons = [
-        {"rol":-1,"label":"Iniciar Sesión","ref":"/login"},
-        {"rol":-1,"label":"Registrarse","ref":"/register"},
-        {"rol":1,"label":"Perfil","ref":"/#"},
-        {"rol":1,"label":"Perfil","ref":"/#"}        
+        {"rol":[-1],"label":"Registrarse","ref":"/register"},
+        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
+        {"rol":[0,1],"label":"Perfil","ref":"/#"},
+        {"rol":[0,1],"label":"Cerrar sesion","ref":"/#"}      
     ]
 
     const menuItems = [
@@ -43,10 +50,9 @@ export default function App() {
         "Cerrar sesión"
     ];
 
-    token();
     
     return (
-        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full" onLoad={token} onMenuOpenChange={setIsMenuOpen}>
+        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full" onMenuOpenChange={setIsMenuOpen}>
             
             <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>
@@ -151,10 +157,10 @@ export default function App() {
 
             </NavbarContent> */}
             
-            <NavbarContent className='hidden md:flex  ' justify='end'>
-                {menuButtons.filter(item => item.rol===userInfo.rol).map((item, index) => (
+            <NavbarContent className='hidden md:flex flex-row  ' justify='end'>
+                {menuButtons.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                         <NavbarItem key={`${item.label}-${index}`}>
-                            <Button className='bg-white' variant="flat">
+                            <Button className='bg-white grow' variant="flat">
                                 <Link className='text-black' href={item.ref}>{item.label}</Link>
                             </Button>
                         </NavbarItem>

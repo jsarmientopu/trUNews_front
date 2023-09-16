@@ -8,10 +8,10 @@ import { Button } from '@nextui-org/react'
 import { Textarea } from '@nextui-org/react'
 import { useState, useRef } from 'react'
 import mammoth from 'mammoth'
-import { useRouter } from 'next/navigation'
+import { useRouter} from 'next/navigation'
 import Swal from 'sweetalert2'
 import { createArticleType } from '@/dto/article'
-import verifyToken from '@/utils/utils'
+
 
 export default function CrearArticulo() {
 
@@ -21,8 +21,7 @@ export default function CrearArticulo() {
   const [plainText, setPlainText] = useState<string>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-  
-  verifyToken({token:localStorage.token})
+  const router = useRouter();
 
   const handleFileChange = (event:any) => {
     const f = event.target.files[0];
@@ -63,7 +62,6 @@ export default function CrearArticulo() {
     console.log(image);
   };
 
-  const router = useRouter()
 
   const [formData, setFormData] = useState<createArticleType>({
         title: '',
