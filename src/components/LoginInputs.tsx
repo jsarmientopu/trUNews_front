@@ -55,7 +55,7 @@ export default function LoginInputs() {
             <p className='content-start text-sm my-2'>Contraseña</p>
             <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='password' type='password' placeholder='Escriba su contraseña' isRequired  onChange={handleChange}/>
             <div className='flex justify-center'>
-                <Button className='content-center my-4' color='primary' onClick={sendData}>Iniciar sesión</Button>
+                <Button className='content-center my-4 bg-[#963ED9]' color='primary' onClick={sendData}>Iniciar sesión</Button>
             </div>
         </div>
     );

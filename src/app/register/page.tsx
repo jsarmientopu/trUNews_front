@@ -1,6 +1,7 @@
 'use client'
 
 import SignUpCard from "@/components/SignUpCard";
+import HomeBubble from "@/components/homeBubble";
 import { useRouter } from "next/navigation";
 
 const SignUp=()=>{
@@ -14,8 +15,8 @@ const SignUp=()=>{
     }else{
 
         return <>
-            <div className="grid place-items-center h-screen bg-blue-300 ">
-
+            <div className="grid place-items-center h-screen bg-[#0079DC] ">
+                <HomeBubble/>
                 <SignUpCard/>
 
             </div>

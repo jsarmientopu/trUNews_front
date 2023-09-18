@@ -6,11 +6,13 @@ import { GrUpdate } from 'react-icons/gr'
 import {MdOutlineCreate} from 'react-icons/md'
 import { Button } from '@nextui-org/react'
 import { Textarea } from '@nextui-org/react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import mammoth from 'mammoth'
 import { useRouter} from 'next/navigation'
 import Swal from 'sweetalert2'
+import { decryptedJWT } from '@/dto/users'
 import { createArticleType } from '@/dto/article'
+import verifyToken from '@/utils/utils'
 
 
 export default function CrearArticulo() {
@@ -18,10 +20,21 @@ export default function CrearArticulo() {
   const [file, setFile] = useState<String>('Añadir archivo nuevo (.txt, .docx, .md)');
   const [nameImage, setNameImage] = useState<String>('Archivo.png');
   const [image,setImage] = useState();
+  const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-1,rol:-1})
   const [plainText, setPlainText] = useState<string>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+
+    async function token(){
+        const rol =await verifyToken({token:localStorage.token});
+        setUserInfo(rol);
+    }
+    
+    useEffect(()=>{
+        token();
+    },[]);
 
   const handleFileChange = (event:any) => {
     const f = event.target.files[0];
@@ -75,30 +88,41 @@ export default function CrearArticulo() {
     async function sendData() {
       formData.date=new Date().toString();
       formData.image_url=image;
+      formData.id_writer=userInfo.userId;
       
-      console.log(formData)
-        let datos;
-        const res = await fetch('http://localhost:3005/articles/create',{
-            method: 'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(formData),
-         }).then(response => response.json()).then(data => datos=data)
-        console.log(res);
-         if (res.err) {
-            // This will activate the closest `error.js` Error Boundary
-            // throw new Error('Failed to fetch data')
-            Swal.fire(
-            'Creación de artículo fallido!',
-            res.err,
-            'error'
-            )
-        }else{
-            Swal.fire(
-            'Creación de artículo exitoso!',
-            '',
-            'success'
-            ).then(function(){router.push("/")})
-        }
+      if(formData.text && formData.title){
+        console.log(formData)
+          let datos;
+          const res = await fetch('http://localhost:3005/articles/create',{
+              method: 'POST',
+              headers:{'Content-Type':'application/json', 'authorization':localStorage.token},
+              body:JSON.stringify(formData),
+           }).then(response => response.json()).then(data => datos=data)
+          console.log(res);
+           if (res.err || res.error) {
+              // This will activate the closest `error.js` Error Boundary
+              // throw new Error('Failed to fetch data')
+              Swal.fire(
+              'Creación de artículo fallido!',
+              res.err,
+              'error'
+              )
+          }else{
+              Swal.fire(
+              'Creación de artículo exitoso!',
+              '',
+              'success'
+              ).then(function(){router.push("/")})
+          }
+      }else{
+              // This will activate the closest `error.js` Error Boundary
+              // throw new Error('Failed to fetch data')
+              Swal.fire(
+              'Creación de artículo fallido!',
+              '',
+              'error'
+              )
+              }
         
         return
     }
@@ -191,10 +215,14 @@ export default function CrearArticulo() {
         />
       </div>
       <div>
-        <Button className='w-36 bg-blue-400 mb-2'>
-          <GrUpdate /> Generar título
-        </Button>
-
+        <div className='flex flex-row gap-4 mb-2'>
+          <Button className='w-36 bg-[#0079DC] text-[#F8F8F8]'>
+            <GrUpdate className='fill-[#F8F8F8]'/> Generar título
+          </Button>
+          <div className='flex flex-column items-center justify-center'>
+            <p> Genera el titulo de tu articulo por medio de inteligencia artificial !Pruebalo ya¡</p>
+          </div>
+        </div>
         <Textarea
           variant='bordered'
           minRows={1}
@@ -205,7 +233,7 @@ export default function CrearArticulo() {
 
         />
 
-        <Button className='bg-blue-400 mb-2 w-36' onClick={sendData}>
+        <Button className='bg-[#963ED9] mb-2 w-36 text-white' onClick={sendData}>
           <MdOutlineCreate /> Crear artículo
         </Button>
 

@@ -18,8 +18,7 @@ export default function LoginWelcome() {
                 />
             </div>
             <div className='text-center'>
-                <p>¿Ya tienes una cuenta? <Link href = "/" className='text-cyan-600'>Registrate</Link></p>
-                <p><Link href = "/" className='text-cyan-600'>Volver</Link></p>
+                <p>¿Aún no tienes una cuenta? <Link href = "/register" className='text-[#0079DC]'>Registrate</Link></p>
             </div>
             
             
