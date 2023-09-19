@@ -8,7 +8,7 @@ export default function TrendingArticle({ image, title, description,className }:
 
                 <div className="relative mr-9">
 
-                    <div className="w-[20rem] md:w-[30rem] lg:w-[45rem] h-72">
+                    <div className="w-[20rem] md:w-[30rem] lg:w-[45rem] h-72 select-none">
                         <img src={image} className="w-full h-full object-cover rounded-lg" />
                     </div>
 

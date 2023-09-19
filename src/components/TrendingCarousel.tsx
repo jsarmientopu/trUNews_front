@@ -38,10 +38,10 @@ export default function TrendingCarousel() {
 
 
                 <div className="flex justify-end items-center">
-                    <div className="mr-6 cursor-pointer" onClick={prevSlide}>
+                    <div className="mr-6 cursor-pointer select-none" onClick={prevSlide}>
                         <MdArrowBackIosNew size="2em" />
                     </div>
-                    <div className='cursor-pointer'>
+                    <div className='cursor-pointer select-none'>
                         <MdArrowForwardIos size="2em" onClick={nextSlide} />
                     </div>
                 </div>
