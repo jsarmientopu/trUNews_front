@@ -1,12 +1,12 @@
 import { Button } from "@nextui-org/react"
 import Image from 'next/image'
 
-export default function TrendingArticle({ image, title, description,className }: any) {
+export default function TrendingArticle({ image, title, description }: any) {
     return (
-        <div id="container-trending-article"className={className}>
+        <div id="container-trending-article">
             <div className="flex">
 
-                <div className="relative mr-9">
+                <div className="relative mr-9 ml-5">
 
                     <div className="w-[20rem] md:w-[30rem] lg:w-[45rem] h-72 select-none">
                         <img src={image} className="w-full h-full object-cover rounded-lg" />
@@ -20,7 +20,7 @@ export default function TrendingArticle({ image, title, description,className }:
 
                 <div className="flex flex-col justify-between">
                     
-                    <div className="break-words text-justify">
+                    <div className="break-words text-justify mr-6">
                         <p className="line-clamp-[9]">{description}</p>
                     </div>
                     <div className="flex justify-center items-center">
