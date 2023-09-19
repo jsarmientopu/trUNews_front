@@ -16,8 +16,8 @@ export default function TrendingCarousel() {
                 <CarouselEmbla loop>
                     {carrouselData.map((slide, index) => {
                         return (
-                            <div className='flex-[0_0_100%]'>
-                                <TrendingArticle key={index} image={slide.image} title={slide.title} description={slide.description} />
+                            <div key={index} className='flex-[0_0_100%]'>
+                                <TrendingArticle image={slide.image} title={slide.title} description={slide.description} />
                             </div>
                             
                         )
