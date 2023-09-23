@@ -1,4 +1,5 @@
 'use client'
+import { Editor } from '@tinymce/tinymce-react';
 import { TfiWrite } from 'react-icons/tfi'
 import { AiFillEye } from 'react-icons/ai'
 import { FaFileUpload } from 'react-icons/fa'
@@ -126,14 +127,13 @@ export default function CrearArticulo() {
         
         return
     }
-  
+    
     const handleChange = (e:any) => {
-        if(e.target.name=='text'){
-          setPlainText(e.target.value)
-        }
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        
-    };
+      if(e.target.name=='text'){
+        setPlainText(e.target.value)
+      }
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }      
 
 
   return (
@@ -200,20 +200,30 @@ export default function CrearArticulo() {
         </div>
       </div>
 
-      <div className='mb-5'>
-        <Textarea
-          name='text'
-          key='bordered'
-          variant='bordered'
-          minRows={10}
-          maxRows = {1000}
-          labelPlacement="outside"
-          placeholder="Empieza a escribir tu artículo..."
-          className="w-full"
-          value={plainText}
-          onChange={handleChange}
-        />
-      </div>
+      
+      
+  <div className='mb-5'>
+    <Editor
+      apiKey="cx94g2it82nxlalcwthrk1ogfnu4kbx3dw55vchnt0mje4jd"
+      initialValue={plainText}
+      init={{
+        height: 300,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar:
+          'undo redo | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help'
+      }}
+      // onEditorChange={handleChange}
+    />
+  </div>
+      
+      
       <div>
         <div className='flex flex-row gap-4 mb-2'>
           <Button className='w-36 bg-[#0079DC] text-[#F8F8F8]'>
