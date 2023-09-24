@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { useState, useEffect} from "react";
 import { decryptedJWT } from "@/dto/users";
 import verifyToken from "@/utils/utils";
-import getFromLocalStorage from "@/utils/localStorage";
+import {getFromLocalStorage} from "@/utils/localStorage";
 
 const SignUp=()=>{
 

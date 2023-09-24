@@ -12,6 +12,7 @@ import {
     NavbarMenuItem,
     NavbarMenuToggle,
 } from "@nextui-org/react";
+import {getFromLocalStorage, removeFromLocalStorage} from '@/utils/localStorage';
 
 import { AiOutlineSearch } from "react-icons/ai";
 
@@ -20,11 +21,13 @@ import verifyToken from '@/utils/utils'
 import { IconContext } from "react-icons";
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
+import { useRouter } from 'next/navigation';
 
 export default function App() {
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-1,rol:-1})
+    const router = useRouter()
     
     async function token(){
         const rol =await verifyToken({token:localStorage.token});
@@ -35,6 +38,15 @@ export default function App() {
         token();
     },[]);
     
+    const logOut=()=>{
+        const tok = getFromLocalStorage("token");
+        if(tok){
+            removeFromLocalStorage("token")
+        }
+        router.refresh()
+        router.push("/")
+        token()
+    }
 
     // token(); 
 
@@ -42,7 +54,7 @@ export default function App() {
         {"rol":[-1],"label":"Registrarse","ref":"/register"},
         {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
         {"rol":[0,1],"label":"Perfil","ref":"/perfil"},
-        {"rol":[0,1],"label":"Cerrar sesion","ref":"/#"}      
+        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut}      
     ]
 
     const menuItems = [
@@ -160,11 +172,17 @@ export default function App() {
             <NavbarContent className='hidden md:flex flex-row  ' justify='end'>
                 {menuButtons.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                         <NavbarItem key={`${item.label}-${index}`}>
-                            <Link className='text-black' href={item.ref}>
-                                <Button className='bg-white grow' variant="flat">
+                            {item.ev?
+                                <Button className='bg-white grow' variant="flat" onClick={item.ev}>
                                     {item.label}
                                 </Button>
-                            </Link>
+                            :
+                                <Link className='text-black' href={item.ref}>
+                                    <Button className='bg-white grow' variant="flat" >
+                                        {item.label}
+                                    </Button>
+                                </Link>
+                            }
                         </NavbarItem>
                 ))}
             </NavbarContent>

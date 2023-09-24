@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import { redirect } from "next/navigation";
 import { decryptedJWT } from "@/dto/users";
-import getFromLocalStorage from "@/utils/localStorage";
+import {getFromLocalStorage} from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
 import ProfileInfo from "@/components/profileInfo";
 import SavedArticles from "@/components/savedArticlesProfile";

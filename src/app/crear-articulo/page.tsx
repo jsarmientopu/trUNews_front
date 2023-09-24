@@ -14,7 +14,7 @@ import Swal from 'sweetalert2'
 import { decryptedJWT } from '@/dto/users'
 import { createArticleType } from '@/dto/article'
 import verifyToken from '@/utils/utils'
-import getFromLocalStorage from '@/utils/localStorage'
+import {getFromLocalStorage} from '@/utils/localStorage'
 
 
 export default function CrearArticulo() {
