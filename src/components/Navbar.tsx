@@ -34,14 +34,14 @@ export default function App() {
     useEffect(()=>{
         token();
     },[]);
-
+    
 
     // token(); 
 
     const menuButtons = [
         {"rol":[-1],"label":"Registrarse","ref":"/register"},
         {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
-        {"rol":[0,1],"label":"Perfil","ref":"/#"},
+        {"rol":[0,1],"label":"Perfil","ref":"/perfil"},
         {"rol":[0,1],"label":"Cerrar sesion","ref":"/#"}      
     ]
 
@@ -160,9 +160,11 @@ export default function App() {
             <NavbarContent className='hidden md:flex flex-row  ' justify='end'>
                 {menuButtons.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                         <NavbarItem key={`${item.label}-${index}`}>
-                            <Button className='bg-white grow' variant="flat">
-                                <Link className='text-black' href={item.ref}>{item.label}</Link>
-                            </Button>
+                            <Link className='text-black' href={item.ref}>
+                                <Button className='bg-white grow' variant="flat">
+                                    {item.label}
+                                </Button>
+                            </Link>
                         </NavbarItem>
                 ))}
             </NavbarContent>

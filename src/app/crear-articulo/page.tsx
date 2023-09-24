@@ -8,11 +8,12 @@ import { Button } from '@nextui-org/react'
 import { Textarea } from '@nextui-org/react'
 import { useState, useRef, useEffect } from 'react'
 import mammoth from 'mammoth'
-import { useRouter} from 'next/navigation'
+import { redirect} from 'next/navigation'
 import Swal from 'sweetalert2'
 import { decryptedJWT } from '@/dto/users'
 import { createArticleType } from '@/dto/article'
 import verifyToken from '@/utils/utils'
+import getFromLocalStorage from '@/utils/localStorage'
 
 
 export default function CrearArticulo() {
@@ -20,16 +21,17 @@ export default function CrearArticulo() {
   const [file, setFile] = useState<String>('Añadir archivo nuevo (.txt, .docx, .md)');
   const [nameImage, setNameImage] = useState<String>('Archivo.png');
   const [image,setImage] = useState();
-  const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-1,rol:-1})
+  const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
   const [plainText, setPlainText] = useState<string>();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
-  const router = useRouter();
-
 
     async function token(){
-        const rol =await verifyToken({token:localStorage.token});
-        setUserInfo(rol);
+        const tok = getFromLocalStorage("token");
+        if(tok){
+            const rol =await verifyToken({token:tok});
+            setUserInfo(rol);
+        }
     }
     
     useEffect(()=>{
@@ -112,7 +114,7 @@ export default function CrearArticulo() {
               'Creación de artículo exitoso!',
               '',
               'success'
-              ).then(function(){router.push("/")})
+              ).then(function(){redirect('/')})
           }
       }else{
               // This will activate the closest `error.js` Error Boundary
@@ -134,6 +136,10 @@ export default function CrearArticulo() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         
     };
+
+
+    if(userInfo.userId==-2) return <p>Loading..</p>;
+    if(userInfo.userId==0 || userInfo.userId==-1) redirect('/');
 
 
   return (

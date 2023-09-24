@@ -14,7 +14,11 @@ async function verifyToken(token:decryptJWT): Promise<decryptedJWT>{
         
         console.log(res)
 
-        return res;
+        if(!res.err && !res.error){
+            return res;
+        }else{
+            localStorage.removeItem("token");
+        }
     }
 
     return {userId: -1, rol: -1};
