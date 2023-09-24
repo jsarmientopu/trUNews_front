@@ -1,4 +1,5 @@
 'use client'
+import { Editor } from '@tinymce/tinymce-react';
 import { TfiWrite } from 'react-icons/tfi'
 import { AiFillEye } from 'react-icons/ai'
 import { FaFileUpload } from 'react-icons/fa'
@@ -23,6 +24,14 @@ export default function CrearArticulo() {
   const [image,setImage] = useState();
   const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
   const [plainText, setPlainText] = useState<string>();
+  const [formData, setFormData] = useState<createArticleType>({
+        title: '',
+        date: '',
+        views:0,
+        id_writer: 1,
+        text:'',
+        image_url:''
+    });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -40,26 +49,32 @@ export default function CrearArticulo() {
 
   const handleFileChange = (event:any) => {
     const f = event.target.files[0];
-    // console.log(f)
     if(f){
       const reader = new FileReader();
-      if(f.type.includes('text')){
+      if(f.type.includes('text')||f.type==""){
         reader.readAsText(f);
         reader.onload = () => {
           const text = reader.result as string;
           setPlainText(text);
+          console.log(text);
         }
       }else if(f.type.includes('application/vnd.openxmlformats-officedocument.wordproces')){
         reader.onload = async() => {
           const arrayBuffer  = reader.result as ArrayBuffer;
-          const result =  await mammoth.extractRawText({ arrayBuffer  });
+          const result =  await mammoth.convertToHtml({ arrayBuffer  });
           setPlainText(result.value);
         };
         reader.readAsArrayBuffer(f);
+      }else{
+          Swal.fire(
+              'Archivo no compatible',
+              '',
+              'error'
+              )
+          return
       }
       setFile(f.name);
-    }
-  // console.log(plainText)      
+    }     
   };
 
   const handleImageChange = (event:any) => {
@@ -76,16 +91,6 @@ export default function CrearArticulo() {
   }
     console.log(image);
   };
-
-
-  const [formData, setFormData] = useState<createArticleType>({
-        title: '',
-        date: '',
-        views:0,
-        id_writer: 1,
-        text:'',
-        image_url:''
-    });
 
     async function sendData() {
       formData.date=new Date().toString();
@@ -128,14 +133,17 @@ export default function CrearArticulo() {
         
         return
     }
-  
+    
     const handleChange = (e:any) => {
-        if(e.target.name=='text'){
-          setPlainText(e.target.value)
-        }
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        
-    };
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }      
+
+    const handleUpdate = (value:any, editor:any) => {
+      const length = editor.getContent({ format: 'text' }).length;
+      setFormData({ ...formData, 'text': value });
+      console.log(value);
+      console.log(length);
+  };
 
 
     if(userInfo.userId==-2) return <p>Loading..</p>;
@@ -196,7 +204,9 @@ export default function CrearArticulo() {
           Contenido
         </p>
         <p className='text-base mb-2'>
-          Añadir contenido para el artículo que será creado. Puede importarse como archivo .txt o escribirse en el campo de texto
+          Añadir contenido para el artículo que será creado. Puede importarse como archivo de word, txt o md o escribirse en el campo de texto.
+          Tenga en cuenta que el estilo de viluazación de la noticia será el mismo el cual usted genere en el campo de texto, agregando únicamente una imagen (Subida anteriormente)
+          y el titulo al inicio de esta misma.
         </p>
         <div className='mb-2' >
           <Button className='bg-gray-300' onClick={()=>{fileInputRef.current?.click()}}>
@@ -206,20 +216,33 @@ export default function CrearArticulo() {
         </div>
       </div>
 
-      <div className='mb-5'>
-        <Textarea
-          name='text'
-          key='bordered'
-          variant='bordered'
-          minRows={10}
-          maxRows = {1000}
-          labelPlacement="outside"
-          placeholder="Empieza a escribir tu artículo..."
-          className="w-full"
-          value={plainText}
-          onChange={handleChange}
-        />
-      </div>
+      
+      
+  <div className='mb-5'>
+    <Editor
+      id="editor"
+      textareaName='text'
+      apiKey="cx94g2it82nxlalcwthrk1ogfnu4kbx3dw55vchnt0mje4jd"
+      initialValue={plainText}
+      init={{
+        height: 300,
+        menubar: false,
+        plugins: [
+          
+          'advlist', 'autolink', ' lists', ' link', ' image', ' charmap', ' preview', ' anchor',
+          'searchreplace', ' visualblocks', ' code', ' fullscreen',
+          'insertdatetime', ' media', ' table', ' code', ' help', ' wordcount'
+        ],
+        toolbar:
+          'undo redo | blocks | formatselect | bold italic backcolor | \
+          alignleft aligncenter alignright alignjustify | \
+          bullist numlist outdent indent | removeformat | help'
+      }}
+      onEditorChange={handleUpdate}
+    />
+  </div>
+      
+      
       <div>
         <div className='flex flex-row gap-4 mb-2'>
           <Button className='w-36 bg-[#0079DC] text-[#F8F8F8]'>
@@ -245,6 +268,9 @@ export default function CrearArticulo() {
 
 
       </div>
+
+        {/* <div className="product-des" dangerouslySetInnerHTML={{ __html: formData.text }}>
+        </div> */}
 
     </div>
   )
