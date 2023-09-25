@@ -225,7 +225,8 @@ export default function CrearArticulo() {
       apiKey="cx94g2it82nxlalcwthrk1ogfnu4kbx3dw55vchnt0mje4jd"
       initialValue={plainText}
       init={{
-        height: 300,
+        min_height: 200,
+        resize:true,
         menubar: false,
         plugins: [
           
