@@ -7,7 +7,7 @@ export default function RecentCarousel() {
     return (
 
         <div>
-            <div className="mb-10 overflow-hidden">
+            <div className="mb-1 overflow-hidden">
                 <RecentCarouselEmbla loop align="start">
                     {recentCarouselData.map((slide, index) => {
                         return (
