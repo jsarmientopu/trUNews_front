@@ -13,12 +13,9 @@ import {
     NavbarMenuToggle,
 } from "@nextui-org/react";
 import {getFromLocalStorage, removeFromLocalStorage} from '@/utils/localStorage';
-
-import { AiOutlineSearch } from "react-icons/ai";
-
+import { Dropdown,DropdownItem, DropdownTrigger, DropdownMenu } from '@nextui-org/react';
 import Image from "next/image";
 import verifyToken from '@/utils/utils'
-import { IconContext } from "react-icons";
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
@@ -30,7 +27,7 @@ export default function App() {
     const router = useRouter()
     
     async function token(){
-        const rol =await verifyToken({token:localStorage.token});
+        const rol =await verifyToken();
         setInfoUser(rol);
     }
     
@@ -51,10 +48,10 @@ export default function App() {
     // token(); 
 
     const menuButtons = [
-        {"rol":[-1],"label":"Registrarse","ref":"/register"},
-        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
-        {"rol":[0,1],"label":"Perfil","ref":"/perfil"},
-        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut}      
+        {"rol":[-1],"label":"Registrarse","ref":"/register",'query':''},
+        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login",'query':''},
+        {"rol":[0,1],"label":"Perfil","ref":"/perfil",'query':userInfo.userId},
+        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut,'query':''}      
     ]
 
     const menuItems = [
@@ -83,21 +80,104 @@ export default function App() {
                     } placeholder="Buscar artículos..." />
                 </NavbarItem> */}
             </NavbarContent>
+
+            <NavbarContent className="hidden md:flex  gap-4" justify="center">
+                <Dropdown>
+                    <NavbarItem>
+                        <DropdownTrigger>
+                            <Link
+                                className='text-white font-bold' href="#"                            >
+                                Features
+                            </Link>
+                        </DropdownTrigger>
+                    </NavbarItem>
+
+                    <DropdownMenu
+                        aria-label="ACME features"
+                        className="w-[340px]"
+                        itemClasses={{
+                            base: "gap-4",
+                        }}
+                    >
+                        <DropdownItem
+                            key="autoscaling"
+                            description="Noticias de deportes"
+                        //startContent={icons.scale}
+                        >
+                            Deportes
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+            </NavbarContent>
             
             <NavbarContent className="hidden md:flex  gap-4" justify="center">
-                <NavbarItem>
+                <Dropdown>
+                    <NavbarItem isActive>
+                        <DropdownTrigger>
+                            <Link
+                                className='text-white' href="#" aria-current="page"                            >
+                                Categories
+                            </Link>
+                        </DropdownTrigger>
+                    </NavbarItem>
+
+                    <DropdownMenu
+                        aria-label="ACME features"
+                        className="w-[340px]"
+                        itemClasses={{
+                            base: "gap-4",
+                        }}
+                    >
+                        <DropdownItem
+                            key="autoscaling"
+                            description="Noticias de deportes"
+                        //startContent={icons.scale}
+                        >
+                            Deportes
+                        </DropdownItem>
+                        <DropdownItem
+                            key="usage_metrics"
+                            description="Noticias de economía"
+                        //startContent={icons.activity}
+                        >
+                            Economía
+                        </DropdownItem>
+                        <DropdownItem
+                            key="production_ready"
+                            description="Noticias de realidad social"
+                        //startContent={icons.flash}
+                        >
+                            Realidad social
+                        </DropdownItem>
+                        <DropdownItem
+                            key="99_uptime"
+                            description="Noticias de salud"
+                        //startContent={icons.server}
+                        >
+                            Salud
+                        </DropdownItem>
+                        <DropdownItem
+                            key="supreme_support"
+                            description="Noticias de entretenimiento"
+                        //startContent={icons.user}
+                        >
+                            Entretenimiento
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                {/* <NavbarItem>
                 <Link className='text-white font-bold' href="#">
                     Features
                 </Link>
-                </NavbarItem>
-                <NavbarItem isActive>
+                </NavbarItem> */}
+                {/* <NavbarItem isActive>
                 <Link className='text-white' href="#" aria-current="page">
-                    Customers
+                    Categories
                 </Link>
-                </NavbarItem>
+                </NavbarItem> */}
                 <NavbarItem>
                 <Link className='text-white' color="foreground" href="#">
-                    Integrations
+                    Communities
                 </Link>
                 </NavbarItem>
             </NavbarContent>
@@ -177,7 +257,7 @@ export default function App() {
                                     {item.label}
                                 </Button>
                             :
-                                <Link className='text-black' href={item.ref}>
+                                <Link className='text-black' href={{pathname:item.ref, query:{search:item.query}}}>
                                     <Button className='bg-white grow' variant="flat" >
                                         {item.label}
                                     </Button>
