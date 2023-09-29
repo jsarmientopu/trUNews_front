@@ -7,12 +7,13 @@ import {getFromLocalStorage} from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
 import ProfileInfo from "@/components/profileInfo";
 import SavedArticles from "@/components/savedArticlesProfile";
+import FollowersPage from "@/components/FollowersProfile";
 
 export default function App({searchParams}:any) {
 
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
-    const [edit, setEdit] =useState<boolean>(false);
-
+    const [edit, setEdit] = useState<boolean>(false);
+    const [follow, setFollow] = useState<boolean>(false);
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -37,11 +38,13 @@ export default function App({searchParams}:any) {
         <ProfileInfo
             edit={edit}
             setEdit={setEdit}
+            follow={follow}
+            setFollow={setFollow}
             userInfo = {userInfo}
             userView = {searchParams.search}
         />
 
-        {edit? <></>:<SavedArticles  userInfo = {userInfo} userView = {searchParams.search}/>
+        {edit? <></>:follow? <FollowersPage/>:<SavedArticles userInfo = {userInfo} userView = {searchParams.search}/>
         }
 
     </div>
