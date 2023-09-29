@@ -1,10 +1,10 @@
 import React from "react";
-import { LiaGlassesSolid } from "react-icons/lia";
+import { FaEye } from "react-icons/fa";
 import {Image, Button} from "@nextui-org/react";
 
 const SavedCard = ()=>{
     return <>
-        <div className="flex flex-row rounded-[15px] w-[49%] bg-[#EEEFEF] p-4 gap-3">
+        <div className="flex flex-row rounded-[15px] w-[49%] bg-[#EEEFEF] p-4 gap-3 shadow-lg">
             <div className="w-[50%]">
                 <Image
                     className="mr-0"
@@ -17,9 +17,9 @@ const SavedCard = ()=>{
             <div className="flex flex-col justify-center w-[50%] gap-2">
                 <p className="text-center">Title</p>
                 <Button className="flex flex-col mx-[10%] py-7 bg-[#0079DC] text-[#F8F8F8]">
-                    <div className="flex flex-col items-center">
+                    <div className="flex flex-col items-center text-white">
                         <p className="">Ver articulo</p>
-                        <LiaGlassesSolid size='1.5em'/>
+                        <FaEye size='1.5em'/>
                     </div>
                 </Button>
             </div>

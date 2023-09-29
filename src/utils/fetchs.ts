@@ -1,13 +1,14 @@
 import verifyToken from "./utils";
 import { getFromLocalStorage } from "./localStorage";
-import { getUserType, imageType, updateUserType} from "@/dto/users";
+import { getUserType, imageType, updateUserType, updatePasswordType} from "@/dto/users";
+import { user } from "@nextui-org/react";
 
-export const getProfile=async()=>{
+export const getProfile=async(userView:number)=>{
     const token = getFromLocalStorage('token')
     if(token){
-        const info=await verifyToken({'token':token});
+        const info=await verifyToken();
         let datos;
-        const res = await fetch('http://localhost:3005/users/'+info.userId+'/me',{
+        const res = await fetch('http://localhost:3005/users/'+userView +'/profile',{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -34,6 +35,49 @@ export const updateProfile=async(datos:getUserType, image:string|null)=>{
             method: 'PUT',
             headers:{'Content-Type':'application/json', 'authorization':token},
             body: JSON.stringify(updateData)
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export const updatePassword=async(data:updatePasswordType, id:number)=>{
+    var datos;
+    const token = getFromLocalStorage('token')
+    if(token){
+        const res = await fetch('http://localhost:3005/users/'+id+'/updatePassword',{
+            method: 'PUT',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+            body: JSON.stringify(data)
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export const follow=async(data:getUserType, userView:number)=>{
+    const token = getFromLocalStorage('token')
+    console.log(data, userView)
+
+    if(token){
+        let datos;
+        const res = await fetch('http://localhost:3005/users/'+userView+'/follow/'+data.id_user,{
+            method: 'POST',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export const unfollow=async(data:getUserType, userView:number)=>{
+    const token = getFromLocalStorage('token')
+    console.log(data, userView)
+    if(token){
+        let datos;
+        const res = await fetch('http://localhost:3005/users/'+userView+'/unfollow/'+data.id_user,{
+            method: 'POST',
+            headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
         console.log(res);
         return res;

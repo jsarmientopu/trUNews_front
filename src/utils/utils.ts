@@ -1,15 +1,16 @@
 import { decryptJWT, decryptedJWT } from "@/dto/users";
+import { getFromLocalStorage } from "./localStorage";
 
-async function verifyToken(token:decryptJWT): Promise<decryptedJWT>{
-
-    if(token.token){
-
+async function verifyToken(): Promise<decryptedJWT>{
+    const token = getFromLocalStorage('token')
+    if(token){
+        console.log(JSON.stringify(token))
         let datos;
-
         const res = await fetch('http://localhost:3005/users/decryptJWT',{
             method: 'POST',
             headers:{'Content-Type':'application/json'},
-            body:JSON.stringify(token),
+            body:JSON.stringify({'token':token})
+            ,
         }).then(response => response.json()).then(data => datos=data)
         
         console.log(res)

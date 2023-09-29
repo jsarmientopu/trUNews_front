@@ -16,7 +16,7 @@ const SignUp=()=>{
     async function token(){
         const tok = getFromLocalStorage("token");
         if(tok){
-            const rol =await verifyToken({token:tok});
+            const rol =await verifyToken();
             setUserInfo(rol);
         }else{
             setUserInfo({userId:-1,rol:-1});

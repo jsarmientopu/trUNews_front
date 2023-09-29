@@ -9,7 +9,7 @@ import ProfileInfo from "@/components/profileInfo";
 import SavedArticles from "@/components/savedArticlesProfile";
 import FollowersPage from "@/components/FollowersProfile";
 
-export default function App() {
+export default function App({searchParams}:any) {
 
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [edit, setEdit] = useState<boolean>(false);
@@ -18,7 +18,7 @@ export default function App() {
     async function token(){
         const tok = getFromLocalStorage("token");
         if(tok){
-            const rol =await verifyToken({token:tok});
+            const rol =await verifyToken();
             setUserInfo(rol);
         }else{
             setUserInfo({userId:-1,rol:-1});
@@ -40,9 +40,11 @@ export default function App() {
             setEdit={setEdit}
             follow={follow}
             setFollow={setFollow}
+            userInfo = {userInfo}
+            userView = {searchParams.search}
         />
 
-        {edit? <></>:follow? <FollowersPage/>:<SavedArticles/>
+        {edit? <></>:follow? <FollowersPage/>:<SavedArticles userInfo = {userInfo} userView = {searchParams.search}/>
         }
 
     </div>
