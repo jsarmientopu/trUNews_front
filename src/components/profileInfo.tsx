@@ -10,7 +10,7 @@ import { alert } from "@/utils/alertHandeler";
 import ModalCard from "./ModalCard";
 import { profile } from "console";
 
-const ProfileInfo=({edit,setEdit,follow,setFollow, userInfo, userView}:{'edit':any, 'setEdit':any , 'follow':any, 'setFollow':any 'userInfo':decryptedJWT, 'userView':number})=>{
+const ProfileInfo=({edit,setEdit,follow,setFollow, userInfo, userView}:{'edit':any, 'setEdit':any , 'follow':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number})=>{
 
     const [image,setImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
     const [newImage, setNewImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
