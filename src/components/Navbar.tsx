@@ -64,7 +64,7 @@ export default function App() {
 
     
     return (
-        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full" onMenuOpenChange={setIsMenuOpen}>
+        <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
             
             <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>

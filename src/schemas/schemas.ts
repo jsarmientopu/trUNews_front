@@ -8,9 +8,29 @@ export const createUserSchema = z.object({
     rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
     profession: z.string().optional(),
     description: z.string().optional()
+}).strict();
+
+export const getUserSchema = z.object({
+    id_user: z.number({required_error: "Debe haber un id"}),
+    username: z.string({required_error: "Debe haber un username UNICO"}),
+    name: z.string({ required_error:"Debe haber name"}),
+    lastname: z.string({ required_error: "Debe haber lastname"}),
+    rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
+    profession: z.string().optional(),
+    description: z.string().optional()
 
 }).strict();
 
+export const updateUserSchema = z.object({
+    username: z.string({required_error: "Debe haber un username UNICO"}),
+    name: z.string({ required_error:"Debe haber name"}),
+    lastname: z.string({ required_error: "Debe haber lastname"}),
+    rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
+    profession: z.string().optional(),
+    description: z.string().optional(),
+    image_url: z.string().optional(),
+    password: z.string().optional()
+}).strict();
 
 export const checkPasswordSchema = z.object({
     username: z.string({required_error:"debe haber username"}),
@@ -34,7 +54,10 @@ export const createArticleSchema = z.object({
     views: z.number().optional(),
     id_writer: z.number(),
     text: z.string({ required_error: "Debe haber un texto" }),
-    image_url: z.any({}).refine((val: any) => val !== undefined) 
+    image_url: z.any({}).refine((val: any) => val !== undefined),
+    image_extension: z.string(),
+    ancho: z.number(),
+    image_ratio: z.string()
     // z.number({ required_error: "Debe haber ua imagen" }),
 }).strict();
 

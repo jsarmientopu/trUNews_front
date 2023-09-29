@@ -9,7 +9,7 @@ import { Button } from '@nextui-org/react'
 import { Textarea } from '@nextui-org/react'
 import { useState, useRef, useEffect } from 'react'
 import mammoth from 'mammoth'
-import { redirect} from 'next/navigation'
+import { useRouter } from "next/navigation";
 import Swal from 'sweetalert2'
 import { decryptedJWT } from '@/dto/users'
 import { createArticleType } from '@/dto/article'
@@ -28,12 +28,16 @@ export default function CrearArticulo() {
         title: '',
         date: '',
         views:0,
-        id_writer: 1,
+        id_writer:-1,
         text:'',
-        image_url:''
+        image_url:'',
+        image_extension:'',
+        ancho:0,
+        image_ratio:'1:0.658'
     });
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -78,22 +82,27 @@ export default function CrearArticulo() {
   };
 
   const handleImageChange = (event:any) => {
-    const image = event.target.files[0];
-    setNameImage(image.name)
-    if (image) {
-  const reader = new FileReader();
-    reader.onload = function(evt:any) { 
-      const metadata = `name: ${image.name}, type: ${image.type}, size: ${image.size}, contents:`;
-      const contents = evt.target.result;
-    setImage(contents);
-    };
-    reader.readAsDataURL(image);
-  }
-    console.log(image);
+      const image = event.target.files[0];
+      setNameImage(image.name)
+      var _URL = window.URL || window.webkitURL;
+      var img = new Image();                  
+      img.src = _URL.createObjectURL(image);
+      if (image) {
+       const reader = new FileReader();
+        reader.onload = function(evt:any) { 
+          const metadata = `name: ${image.name}, type: ${image.type}, size: ${image.size}, contents:`;
+          const ext=image.name.split(".");
+          const width = img.width;
+          const contents = evt.target.result;
+          setImage(contents);
+          setFormData({ ...formData, 'image_extension': '.'+ext[1], 'ancho': width});
+        };
+        reader.readAsDataURL(image);
+      }
   };
 
     async function sendData() {
-      formData.date=new Date().toString();
+      formData.date=new Date().toISOString().split('T')[0];
       formData.image_url=image;
       formData.id_writer=userInfo.userId;
       
@@ -119,7 +128,7 @@ export default function CrearArticulo() {
               'Creación de artículo exitoso!',
               '',
               'success'
-              ).then(function(){redirect('/')})
+              ).then(()=>{router.push('/')})
           }
       }else{
               // This will activate the closest `error.js` Error Boundary
@@ -147,7 +156,7 @@ export default function CrearArticulo() {
 
 
     if(userInfo.userId==-2) return <p>Loading..</p>;
-    if(userInfo.userId==0 || userInfo.userId==-1) redirect('/');
+    if(userInfo.userId==0 || userInfo.userId==-1) router.push('/');
 
 
   return (
@@ -181,7 +190,7 @@ export default function CrearArticulo() {
 
           <div>
             <Button className='bg-blue-400 h-9 w-[6.5rem] mr-4' onClick={()=>{imageInputRef.current?.click()}}>
-              <input key='1' type='file' className='hidden' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
+              <input className='hidden' id='input_image' name='input_Image' key='1' type='file' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
               Subir imagen
             </Button>
           </div>
@@ -210,7 +219,7 @@ export default function CrearArticulo() {
         </p>
         <div className='mb-2' >
           <Button className='bg-gray-300' onClick={()=>{fileInputRef.current?.click()}}>
-            <input key='2' type='file' className='hidden' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
+            <input className='hidden' id='input_File' name='input_File' key='2' type='file' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
             <FaFileUpload  /> {file}
           </Button>
         </div>
@@ -225,13 +234,14 @@ export default function CrearArticulo() {
       apiKey="cx94g2it82nxlalcwthrk1ogfnu4kbx3dw55vchnt0mje4jd"
       initialValue={plainText}
       init={{
-        min_height: 200,
         resize:true,
+        min_height: 300,
+        max_height: 600,
         menubar: false,
         plugins: [
           
           'advlist', 'autolink', ' lists', ' link', ' image', ' charmap', ' preview', ' anchor',
-          'searchreplace', ' visualblocks', ' code', ' fullscreen',
+          'searchreplace', ' visualblocks', ' code', ' fullscreen', 'autoresize',
           'insertdatetime', ' media', ' table', ' code', ' help', ' wordcount'
         ],
         toolbar:
