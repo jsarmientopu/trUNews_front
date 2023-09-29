@@ -8,7 +8,7 @@ import verifyToken from "@/utils/utils";
 import ProfileInfo from "@/components/profileInfo";
 import SavedArticles from "@/components/savedArticlesProfile";
 
-export default function App() {
+export default function App({searchParams}:any) {
 
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [edit, setEdit] =useState<boolean>(false);
@@ -17,7 +17,7 @@ export default function App() {
     async function token(){
         const tok = getFromLocalStorage("token");
         if(tok){
-            const rol =await verifyToken({token:tok});
+            const rol =await verifyToken();
             setUserInfo(rol);
         }else{
             setUserInfo({userId:-1,rol:-1});
@@ -37,9 +37,11 @@ export default function App() {
         <ProfileInfo
             edit={edit}
             setEdit={setEdit}
+            userInfo = {userInfo}
+            userView = {searchParams.search}
         />
 
-        {edit? <></>:<SavedArticles/>
+        {edit? <></>:<SavedArticles  userInfo = {userInfo} userView = {searchParams.search}/>
         }
 
     </div>

@@ -1,12 +1,16 @@
 import React, {useState, useEffect, useRef} from "react";
-import { AiFillEye } from "react-icons/ai";
+import { FaPenNib } from "react-icons/fa";
+import {GiBookCover} from "react-icons/gi"
 import { FiEdit } from "react-icons/fi";
 import {ImCross, ImCheckmark} from "react-icons/im"
 import {Avatar, Button, Input, Textarea} from "@nextui-org/react";
-import { getUserType, imageType } from "@/dto/users";
-import { getProfile, updateProfile, squareImage} from "@/utils/fetchs";
+import { decryptedJWT, getUserType, imageType } from "@/dto/users";
+import { getProfile, updateProfile, squareImage, follow, unfollow} from "@/utils/fetchs";
+import { alert } from "@/utils/alertHandeler";
+import ModalCard from "./ModalCard";
+import { profile } from "console";
 
-const ProfileInfo=({edit,setEdit}:any)=>{
+const ProfileInfo=({edit,setEdit, userInfo, userView}:{'edit':any, 'setEdit':any , 'userInfo':decryptedJWT, 'userView':number})=>{
 
     const [image,setImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
     const [newImage, setNewImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
@@ -18,9 +22,14 @@ const ProfileInfo=({edit,setEdit}:any)=>{
         'lastname':'',
         'rol':0,
         'profession':'',
-        'description':''
+        'description':'',
+        'image_url':'',
+        'followersCount':0,
+        'followingsCount':0,
+        'isFollowing':false
     });
     const imageInputRef = useRef<HTMLInputElement>(null);
+    
 
     const getImageMeta = async (
         file: File
@@ -76,13 +85,24 @@ const ProfileInfo=({edit,setEdit}:any)=>{
             'description':tar.description.value
         } as getUserType
         console.log(newImage)
-        if(newImage==image){
-            const res = await updateProfile(sentData,newImage)
-            if(res.image_url)setImage(res.image_url)
-        }else{
-            const res = await updateProfile(sentData,null)
-        }
-        setProfileInfo(sentData)
+        alert('question', 'You are going to modify your profile','success',async ()=>{
+            var res;
+            if(newImage!==image){
+                 res = await updateProfile(sentData,newImage)
+            }else{
+                res = await updateProfile(sentData,null)
+            }
+            if(!res.error){
+                setProfileInfo(sentData)
+                if(res.image_url){
+                    console.log(res.image_url)
+                    setImage(res.image_url); setNewImage(res.image_url);
+                }
+                setTimeout(()=>{},2000)
+                setEdit(false)
+            }
+        })
+        
     }
 
     useEffect(() => {
@@ -96,8 +116,13 @@ const ProfileInfo=({edit,setEdit}:any)=>{
 
     useEffect(() => {
         (async () => {
-            const users = await getProfile();
+            console.log(userView)
+            const users = await getProfile(userView);
             setProfileInfo(users);
+            if(users.image_url)setImage(users.image_url);setNewImage(users.image_url);
+            // if(profileInfo.id_user!==userInfo.userId){
+            //     setFollow(getFollowing(userView))
+            // }
         })();
     },[])
 
@@ -139,7 +164,7 @@ const ProfileInfo=({edit,setEdit}:any)=>{
                             <Button  isIconOnly  className="bg-[#0CDD4E] text-[#F8F8F8] shadow-2xl" type="submit">
                             <ImCheckmark size='1.5em' />
                             </Button>
-                            <Button  isIconOnly  className=" text-[#F8F8F8] shadow-2xl"color="danger"  onClick={()=>{setEdit(false); setNewImage(image)}}>
+                            <Button  isIconOnly  className=" text-[#F8F8F8] shadow-2xl"color="danger"  onClick={()=>{alert('question','Your changes will discard','',()=>{setEdit(false); setNewImage(image)})}}>
                             <ImCross size='1.5em' />
                             </Button>
                         </div>
@@ -161,21 +186,19 @@ const ProfileInfo=({edit,setEdit}:any)=>{
                 <div className="flex flex-wrap sm:flex-row h-full w-full sm:w-[70%] gap-10 items-center justify-center">
                     <div className="w-full sm:w-[30%] h-full">
                         <Avatar fallback src={image} className="w-full h-full text-large" isBordered />
-                        <div className="flex flex-column gap-4 items-center justify-center py-4">
-                            {profileInfo.rol==0?
+                        <div className="flex flex-col gap-2 items-center justify-center py-4">
+                            {
+                            profileInfo.rol==0?
                             <Button>
-                            <AiFillEye size='1.5em' /> 
-                                Lector
+                            <GiBookCover size='1.5em' /> 
+                                Reader
                             </Button>
                             :
                             <Button>
-                            <AiFillEye size='1.5em' /> 
-                                Escritor
+                            <FaPenNib size='1.5em' /> 
+                                Writer
                             </Button>
                             }
-                            <Button  isIconOnly  className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true)}}>
-                            <FiEdit size='1.5em' />
-                            </Button>
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center w-full sm:w-[60%] h-full">
@@ -189,13 +212,35 @@ const ProfileInfo=({edit,setEdit}:any)=>{
                     </div>
                 </div>
                     <div className=" flex flex-col items-center justify-center gap-4 w-full sm:w-[25%]">
-                        <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4">
-                            <p className='text-lg'>100 Seguidos</p>
-                            <p className='text-lg'>6 Seguidores</p>
+                        <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4 h-[20%]">
+                            <p className='text-lg'>{profileInfo.followersCount}   Following</p>
+                            <p className='text-lg'>{profileInfo.followingsCount}   Followers</p>
                         </div>
-                        <Button color="primary">
-                            Seguir
+                        {profileInfo.id_user==userInfo.userId?
+                        <>
+                        <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true)}}>
+                            Edit <FiEdit size='1.5em' />
                         </Button>
+                        
+                            {profileInfo.id_user==userInfo.userId?
+                            <ModalCard user={profileInfo}></ModalCard>
+                            :
+                            <></>
+                            }
+                        </>
+                        :
+                        <>
+                        {profileInfo.isFollowing?
+                            <Button color="primary" onClick={async()=>{const res = await unfollow(profileInfo,userInfo.userId); if(!res.error)setProfileInfo({...profileInfo,'isFollowing':false})}}>
+                                Unfollow
+                            </Button>
+                        :
+                            <Button color="primary" onClick={async()=>{const res = await follow(profileInfo, userInfo.userId); if(!res.error)setProfileInfo({...profileInfo,'isFollowing':true})}}>
+                                Follow
+                            </Button>
+                        }
+                        </>
+                        }
                     </div>
             </div>
         

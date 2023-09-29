@@ -17,8 +17,11 @@ export const getUserSchema = z.object({
     lastname: z.string({ required_error: "Debe haber lastname"}),
     rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
     profession: z.string().optional(),
-    description: z.string().optional()
-
+    description: z.string().optional(),
+    image_url: z.string().optional(),
+    followersCount: z.number(),
+    followingsCount: z.number(),
+    isFollowing: z.boolean()
 }).strict();
 
 export const updateUserSchema = z.object({
@@ -31,6 +34,12 @@ export const updateUserSchema = z.object({
     image_url: z.string().optional(),
     password: z.string().optional()
 }).strict();
+
+export const updatePasswordSchema = z.object({
+    username: z.string({required_error:"debe haber username"}),
+    currentPassword: z.string({required_error:"debe haber contraseña"}),
+    newPassword: z.string({required_error:"debe haber nueva contraseña"})
+}).strict()
 
 export const checkPasswordSchema = z.object({
     username: z.string({required_error:"debe haber username"}),
