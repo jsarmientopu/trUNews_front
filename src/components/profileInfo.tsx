@@ -6,7 +6,8 @@ import {Avatar, Button, Input, Textarea} from "@nextui-org/react";
 import { getUserType, imageType } from "@/dto/users";
 import { getProfile, updateProfile, squareImage} from "@/utils/fetchs";
 
-const ProfileInfo=({edit,setEdit}:any)=>{
+
+const ProfileInfo=({edit,setEdit,follow,setFollow}:any)=>{
 
     const [image,setImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
     const [newImage, setNewImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
@@ -190,7 +191,7 @@ const ProfileInfo=({edit,setEdit}:any)=>{
                 </div>
                     <div className=" flex flex-col items-center justify-center gap-4 w-full sm:w-[25%]">
                         <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4">
-                            <p className='text-lg'>100 Seguidos</p>
+                            <p className='text-lg'>100 <a onClick={() => {follow ? setFollow(false) : setFollow(true)}}>Seguidos</a></p>
                             <p className='text-lg'>6 Seguidores</p>
                         </div>
                         <Button color="primary">
