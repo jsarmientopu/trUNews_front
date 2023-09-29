@@ -1,4 +1,5 @@
 'use client'
+import { Roboto } from 'next/font/google'
 
 import './globals.css'
 import type { Metadata } from 'next'
@@ -6,6 +7,12 @@ import { Inter } from 'next/font/google'
 import { Providers } from './providers'
 import Navbar from '@/components/Navbar'
 import { usePathname } from 'next/navigation';
+
+const roboto = Roboto({
+  weight:["300","400","500","700"],
+  style:["normal","italic"],
+  subsets: ['latin'],
+})
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,7 +32,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <Providers>
           <>
           {!isLoginPage &&(<Navbar /> )}

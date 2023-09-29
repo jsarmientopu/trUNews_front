@@ -12,7 +12,7 @@ export default function TrendingCarousel() {
     return (
 
         <div>
-            <div className="mb-10 overflow-hidden">
+            <div className="mb-1 overflow-hidden">
                 <CarouselEmbla loop>
                     {carrouselData.map((slide, index) => {
                         return (
