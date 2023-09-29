@@ -32,7 +32,7 @@ export default function App() {
     if(userInfo.userId==-1) redirect('/');
 
   return (<>
-    <div className="grid grid-rows-1 grid-cols-1 place-items-center  min-w-full min-h-full bg-[#0079DC] gap-10 py-10">
+    <div className="grid grid-rows-1 grid-cols-1 place-items-center  min-w-full min-h-full bg-[#0089DC] gap-10 py-10">
 
         <ProfileInfo
             edit={edit}

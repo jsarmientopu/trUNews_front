@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import verifyToken from "@/utils/utils";
 import { decryptedJWT } from "@/dto/users";
-import getFromLocalStorage from "@/utils/localStorage";
+import {getFromLocalStorage} from "@/utils/localStorage";
 
 const Login=()=> {
 
