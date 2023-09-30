@@ -1,7 +1,7 @@
 'use client'
 
-import SignUpCard from "@/components/SignUpCard";
-import HomeBubble from "@/components/homeBubble";
+import SignUpCard from "@/components/register/SignUpCard";
+import HomeBubble from "@/components/HomeBubble";
 import { redirect } from "next/navigation";
 import { useState, useEffect} from "react";
 import { decryptedJWT } from "@/dto/users";

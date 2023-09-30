@@ -1,7 +1,7 @@
 'use client'
 
-import LoginCard from "@/components/LoginCard";
-import HomeBubble from "@/components/homeBubble";
+import LoginCard from "@/components/login/LoginCard";
+import HomeBubble from "@/components/HomeBubble";
 import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 import verifyToken from "@/utils/utils";

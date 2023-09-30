@@ -1,4 +1,4 @@
-import RegisterInputs from "./resgisterInputs";
+import RegisterInputs from "./ResgisterInputs";
 
 const SignUpCard=()=>{
 

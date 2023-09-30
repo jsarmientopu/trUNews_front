@@ -4,7 +4,7 @@ import {
 } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import {useState} from 'react';
-import { checkPasswordType } from "../dto/users";
+import { checkPasswordType } from "../../dto/users";
 import Swal from "sweetalert2";
 
 export default function LoginInputs() {
