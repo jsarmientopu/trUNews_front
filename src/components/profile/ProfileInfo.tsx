@@ -8,8 +8,19 @@ import { decryptedJWT, getUserType, imageType } from "@/dto/users";
 import { getProfile, updateProfile, squareImage, follow, unfollow} from "@/utils/fetchs";
 import { alert } from "@/utils/alertHandeler";
 import ModalCard from "./ModalCard";
+import { animated, useSpring} from "react-spring";
+
 
 const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows, setArticleWriter, articlesPage, setArticlesPage}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any, 'setArticleWriter':any, 'articlesPage':any, 'setArticlesPage':any})=>{
+    
+    const ani = useSpring({
+        from: { width: '40%', opacity: 0 },
+        to: { width: '80%', opacity: 1 },
+        config: { duration: 500 },
+        reset: true,
+    })
+
+
 
     const [image,setImage] = useState<string>("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg");
     const [newImage, setNewImage] = useState<string>("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg");
@@ -132,9 +143,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
     if(edit){
 
-        return <>
-
-            <div className="bg-white w-[80%] rounded-[17px] shadow-xl">
+        return <animated.div className="bg-white w-[40%] rounded-[17px] shadow-xl opacity-0" style={ani}>
 
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 px-5 sm:px-16 sm:py-10 gap-4">
                 <form className="flex flex-wrap sm:flex-row h-full w-full gap-10 items-center justify-center" onSubmit={submitForm}>
@@ -177,9 +186,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             </div>
         
 
-        </div>
-
-        </>
+        </animated.div>
 
     }
 
@@ -229,12 +236,12 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
                         <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-6 h-[20%]">
                             {profileInfo.rol==1?
-                                <p className='text-lg font-sans flex flex-col text-center' onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
+                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
                             :
-                                <p className='text-lg font-sans flex flex-col text-center' onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
+                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
                             }
-                            <p className='text-lg font-sans flex flex-col text-center' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
-                            <p className='text-lg font-sans flex flex-col text-center' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
+                            <p id = "0" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
+                            <p id = "1" title="View users user follows" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
                         </div>
                         {profileInfo.id_user==userInfo.userId?
                         <>
