@@ -70,3 +70,17 @@ export const createArticleSchema = z.object({
     // z.number({ required_error: "Debe haber ua imagen" }),
 }).strict();
 
+export const getArticleSchema = z.object({
+    id_article: z.number({required_error: 'Debe haber un id del articulo'}),
+    title: z.string({ required_error: "Debe haber un título" }),
+    date: z.string({required_error: "Debe haber una fecha"}),
+    views: z.number().optional(),
+    text: z.string({ required_error: "Debe haber un texto" }),
+    image_url: z.any({}).refine((val: any) => val !== undefined),
+    writer: z.object({
+        id_user:z.number(),
+        username: z.string(),
+    }).strict()
+    // z.number({ required_error: "Debe haber ua imagen" }),
+}).strict();
+

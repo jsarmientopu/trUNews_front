@@ -17,6 +17,19 @@ export const getProfile=async(userView:number)=>{
     }
 }
 
+export const getSaved=async(userView:number)=>{
+    const token = getFromLocalStorage('token')
+    if(token){
+        let datos;
+        const res = await fetch('http://localhost:3005/articles/savedArticles/'+userView,{
+            method: 'GET',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
 export const updateProfile=async(datos:getUserType, image:string|null)=>{
     console.log(datos)
     const updateData ={
