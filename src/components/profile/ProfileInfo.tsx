@@ -29,6 +29,8 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit
         'isFollowing':false
     });
     const imageInputRef = useRef<HTMLInputElement>(null);
+    const [height, setHeight] = useState<number>(0);
+    const divRef = useRef<any>(null);
     
 
     const getImageMeta = async (
@@ -180,10 +182,14 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit
     }
 
     return <>
+
+    <div className="w-[80%]">
+
+    <div className="grid grid-rows-1 grid-cols-3 place-items-center  w-full min-h-full bg-[#C1D6E8] gap-4">
     
-        <div className="bg-[#F0F2F4] w-[80%] rounded-[17px]">+
-            <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 px-5 sm:px-28 sm:py-10 gap-4">
-                <div className="flex flex-wrap sm:flex-row h-full w-full sm:w-[70%] gap-10 items-center justify-center">
+        <div className="bg-[#F0F2F4] w-full rounded-[17px] col-span-2 shadow-lg" ref={divRef} >
+            <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 pl-5 sm:pl-28 sm:py-10 gap-4">
+                <div className="flex flex-wrap sm:flex-row h-full w-full gap-10 items-center justify-center">
                     <div className="w-full sm:w-[30%] h-full">
                         <Avatar fallback src={image} className="w-full h-full text-large" isBordered />
                         <div className="flex flex-col gap-2 items-center justify-center py-4">
@@ -205,17 +211,23 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit
                         <div className="flex flex-col item-center w-full items-center sm:items-start">
                             <p className='font-bold text-4xl font-sans'>{profileInfo.name} {profileInfo.lastname}</p>
                             <p className='text-sm mb-4 font-sans'>{profileInfo.username}</p>
-                            {profileInfo.profession?<p className='text-lg'>Profesión: <p className='text-base'>{profileInfo.profession}</p></p>:<></>}
-                            {profileInfo.description?<p className='text-lg'>Description: <p className='text-base'>{profileInfo.description}</p></p>:<></>}
+                            {profileInfo.profession?<p className='text-lg'><b className="text-[#37393B]">Profesión:</b> {profileInfo.profession}</p>:<></>}
+                            {profileInfo.description?<p className='text-lg'><b className="text-[#37393B]">Description:</b> {profileInfo.description}</p>:<></>}
                         </div>
                         
                     </div>
                 </div>
-                    <div className=" flex flex-col items-center justify-center gap-4 w-full sm:w-[25%]">
+                    
+            </div>
+        
+
+        </div>
+        <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-[17px] justify-center h-full shadow-lg`} >
+            <div className=" flex flex-col items-center justify-center gap-10 w-full sm:w-[90%]">
 
                         <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4 h-[20%]">
-                            <p className='text-lg font-sans'>{profileInfo.followersCount}<a onClick={() => {followp ? setFollow(false) : setFollow(true)}}> Following</a></p>
-                            <p className='text-lg font-sans'>{profileInfo.followingsCount}   Followers</p>
+                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followersCount}<a onClick={() => {followp ? setFollow(false) : setFollow(true)}}> Following</a></p>
+                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followingsCount}  <a>Followers</a></p>
                         </div>
                         {profileInfo.id_user==userInfo.userId?
                         <>
@@ -243,11 +255,11 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit
                         </>
                         }
                     </div>
-            </div>
-        
-
         </div>
 
+    </div>
+
+    </div>
     </>
 }
 
