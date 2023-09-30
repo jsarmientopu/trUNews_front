@@ -10,7 +10,7 @@ import { alert } from "@/utils/alertHandeler";
 import ModalCard from "./ModalCard";
 import { profile } from "console";
 
-const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number})=>{
+const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any})=>{
 
     const [image,setImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
     const [newImage, setNewImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
@@ -226,8 +226,8 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit
             <div className=" flex flex-col items-center justify-center gap-10 w-full sm:w-[90%]">
 
                         <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4 h-[20%]">
-                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followersCount}<a onClick={() => {followp ? setFollow(false) : setFollow(true)}}> Following</a></p>
-                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followingsCount}  <a>Followers</a></p>
+                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followingsCount}  <a id = "0" onClick={fixFollows}>Followers</a></p>
+                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followersCount}<a id = "1" onClick={fixFollows}> Following</a></p>
                         </div>
                         {profileInfo.id_user==userInfo.userId?
                         <>

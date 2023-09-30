@@ -13,7 +13,7 @@ export default function App({searchParams}:any) {
 
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [edit, setEdit] = useState<boolean>(false);
-    const [followp, setFollow] = useState<boolean>(false);
+    const [followp, setFollow] = useState<[boolean,boolean]>([false,false]);
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -23,6 +23,19 @@ export default function App({searchParams}:any) {
         }else{
             setUserInfo({userId:-1,rol:-1});
         }
+    }
+
+    function fixFollows(event:any){
+        const index = parseInt(event.target.id);
+        const newFollows = [...followp];
+        if(followp[(index + 1) % 2]){
+            newFollows[(index + 1) % 2] = false;
+        }
+        newFollows[index] = true;
+        setFollow(newFollows as [boolean,boolean]);
+
+        //Can you help me fix the above function? I'm trying to make it so that when you click on the other button, the other one is unselected.
+
     }
 
     useEffect(()=>{
@@ -42,9 +55,10 @@ export default function App({searchParams}:any) {
             setFollow={setFollow}
             userInfo = {userInfo}
             userView = {searchParams.search}
+            fixFollows = {fixFollows}
         />
 
-        {edit? <></>:followp? <FollowersPage/>:<SavedArticles userInfo = {userInfo} userView = {searchParams.search}/>
+        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows}/>:<SavedArticles userInfo = {userInfo} userView = {searchParams.search}/>
         }
 
     </div>
