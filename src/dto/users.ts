@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { checkPasswordSchema, createUserSchema, decryptJWTSchema, decryptedJWTSchema, getUserSchema, updateUserSchema, updatePasswordSchema} from '../schemas/schemas'
+import { checkPasswordSchema, createUserSchema, decryptJWTSchema, decryptedJWTSchema, getUserSchema, updateUserSchema, updatePasswordSchema, getFollowerSchema} from '../schemas/schemas'
 
 export type createUserType = z.infer<typeof createUserSchema>
 export type getUserType = z.infer<typeof getUserSchema>
@@ -18,6 +18,8 @@ export type decryptedJWT = z.infer<typeof decryptedJWTSchema>
 export type updateUserType = z.infer<typeof updateUserSchema>
 
 export type updatePasswordType= z.infer<typeof updatePasswordSchema>
+
+export type getFollowerType = z.infer<typeof getFollowerSchema>
 
 export interface imageType{
     contenido:string,

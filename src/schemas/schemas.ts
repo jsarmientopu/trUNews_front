@@ -21,7 +21,12 @@ export const getUserSchema = z.object({
     image_url: z.string().optional(),
     followersCount: z.number(),
     followingsCount: z.number(),    
-    isFollowing: z.boolean()
+    isFollowing: z.boolean(),
+    articlesByUser: z.array(z.object({
+        image_url: z.string({ required_error:'Debe haner imagen'}),
+        title: z.string({ required_error:'Debe haner imagen'}),
+        id_article: z.number({ required_error:'Debe haber numero'}),
+    })).optional()
 }).strict();
 
 export const updateUserSchema = z.object({
@@ -44,6 +49,15 @@ export const updatePasswordSchema = z.object({
 export const checkPasswordSchema = z.object({
     username: z.string({required_error:"debe haber username"}),
     password: z.string({required_error:"debe haber username"})
+}).strict()
+
+export const getFollowerSchema = z.object({
+    id_user: z.number({required_error:"debe haber user_id"}),
+    name: z.string({required_error:"debe haber nombre"}),
+    lastname: z.string({required_error:"debe haber lastname"}),
+    username: z.string({required_error:"debe haber username"}),
+    rol: z.number({required_error:"debe haber rol"}),
+    image_url: z.string({required_error:"debe haber imagen"})
 }).strict()
 
 export const decryptJWTSchema = z.object({

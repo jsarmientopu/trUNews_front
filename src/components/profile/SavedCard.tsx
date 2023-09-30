@@ -1,6 +1,6 @@
 import React from "react";
 import { FaEye } from "react-icons/fa";
-import {Image, Button} from "@nextui-org/react";
+import {Image, Button } from "@nextui-org/react";
 import { getArticleType } from "@/dto/article";
 
 const SavedCard = ({data}:{data:getArticleType})=>{

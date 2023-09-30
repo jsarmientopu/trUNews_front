@@ -68,6 +68,27 @@ export const updatePassword=async(data:updatePasswordType, id:number)=>{
     }
 }
 
+export const getFollower=async(userView:number, type:[boolean,boolean])=>{
+    const token = getFromLocalStorage('token')
+    if(token){
+        let datos;
+        let res;
+        if(type[1]){
+            res = await fetch('http://localhost:3005/users/followers/'+userView,{
+                method: 'GET',
+                headers:{'Content-Type':'application/json', 'authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        }else{
+            res = await fetch('http://localhost:3005/users/following/'+userView,{
+                method: 'GET',
+                headers:{'Content-Type':'application/json', 'authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        }   
+        console.log(res);
+        return res;
+    }
+}
+
 export const follow=async(data:getUserType, userView:number)=>{
     const token = getFromLocalStorage('token')
     console.log(data, userView)

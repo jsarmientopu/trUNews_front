@@ -8,12 +8,11 @@ import { decryptedJWT, getUserType, imageType } from "@/dto/users";
 import { getProfile, updateProfile, squareImage, follow, unfollow} from "@/utils/fetchs";
 import { alert } from "@/utils/alertHandeler";
 import ModalCard from "./ModalCard";
-import { profile } from "console";
 
-const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any})=>{
+const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows, setArticleWriter, articlesPage, setArticlesPage}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any, 'setArticleWriter':any, 'articlesPage':any, 'setArticlesPage':any})=>{
 
-    const [image,setImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
-    const [newImage, setNewImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
+    const [image,setImage] = useState<string>('https://i.pravatar.cc/150?u=a04258114e29026302d');
+    const [newImage, setNewImage] = useState<string>('https://i.pravatar.cc/150?u=a04258114e29026302d');
     const [infoImage, setInfoImage]=useState<imageType>();
     const [profileInfo,setProfileInfo] = useState<getUserType>({
         'id_user':-1,
@@ -26,7 +25,8 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         'image_url':'',
         'followersCount':0,
         'followingsCount':0,
-        'isFollowing':false
+        'isFollowing':false,
+        'articlesByUser':[]
     });
     const imageInputRef = useRef<HTMLInputElement>(null);
     const [height, setHeight] = useState<number>(0);
@@ -120,8 +120,10 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         (async () => {
             console.log(userView)
             const users = await getProfile(userView);
+            console.log(users)
             setProfileInfo(users);
             if(users.image_url)setImage(users.image_url);setNewImage(users.image_url);
+            if(users.articlesByUser)setArticleWriter(users.articlesByUser);
             // if(profileInfo.id_user!==userInfo.userId){
             //     setFollow(getFollowing(userView))
             // }
@@ -160,7 +162,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         
                     </div>
                     <div className="w-full sm:w-[30%] h-full">  
-                        <Avatar src={newImage}  className="w-full h-full text-large object-cover" onClick={()=>{imageInputRef.current?.click()}} isBordered/>
+                        <Avatar showFallback src={newImage}  className="w-full h-full text-large object-cover" onClick={()=>{imageInputRef.current?.click()}} isBordered/>
                         <input key='1' type='file' className='hidden' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
                         <div className="flex flex-column gap-4 items-center justify-center py-4">
                             <Button  isIconOnly  className="bg-[#0CDD4E] text-[#F8F8F8] shadow-2xl" type="submit">
@@ -191,7 +193,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 pl-5 sm:pl-28 sm:py-10 gap-4">
                 <div className="flex flex-wrap sm:flex-row h-full w-full gap-10 items-center justify-center">
                     <div className="w-full sm:w-[30%] h-full">
-                        <Avatar fallback src={image} className="w-full h-full text-large" isBordered />
+                        <Avatar showFallback src={image} className="w-full h-full text-large" isBordered />
                         <div className="flex flex-col gap-2 items-center justify-center py-4">
                             {
                             profileInfo.rol==0?
@@ -226,8 +228,13 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             <div className=" flex flex-col items-center justify-center gap-10 w-full sm:w-[90%]">
 
                         <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4 h-[20%]">
-                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followingsCount}  <a id = "0" onClick={fixFollows}>Followers</a></p>
-                            <p className='text-lg font-sans flex flex-col text-center'>{profileInfo.followersCount}<a id = "1" onClick={fixFollows}> Following</a></p>
+                            {profileInfo.rol==1?
+                                <p className='text-lg font-sans flex flex-col text-center' onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
+                            :
+                                <p className='text-lg font-sans flex flex-col text-center' onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
+                            }
+                            <p className='text-lg font-sans flex flex-col text-center' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
+                            <p className='text-lg font-sans flex flex-col text-center' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
                         </div>
                         {profileInfo.id_user==userInfo.userId?
                         <>

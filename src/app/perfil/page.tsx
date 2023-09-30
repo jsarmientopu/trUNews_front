@@ -14,6 +14,8 @@ export default function App({searchParams}:any) {
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [edit, setEdit] = useState<boolean>(false);
     const [followp, setFollow] = useState<[boolean,boolean]>([false,false]);
+    const [articleWriter, setArticleWriter]= useState();
+    const [articlesPage, setArticlesPage]=useState<boolean>(false);
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -56,9 +58,12 @@ export default function App({searchParams}:any) {
             userInfo = {userInfo}
             userView = {searchParams.search}
             fixFollows = {fixFollows}
+            setArticleWriter= {setArticleWriter}
+            articlesPage={articlesPage}
+            setArticlesPage={setArticlesPage}
         />
 
-        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows}/>:<SavedArticles userInfo = {userInfo} userView = {searchParams.search}/>
+        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {searchParams.search}/>:<SavedArticles userInfo = {userInfo} userView = {searchParams.search} articleWriter={articleWriter} articlesPage={articlesPage}/>
         }
 
     </div>
