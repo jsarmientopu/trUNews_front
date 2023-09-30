@@ -11,8 +11,8 @@ import ModalCard from "./ModalCard";
 
 const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows, setArticleWriter, articlesPage, setArticlesPage}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any, 'setArticleWriter':any, 'articlesPage':any, 'setArticlesPage':any})=>{
 
-    const [image,setImage] = useState<string>('https://i.pravatar.cc/150?u=a04258114e29026302d');
-    const [newImage, setNewImage] = useState<string>('https://i.pravatar.cc/150?u=a04258114e29026302d');
+    const [image,setImage] = useState<string>("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg");
+    const [newImage, setNewImage] = useState<string>("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg");
     const [infoImage, setInfoImage]=useState<imageType>();
     const [profileInfo,setProfileInfo] = useState<getUserType>({
         'id_user':-1,
@@ -213,7 +213,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         <div className="flex flex-col item-center w-full items-center sm:items-start">
                             <p className='font-bold text-4xl font-sans'>{profileInfo.name} {profileInfo.lastname}</p>
                             <p className='text-sm mb-4 font-sans'>{profileInfo.username}</p>
-                            {profileInfo.profession?<p className='text-lg'><b className="text-[#37393B]">Profesión:</b> {profileInfo.profession}</p>:<></>}
+                            {profileInfo.profession?<p className='text-lg'><b className="text-[#37393B]">Profession:</b> {profileInfo.profession}</p>:<></>}
                             {profileInfo.description?<p className='text-lg'><b className="text-[#37393B]">Description:</b> {profileInfo.description}</p>:<></>}
                         </div>
                         
@@ -227,7 +227,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-[17px] justify-center h-full shadow-lg`} >
             <div className=" flex flex-col items-center justify-center gap-10 w-full sm:w-[90%]">
 
-                        <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4 h-[20%]">
+                        <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-6 h-[20%]">
                             {profileInfo.rol==1?
                                 <p className='text-lg font-sans flex flex-col text-center' onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
                             :
