@@ -20,7 +20,7 @@ export const getUserSchema = z.object({
     description: z.string().optional(),
     image_url: z.string().optional(),
     followersCount: z.number(),
-    followingsCount: z.number(),
+    followingsCount: z.number(),    
     isFollowing: z.boolean()
 }).strict();
 

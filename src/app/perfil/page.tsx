@@ -5,9 +5,9 @@ import { redirect } from "next/navigation";
 import { decryptedJWT } from "@/dto/users";
 import {getFromLocalStorage} from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
-import ProfileInfo from "@/components/profileInfo";
-import SavedArticles from "@/components/savedArticlesProfile";
-import FollowersPage from "@/components/FollowersProfile";
+import ProfileInfo from "@/components/profile/ProfileInfo";
+import SavedArticles from "@/components/profile/SavedArticlesProfile";
+import FollowersPage from "@/components/profile/FollowersProfile";
 
 export default function App({searchParams}:any) {
 
@@ -31,9 +31,9 @@ export default function App({searchParams}:any) {
 
     if(userInfo.userId==-2) return
     if(userInfo.userId==-1) redirect('/');
-
+//#D8DCFF- 
   return (<>
-    <div className="grid grid-rows-1 grid-cols-1 place-items-center  min-w-full min-h-full bg-[#0089DC] gap-4 py-10">
+    <div className="grid grid-rows-1 grid-cols-1 place-items-center  min-w-full min-h-full bg-[#C1D6E8] gap-4 py-10">
 
         <ProfileInfo
             edit={edit}

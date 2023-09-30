@@ -10,7 +10,7 @@ import { alert } from "@/utils/alertHandeler";
 import ModalCard from "./ModalCard";
 import { profile } from "console";
 
-const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number})=>{
+const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number})=>{
 
     const [image,setImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
     const [newImage, setNewImage] = useState<string>("https://i.pravatar.cc/150?u=a04258114e29026708c");
@@ -98,7 +98,7 @@ const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':
                     console.log(res.image_url)
                     setImage(res.image_url); setNewImage(res.image_url);
                 }
-                setTimeout(()=>{},2000)
+                setTimeout(()=>{},2800)
                 setEdit(false)
             }
         })
@@ -130,7 +130,7 @@ const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':
 
         return <>
 
-            <div className="bg-white w-[80%] rounded-[17px]">
+            <div className="bg-white w-[80%] rounded-[17px] shadow-xl">
 
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 px-5 sm:px-16 sm:py-10 gap-4">
                 <form className="flex flex-wrap sm:flex-row h-full w-full gap-10 items-center justify-center" onSubmit={submitForm}>
@@ -181,7 +181,7 @@ const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':
 
     return <>
     
-        <div className="bg-[#F0F2F4] w-[80%] rounded-[17px]">
+        <div className="bg-[#F0F2F4] w-[80%] rounded-[17px]">+
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 px-5 sm:px-28 sm:py-10 gap-4">
                 <div className="flex flex-wrap sm:flex-row h-full w-full sm:w-[70%] gap-10 items-center justify-center">
                     <div className="w-full sm:w-[30%] h-full">
@@ -190,7 +190,7 @@ const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':
                             {
                             profileInfo.rol==0?
                             <Button>
-                            <GiBookCover size='1.5em' /> 
+                            <GiBookCover size='1.5em'  /> 
                                 Reader
                             </Button>
                             :
@@ -203,8 +203,8 @@ const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':
                     </div>
                     <div className="flex flex-col items-center justify-center w-full sm:w-[60%] h-full">
                         <div className="flex flex-col item-center w-full items-center sm:items-start">
-                            <p className='font-bold text-4xl'>{profileInfo.name} {profileInfo.lastname}</p>
-                            <p className='text-sm mb-4'>{profileInfo.username}</p>
+                            <p className='font-bold text-4xl font-sans'>{profileInfo.name} {profileInfo.lastname}</p>
+                            <p className='text-sm mb-4 font-sans'>{profileInfo.username}</p>
                             {profileInfo.profession?<p className='text-lg'>Profesión: <p className='text-base'>{profileInfo.profession}</p></p>:<></>}
                             {profileInfo.description?<p className='text-lg'>Description: <p className='text-base'>{profileInfo.description}</p></p>:<></>}
                         </div>
@@ -214,8 +214,8 @@ const ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView}:{'edit':
                     <div className=" flex flex-col items-center justify-center gap-4 w-full sm:w-[25%]">
 
                         <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-4 h-[20%]">
-                            <p className='text-lg'>{profileInfo.followersCount}<a onClick={() => {followp ? setFollow(false) : setFollow(true)}}> Following</a></p>
-                            <p className='text-lg'>{profileInfo.followingsCount}   Followers</p>
+                            <p className='text-lg font-sans'>{profileInfo.followersCount}<a onClick={() => {followp ? setFollow(false) : setFollow(true)}}> Following</a></p>
+                            <p className='text-lg font-sans'>{profileInfo.followingsCount}   Followers</p>
                         </div>
                         {profileInfo.id_user==userInfo.userId?
                         <>
