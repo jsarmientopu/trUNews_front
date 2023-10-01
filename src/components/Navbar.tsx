@@ -11,6 +11,7 @@ import {
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
+    user,
 } from "@nextui-org/react";
 import {getFromLocalStorage, removeFromLocalStorage} from '@/utils/localStorage';
 import { Dropdown,DropdownItem, DropdownTrigger, DropdownMenu } from '@nextui-org/react';
@@ -48,10 +49,10 @@ export default function App() {
     // token(); 
 
     const menuButtons = [
-        {"rol":[-1],"label":"Registrarse","ref":"/register",'query':''},
-        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login",'query':''},
+        {"rol":[-1],"label":"Registrarse","ref":"/register"},
+        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
         {"rol":[0,1],"label":"Perfil","ref":"/perfil",'query':userInfo.userId},
-        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut,'query':''}      
+        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut}      
     ]
 
     const menuItems = [
@@ -65,13 +66,15 @@ export default function App() {
             
             <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>
+                    <Link className='flex flex-row ' href={'/'}>
                     <Image
                         src="/images/logo.png"
                         alt="App Logo"
                         width={35}
                         height={35}
                     />
-                    <p className="font-bold text-2xl">TrUNews</p>
+                    <p className="flex flex-col justify-center font-bold text-2xl">TrUNews</p>
+                    </Link>
                 </NavbarBrand>
 
                 {/* <NavbarItem mr-8>
@@ -256,8 +259,15 @@ export default function App() {
                                 <Button className='bg-white grow' variant="flat" onClick={item.ev}>
                                     {item.label}
                                 </Button>
-                            :
-                                <Link className='text-black' href={{pathname:item.ref, query:{search:item.query}}}>
+                            :   
+                                item.query?
+                                <Link className='text-black' href={{pathname:item.ref, query:{search:userInfo.userId}}}>
+                                    <Button className='bg-white grow' variant="flat" >
+                                        {item.label}
+                                    </Button>
+                                </Link>
+                                :
+                                <Link className='text-black' href={{pathname:item.ref}}>
                                     <Button className='bg-white grow' variant="flat" >
                                         {item.label}
                                     </Button>

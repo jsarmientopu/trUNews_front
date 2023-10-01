@@ -23,7 +23,7 @@ export default function Layout({
     const router = useRouter();
 
     async function token(){
-        const rol =await verifyToken({token:localStorage.token});
+        const rol =await verifyToken();
         if(rol.rol!=1){
             router.push("/");
         }

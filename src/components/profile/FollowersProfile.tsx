@@ -61,7 +61,7 @@ const FollowersPage=({follows,fixFollows, userView} : any)=>{
             <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 sm:px-16 sm:pb-10 pt-0 gap-6 bg-[#F0F2F4]">
                 {followers.length!==0?
                     followers.map((item:getFollowerType, index) => (
-                        <FollowersCard data={item} />
+                        <FollowersCard key={index} data={item} />
                     ))
                 :
                     follows[0]?

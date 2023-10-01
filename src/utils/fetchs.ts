@@ -2,13 +2,14 @@ import verifyToken from "./utils";
 import { getFromLocalStorage } from "./localStorage";
 import { getUserType, imageType, updateUserType, updatePasswordType} from "@/dto/users";
 import { user } from "@nextui-org/react";
+import { parseArgs } from "util";
 
 export const getProfile=async(userView:number)=>{
     const token = getFromLocalStorage('token')
     if(token){
         const info=await verifyToken();
         let datos;
-        const res = await fetch('http://localhost:3005/users/'+userView +'/profile',{
+        const res = await fetch('http://localhost:3005/users/'+userView+'/profile',{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
