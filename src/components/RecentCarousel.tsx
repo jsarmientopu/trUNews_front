@@ -1,4 +1,4 @@
-'use client'
+
 /* import {recentCarouselData} from './recentCarouselData' */
 import RecentArticle from "./RecentArticle";
 import RecentCarouselEmbla from "./RecentCarouselEmbla";

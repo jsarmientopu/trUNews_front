@@ -1,3 +1,4 @@
+'use client'
 export default function RecentArticle({ image, title, timeSincePosted }: any) {
     return (
         <div id="container-recent-article" className="flex justify-start">
