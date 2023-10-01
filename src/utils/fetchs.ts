@@ -128,3 +128,23 @@ export const squareImage=async(datos:imageType)=>{
     console.log(res);
     return res;
 }
+
+export async function deletePost(id:number){
+    const token = getFromLocalStorage('token')
+    if(token){
+        const info=await verifyToken();
+        let datos;
+        const res = await fetch(`http://localhost:3005/articles/${id}`,{
+            method: 'DELETE',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export async function getPost(id: number) {
+    const res = await fetch(`http://localhost:3005/articles/${id}`)
+    const post = res.json()
+    return post
+}

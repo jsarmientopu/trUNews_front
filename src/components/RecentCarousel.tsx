@@ -19,7 +19,7 @@ export default async function RecentCarousel() {
                     {recentCarouselData.map((slide:any, index:any) => {
                         return (
                             <div key={index} className='flex-[0_0_25%] flex justify-center'>
-                                <RecentArticle image={slide.image_url} title={slide.title} timeSincePosted={slide.date} />
+                                <RecentArticle id = {slide.articles_id_article} image={slide.image_url} title={slide.title} timeSincePosted={slide.date} />
                             </div>
                             
                         )

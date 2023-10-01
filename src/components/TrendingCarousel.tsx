@@ -20,7 +20,7 @@ export default async function TrendingCarousel() {
                     {trendingCarouselData.map((slide:any, index:any) => {
                         return (
                             <div key={index} className='flex-[0_0_100%]'>
-                                <TrendingArticle image={slide.image_url} title={slide.title} description={slide.text} />
+                                <TrendingArticle id={slide.articles_id_article} image={slide.image_url} title={slide.title} description={slide.text} />
                             </div>
                             
                         )
