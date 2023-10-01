@@ -1,5 +1,5 @@
 'use client'
-import { Roboto } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 
 import './globals.css'
 import type { Metadata } from 'next'
@@ -8,7 +8,7 @@ import { Providers } from './providers'
 import Navbar from '@/components/Navbar'
 import { usePathname } from 'next/navigation';
 
-const roboto = Roboto({
+const montserrat = Montserrat({
   weight:["300","400","500","700"],
   style:["normal","italic"],
   subsets: ['latin'],
@@ -32,7 +32,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className={roboto.className}>
+      <body className={montserrat.className}>
         <Providers>
           <>
           {!isLoginPage &&(<Navbar /> )}

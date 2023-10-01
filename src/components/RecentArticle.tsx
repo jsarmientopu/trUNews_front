@@ -8,11 +8,11 @@ export default function RecentArticle({ image, title, timeSincePosted }: any) {
                     <img src={image} className="w-full h-full object-cover rounded-lg" />
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center text-center w-60">
                     <p className="font-bold text-lg">{title}</p>
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center w-60">
                     <p className="text-gray-600">{timeSincePosted}</p>
                 </div>
 

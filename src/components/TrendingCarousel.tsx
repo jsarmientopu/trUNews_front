@@ -6,18 +6,25 @@ import { MdArrowBackIosNew } from 'react-icons/md'
 import { MdArrowForwardIos } from 'react-icons/md'
 import CarouselEmbla from './CarouselEmbla';
 
-export default function TrendingCarousel() {
+async function loadTrendingPosts(){
+    const res = await fetch("http://localhost:3005/articles/trending/5")
+    const trendingCarouselData = res.json()
+    return trendingCarouselData
+}
 
+export default async function TrendingCarousel() {
+
+    const trendingCarouselData = await loadTrendingPosts();
 
     return (
 
         <div>
             <div className="mb-1 overflow-hidden">
                 <CarouselEmbla loop>
-                    {carrouselData.map((slide, index) => {
+                    {trendingCarouselData.map((slide:any, index:any) => {
                         return (
                             <div key={index} className='flex-[0_0_100%]'>
-                                <TrendingArticle image={slide.image} title={slide.title} description={slide.description} />
+                                <TrendingArticle image={slide.image_url} title={slide.title} description={slide.text} />
                             </div>
                             
                         )
