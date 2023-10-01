@@ -1,5 +1,5 @@
 'use client';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useCallback, useRef} from 'react';
 import '../app/globals.css'
 import {
     Navbar,
@@ -21,12 +21,15 @@ import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
 import { SearchIcon } from './navbar/SearchIcon';
+import { useSearchParams } from 'next/navigation'
 
 export default function App() {
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-1,rol:-1})
     const router = useRouter()
+    const [serach, setSearch]=useState<string>('')
+    const ref= useRef<any>()
     
     async function token(){
         const rol =await verifyToken();
@@ -85,19 +88,24 @@ export default function App() {
                 </NavbarItem> */}
             </NavbarContent>
 
-            <NavbarContent className="hidden md:flex  gap-4" justify="center">
+            <NavbarContent className="flex gap-4 w-[50%] sm:w-[35%] " justify="center">
             <Input
-          classNames={{
-            base: "max-w-full sm:w-[30rem] h-10 mr-4",
-            mainWrapper: "h-full",
-            input: "text-small",
-            inputWrapper: "h-full font-normal text-default-500 bg-white ",
-          }}
-          placeholder="Type to search"
-          size="sm"
-          startContent={<SearchIcon size={18} />}
-          type="search"
-        />
+                classNames={{
+                    base: "max-w-full h-10 mr-4",
+                    mainWrapper: "h-full",
+                    input: "text-small",
+                    inputWrapper: "h-full font-normal text-default-500 bg-white ",
+                }}
+                placeholder="Type to search"
+                size="sm"
+                startContent={<SearchIcon size={18} />}
+                type="search"
+                onChange={(event)=>{setSearch(event.target.value)}}
+                onKeyDown={(event)=>{if(event.key=='Enter'){ref.current.click()}}}
+            />
+            <Link target='_parent' href={{pathname:'/search', query:{search:serach}}} ref={ref}/>
+            </NavbarContent>
+            <NavbarContent className="hidden md:flex  gap-4 " justify="center">
                 <Dropdown>
                     <NavbarItem>
                         <DropdownTrigger>

@@ -10,7 +10,7 @@ const UserCard=({user}:{'user':getUserType})=>{
                     <Avatar
                         className="mr-0 w-full h-full"
                         alt="NextUI hero Image with delay"
-                        src={user.image_url}
+                        src={user.image_url?user.image_url:'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}
                         isBordered
                     />
                 </div>

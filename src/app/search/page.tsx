@@ -24,17 +24,27 @@ const App=()=>{
     }
     
     useEffect(()=>{
-        async()=>{
+        (async()=>{
             const res = await getSearch(search)
             if(res==undefined||(res[0].err&&res[1].err)){
                 setFilter([false,false,false])
                 console.log('mal')
+                setSearchedArticles([])
+                setSearchedUsers([])
             }else{
                 console.log(res)
-                setSearchedArticles(res[1])
-                setSearchedUsers(res[0])
+                if(res[0].err){
+                    setSearchedUsers([])
+                }else{
+                    setSearchedUsers(res[0])
+                }
+                if(res[1].err){
+                    setSearchedArticles([])
+                }else{
+                    setSearchedArticles(res[1])
+                }
             }
-        }
+        })()
     },[])
 
     return <div className="flex flex-row justify-center min-w-full min-h-full">
@@ -48,38 +58,41 @@ const App=()=>{
             <div className="w-full h-0.5 bg-gray-300 mb-6 rounded-full">
             </div>
             </div>
-            {filter[0]&&searchedUsers.length>0?
+            {filter[0]&&searchedArticles.length>0?
                 <div className="flex flex-row gap-8 justify-center w-full pb-20">
-                    <div className="flex flex-col gap-5 w-[28%] justify-center">
-                        <ArticleCard article={{'id_article':0,'title':'Hi','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
-                        <ArticleCard article={{'id_article':0,'title':'Hisadisnhcyuisojnuydchjioashnufiobyiohfdiobjdugycsioxbhuidaohufsjioabhnbu','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
-                        <ArticleCard article={{'id_article':0,'title':'Hi','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
+                    <div className="flex flex-col gap-5 w-[28%] justify-start">
+                        {searchedArticles.filter((item:getArticleType, index)=>index%3==0).map((item:getArticleType, index) => (
+                            <ArticleCard key={index} article={item}/>
+                        ))
+                        }
                     </div>
-                    <div className="flex flex-col gap-5 w-[28%] justify-center">
-                        <ArticleCard article={{'id_article':0,'title':'Hi','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
-                        <ArticleCard article={{'id_article':0,'title':'Hisadisnhcyuisojnuydchjioashnufiobyiohfdiobjdugycsioxbhuidaohufsjioabhnbu','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
-                        <ArticleCard article={{'id_article':0,'title':'Hi','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
+                    <div className="flex flex-col gap-5 w-[28%] justify-start">
+                        {searchedArticles.filter((item:getArticleType, index)=>index%3==1).map((item:getArticleType, index) => (
+                            <ArticleCard key={index} article={item}/>
+                        ))
+                        }
                     </div>
-                    <div className="flex flex-col gap-5 w-[28%] justify-center">
-                        <ArticleCard article={{'id_article':0,'title':'Hi','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
-                        <ArticleCard article={{'id_article':0,'title':'Hisadisnhcyuisojnuydchjioashnufiobyiohfdiobjdugycsioxbhuidaohufsjioabhnbu','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
-                        <ArticleCard article={{'id_article':0,'title':'Hi','date':"09/15/2023",'text':'asdsad','writer':{'id_user':0,'username':'el_seba'},'views':10,'image_url':'https://www.eleconomista.com.mx/__export/1676509440126/sites/eleconomista/img/2023/02/13/terremoto_turquia.jpg_554688468.jpg'}}/>
+                    <div className="flex flex-col gap-5 w-[28%] justify-start">
+                        {searchedArticles.filter((item:getArticleType, index)=>index%3==2).map((item:getArticleType, index) => (
+                            <ArticleCard key={index} article={item}/>
+                        ))
+                        }
                     </div>
                 </div>
             :
-                filter[1]&&searchedArticles.length>0?
+                filter[1]&&searchedUsers.length>0?
                     <div className="flex flex-row gap-16 justify-center w-full pb-20">
                         <div className="flex flex-col gap-5 w-[35%] justify-center">
-                            <UserCard user={{'id_user':0,'username':'benito','name':'Juan','lastname':'ron', 'rol':0, 'followersCount':100,'followingsCount':10231,'isFollowing':false, 'description':'dasdasdsasda','image_url':'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}}/>
-                            <UserCard user={{'id_user':0,'username':'benito','name':'Juan','lastname':'ron', 'rol':0, 'followersCount':100,'followingsCount':10231,'isFollowing':false, 'description':'dasdasdsasda','image_url':'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}}/>
-                            <UserCard user={{'id_user':0,'username':'benito','name':'Juan','lastname':'ron', 'rol':0, 'followersCount':100,'followingsCount':10231,'isFollowing':false, 'description':'dasdasdsasda','image_url':'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}}/>
-
+                            {searchedUsers.filter((item:getUserType, index)=>index%2==0).map((item:getUserType, index) => (
+                            <UserCard key={index} user={item}/>
+                            ))
+                            }
                         </div>
-                        <div className="flex flex-col gap-5 w-[35%] justify-center">
-                            <UserCard user={{'id_user':0,'username':'benito','name':'Juan','lastname':'ron', 'rol':0, 'followersCount':100,'followingsCount':10231,'isFollowing':false, 'description':'dasdasdsasda','image_url':'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}}/>
-                            <UserCard user={{'id_user':0,'username':'benito','name':'Juan','lastname':'ron', 'rol':0, 'followersCount':100,'followingsCount':10231,'isFollowing':false, 'description':'dasdasdsasda','image_url':'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}}/>
-                            <UserCard user={{'id_user':0,'username':'benito','name':'Juan','lastname':'ron', 'rol':0, 'followersCount':100,'followingsCount':10231,'isFollowing':false, 'description':'dasdasdsasda','image_url':'https://www.sopitas.com/wp-content/uploads/2023/06/historia-detras-meme-hormiga-triste-origen-4.jpg?resize=1024,1019'}}/>
-                            
+                        <div className="flex flex-col gap-5 w-[35%] justify-start">
+                            {searchedUsers.filter((item:getUserType, index)=>index%2==1).map((item:getUserType, index) => (
+                            <UserCard key={index} user={item}/>
+                            ))
+                            }
                         </div>
                     </div>
                 :
