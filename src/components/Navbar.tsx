@@ -20,6 +20,7 @@ import verifyToken from '@/utils/utils'
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
+import { SearchIcon } from './navbar/SearchIcon';
 
 export default function App() {
     
@@ -85,6 +86,18 @@ export default function App() {
             </NavbarContent>
 
             <NavbarContent className="hidden md:flex  gap-4" justify="center">
+            <Input
+          classNames={{
+            base: "max-w-full sm:w-[30rem] h-10 mr-4",
+            mainWrapper: "h-full",
+            input: "text-small",
+            inputWrapper: "h-full font-normal text-default-500 bg-white ",
+          }}
+          placeholder="Type to search"
+          size="sm"
+          startContent={<SearchIcon size={18} />}
+          type="search"
+        />
                 <Dropdown>
                     <NavbarItem>
                         <DropdownTrigger>
