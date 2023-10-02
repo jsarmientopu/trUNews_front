@@ -2,24 +2,33 @@
 /* import {recentCarouselData} from './recentCarouselData' */
 import RecentArticle from "./RecentArticle";
 import RecentCarouselEmbla from "./RecentCarouselEmbla";
+import { getLatestPosts } from "@/utils/fetchs";
+import {useEffect} from 'react'
+import {useState} from 'react'
 
-async function loadLastestPosts(){
-    const res = await fetch("http://localhost:3005/articles/latest/5")
-    const recentCarouselData = res.json()
-    return recentCarouselData
-}
+export default function RecentCarousel() {
+    
+    const[recentCarouselData,setRecentCarouselData] = useState()
 
-export default async function RecentCarousel() {
-    const recentCarouselData = await loadLastestPosts();
+    useEffect(()=>{
+        const fetchData = async () =>{
+            const posts = await getLatestPosts()
+            /* const res = await posts.json() */
+            setRecentCarouselData(posts)
+        };
+        fetchData(); 
+    },[recentCarouselData])
+
+
     return (
 
         <div>
             <div className="mb-1 overflow-hidden">
                 <RecentCarouselEmbla loop align="start">
-                    {recentCarouselData.map((slide:any, index:any) => {
+                    {recentCarouselData?.map((slide:any, index:any) => {
                         return (
                             <div key={index} className='flex-[0_0_25%] flex justify-center'>
-                                <RecentArticle id = {slide.articles_id_article} image={slide.image_url} title={slide.title} timeSincePosted={slide.date} />
+                                <RecentArticle id = {slide.article_id} image={slide.image_url} title={slide.title} timeSincePosted={slide.date} />
                             </div>
                             
                         )

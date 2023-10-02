@@ -27,11 +27,11 @@ export default function TrendingArticle({ id,image, title, description }: any) {
                         <p className="line-clamp-[9]">{description}</p>
                     </div>
                     <div className="flex justify-center items-center">
-                        <Button className="bg-[#963ED9] text-white">
+                        <button className="bg-[#963ED9] text-white py-2 px-3 rounded-xl" onClick={() => console.log(id)}>
                             <Link href={`articulo/${id}`}>
                                 Leer artículo
                             </Link>
-                        </Button>  
+                        </button>  
                     </div>
                     
                 </div>

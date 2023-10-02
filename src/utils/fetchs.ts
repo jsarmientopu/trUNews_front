@@ -148,3 +148,16 @@ export async function getPost(id: number) {
     const post = res.json()
     return post
 }
+
+export async function getTrendingPosts(){
+    const res = await fetch("http://localhost:3005/articles/trending/5")
+    const trendingCarouselData = res.json()
+    return trendingCarouselData
+}
+
+export async function getLatestPosts(){
+    const res = await fetch("http://localhost:3005/articles/latest/5")
+    const recentCarouselData = res.json()
+    return recentCarouselData
+}
+

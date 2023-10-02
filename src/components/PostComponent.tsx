@@ -3,7 +3,8 @@ import { ScrollShadow } from "@nextui-org/react"
 import { Button } from "@nextui-org/react";
 import { deletePost } from "@/utils/fetchs";
 
-export default function PostComponent({ id, image_url, title, text }: any) {
+export default function PostComponent({ id, image_url, title, text, date, author }: any) {
+
 
     return (
         <ScrollShadow size={50} className="h-[87vh] p-8">
@@ -17,8 +18,8 @@ export default function PostComponent({ id, image_url, title, text }: any) {
 
 
                 <p className="font-bold text-3xl">{title}</p>
-                <p className="font-semibold text-2xl text-zinc-700">Escrito por: pendiente</p>
-                <p className="font-medium text-lg text-zinc-700">XX-XX-2023</p>
+                <p className="font-semibold text-xl text-zinc-700">Por {author}</p>
+                <p className="font-medium text-lg text-zinc-700">{date}</p>
 
             </div>
 
