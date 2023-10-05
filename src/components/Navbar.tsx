@@ -51,13 +51,17 @@ export default function App() {
         {"rol":[-1],"label":"Registrarse","ref":"/register",'query':''},
         {"rol":[-1],"label":"Iniciar Sesión","ref":"/login",'query':''},
         {"rol":[0,1],"label":"Perfil","ref":"/perfil",'query':userInfo.userId},
-        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut,'query':''}      
+        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut,'query':''}   
     ]
 
     const menuItems = [
         "Categorías",
         "Cerrar sesión"
     ];
+
+    const menuSections = [
+        {"rol":[0,1],"label":"Feed","ref":"/feed",'query':userInfo.userId},
+    ]
 
     
     return (
@@ -175,6 +179,13 @@ export default function App() {
                     Categories
                 </Link>
                 </NavbarItem> */}
+                {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
+                    <NavbarItem key={`${item.label}-${index}`} isActive>
+                            <Link className='text-white' color="foreground" href={{pathname:item.ref, query:{search:item.query}}}>
+                                {item.label}
+                            </Link>
+                    </NavbarItem>
+                ))}
                 <NavbarItem>
                 <Link className='text-white' color="foreground" href="#">
                     Communities
