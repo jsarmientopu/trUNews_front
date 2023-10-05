@@ -1,23 +1,21 @@
 'use client'
-import { carrouselData } from "./carrouselData";
 import TrendingArticle from './TrendingArticle';
-import { BsFire } from 'react-icons/bs'
-import { MdArrowBackIosNew } from 'react-icons/md'
-import { MdArrowForwardIos } from 'react-icons/md'
 import CarouselEmbla from './CarouselEmbla';
 
-export default function TrendingCarousel() {
 
+export default function TrendingCarousel({trendingCarouselData}:any) {
+
+    
 
     return (
 
         <div>
             <div className="mb-1 overflow-hidden">
                 <CarouselEmbla loop>
-                    {carrouselData.map((slide, index) => {
+                    {trendingCarouselData.map((slide:any, index:any) => {
                         return (
                             <div key={index} className='flex-[0_0_100%]'>
-                                <TrendingArticle image={slide.image} title={slide.title} description={slide.description} />
+                                <TrendingArticle id={slide.articles_id_article} image={slide.image_url} title={slide.title} description={slide.text} />
                             </div>
                             
                         )

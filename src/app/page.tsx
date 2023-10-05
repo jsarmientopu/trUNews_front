@@ -1,22 +1,27 @@
-'use client'
+
 
 import TrendingCarousel from "@/components/TrendingCarousel"
 import RecentCarousel from "@/components/RecentCarousel"
-import { Divider } from "@nextui-org/react"
+import { getLatestPosts } from "@/utils/fetchs";
+import { getTrendingPosts } from "@/utils/fetchs";
+
+export default async function Home() {
+
+    const recentCarouselData = await getLatestPosts()
+    const trendingCarouselData = await getTrendingPosts()
 
 
-export default function Home() {
     return (
         <div className="p-8">
 
-            <TrendingCarousel />
-            {/* <Divider className="mb-7"></Divider> */}
+            <TrendingCarousel trendingCarouselData = {trendingCarouselData}/>
+
             <div id="divider" className="flex justify-center">
                 <div className="w-[70%] h-0.5 bg-gray-200 mb-6 rounded-full">
                 </div>
             </div>
 
-            <RecentCarousel />
+            <RecentCarousel recentCarouselData = {recentCarouselData} />
 
         </div>
     )
