@@ -190,9 +190,9 @@ export default function CrearArticulo() {
 
           <div>
             <Button className='bg-blue-400 h-9 w-[6.5rem] mr-4' onClick={()=>{imageInputRef.current?.click()}}>
-              <input className='hidden' id='input_image' name='input_Image' key='1' type='file' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
               Subir imagen
             </Button>
+              <input className='hidd' id='input_image' name='input_Image' key='1' type='file' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
           </div>
 
           <div id="divider" className='w-0.5 h-8 bg-zinc-950 mr-3'>
@@ -219,9 +219,9 @@ export default function CrearArticulo() {
         </p>
         <div className='mb-2' >
           <Button className='bg-gray-300' onClick={()=>{fileInputRef.current?.click()}}>
-            <input className='hidden' id='input_File' name='input_File' key='2' type='file' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
             <FaFileUpload  /> {file}
           </Button>
+            <input className='hid' id='input_File' name='input_File' key='2' type='file' ref={fileInputRef} onChange={handleFileChange} accept='.doc,.docx,.txt,.md'/>
         </div>
       </div>
 
