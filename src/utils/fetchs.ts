@@ -161,3 +161,17 @@ export async function getLatestPosts(){
     return recentCarouselData
 }
 
+// feed de cada usuario
+export async function getFeed(){
+    const token = getFromLocalStorage('token')
+    let datos;
+
+    if(token){
+        const res = await fetch("http://localhost:3005/articles/feed",{
+                method: 'GET',
+                headers:{'Content-Type':'application/json','authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
