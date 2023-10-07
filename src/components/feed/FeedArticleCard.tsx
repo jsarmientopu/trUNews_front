@@ -9,6 +9,7 @@ interface FeedArticleCardProps {
   title: string;
   summary: string;
   id: number;
+  idWriter: number;
 }
 
 const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
@@ -18,23 +19,27 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   username,
   title,
   summary,
-  id
+  id,
+  idWriter
 }) => {
   return (
-    <Card className = "w-[75%] p-unit-lg shadow-lg">
+    <Card className = "w-[80%] p-unit-lg shadow-lg">
       <div className='flex items-center'>
         <div className='sm-w-none' style={{ flex: 1 }}>
           <div className='flex justify-center'>
             <Image src={imageArticle} alt="Card Image" width={280} />
           </div> 
           <div className='flex items-center justify-center py-4'>
-            <User   
-              name={autor}
-              description={username}
-              avatarProps={{
-                src: profileImage
-              }}
-            />
+            <a className="tap-highlight-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 hover:opacity-80 active:opacity-disabled transition-opacity" 
+              href={`perfil/?search=${idWriter}`}>
+              <User   
+                name={autor}
+                description={username}
+                avatarProps={{
+                  src: profileImage
+                }}
+              />
+            </a>
           </div>
         </div>
         <div className='px-4' style={{ flex: 2 }}>
