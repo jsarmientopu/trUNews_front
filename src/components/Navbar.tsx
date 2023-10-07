@@ -1,5 +1,5 @@
 'use client';
-import { useState,useEffect } from 'react';
+import { useState,useEffect, useCallback, useRef} from 'react';
 import '../app/globals.css'
 import {
     Navbar,
@@ -11,6 +11,7 @@ import {
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
+    user,
 } from "@nextui-org/react";
 import {getFromLocalStorage, removeFromLocalStorage} from '@/utils/localStorage';
 import { Dropdown,DropdownItem, DropdownTrigger, DropdownMenu } from '@nextui-org/react';
@@ -19,12 +20,16 @@ import verifyToken from '@/utils/utils'
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
+import { SearchIcon } from './navbar/SearchIcon';
+import { useSearchParams } from 'next/navigation'
 
 export default function App() {
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-1,rol:-1})
     const router = useRouter()
+    const [serach, setSearch]=useState<string>('')
+    const ref= useRef<any>()
     
     async function token(){
         const rol =await verifyToken();
@@ -48,10 +53,10 @@ export default function App() {
     // token(); 
 
     const menuButtons = [
-        {"rol":[-1],"label":"Registrarse","ref":"/register",'query':''},
-        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login",'query':''},
+        {"rol":[-1],"label":"Registrarse","ref":"/register"},
+        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
         {"rol":[0,1],"label":"Perfil","ref":"/perfil",'query':userInfo.userId},
-        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut,'query':''}   
+        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut}      
     ]
 
     const menuItems = [
@@ -60,7 +65,7 @@ export default function App() {
     ];
 
     const menuSections = [
-        {"rol":[0,1],"label":"Feed","ref":"/feed",'query':userInfo.userId},
+        {"rol":[0,1],"label":"Feed","ref":"/feed"},
     ]
 
     
@@ -69,13 +74,15 @@ export default function App() {
             
             <NavbarContent id='logo' justify='start'>
                 <NavbarBrand className='mr-8'>
+                    <Link className='flex flex-row ' href={'/'}>
                     <Image
                         src="/images/logo.png"
                         alt="App Logo"
                         width={35}
                         height={35}
                     />
-                    <p className="font-bold text-2xl">TrUNews</p>
+                    <p className="flex flex-col justify-center font-bold text-2xl">TrUNews</p>
+                    </Link>
                 </NavbarBrand>
 
                 {/* <NavbarItem mr-8>
@@ -85,7 +92,24 @@ export default function App() {
                 </NavbarItem> */}
             </NavbarContent>
 
-            <NavbarContent className="hidden md:flex  gap-4" justify="center">
+            <NavbarContent className="flex gap-4 w-[50%] sm:w-[35%] " justify="center">
+            <Input
+                classNames={{
+                    base: "max-w-full h-10 mr-4",
+                    mainWrapper: "h-full",
+                    input: "text-small",
+                    inputWrapper: "h-full font-normal text-default-500 bg-white ",
+                }}
+                placeholder="Type to search"
+                size="sm"
+                startContent={<SearchIcon size={18} />}
+                type="search"
+                onChange={(event)=>{setSearch(event.target.value)}}
+                onKeyDown={(event)=>{if(event.key=='Enter'){ref.current.click()}}}
+            />
+            <Link target='_parent' href={{pathname:'/search', query:{search:serach}}} ref={ref}/>
+            </NavbarContent>
+            <NavbarContent className="hidden md:flex  gap-4 " justify="center">
                 <Dropdown>
                     <NavbarItem>
                         <DropdownTrigger>
@@ -181,7 +205,7 @@ export default function App() {
                 </NavbarItem> */}
                 {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                     <NavbarItem key={`${item.label}-${index}`} isActive>
-                            <Link className='text-white' color="foreground" href={{pathname:item.ref, query:{search:item.query}}}>
+                            <Link className='text-white' color="foreground" href={{pathname:item.ref}}>
                                 {item.label}
                             </Link>
                     </NavbarItem>
@@ -267,8 +291,15 @@ export default function App() {
                                 <Button className='bg-white grow' variant="flat" onClick={item.ev}>
                                     {item.label}
                                 </Button>
-                            :
-                                <Link className='text-black' href={{pathname:item.ref, query:{search:item.query}}}>
+                            :   
+                                item.query?
+                                <Link className='text-black' href={{pathname:item.ref, query:{search:userInfo.userId}}}>
+                                    <Button className='bg-white grow' variant="flat" >
+                                        {item.label}
+                                    </Button>
+                                </Link>
+                                :
+                                <Link className='text-black' href={{pathname:item.ref}}>
                                     <Button className='bg-white grow' variant="flat" >
                                         {item.label}
                                     </Button>

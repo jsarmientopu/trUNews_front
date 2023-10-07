@@ -11,7 +11,7 @@ const MainCard=()=>{
       <CardHeader className="justify-between">
         
       </CardHeader>
-      <CardBody className="flex flex-row flex-wrap md:flex-nowrap px-3 py-0 text-small text-default-400 h-full px-4 gap-5 align-middle">
+      <CardBody className="flex flex-row flex-wrap md:flex-nowrap py-0 text-small text-default-400 h-full px-4 gap-5 align-middle">
         <div className="w-full md:w-[65%]">
           <Image
               width={'100%'}

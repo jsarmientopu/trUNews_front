@@ -2,13 +2,14 @@ import verifyToken from "./utils";
 import { getFromLocalStorage } from "./localStorage";
 import { getUserType, imageType, updateUserType, updatePasswordType} from "@/dto/users";
 import { user } from "@nextui-org/react";
+import { parseArgs } from "util";
 
 export const getProfile=async(userView:number)=>{
     const token = getFromLocalStorage('token')
     if(token){
         const info=await verifyToken();
         let datos;
-        const res = await fetch('http://localhost:3005/users/'+userView +'/profile',{
+        const res = await fetch('http://localhost:3005/users/'+userView+'/profile',{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -134,7 +135,7 @@ export async function deletePost(id:number){
     if(token){
         const info=await verifyToken();
         let datos;
-        const res = await fetch(`http://35.175.244.104:3005/articles/${id}`,{
+        const res = await fetch(`http://localhost:3005/articles/${id}`,{
             method: 'DELETE',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -144,21 +145,47 @@ export async function deletePost(id:number){
 }
 
 export async function getPost(id: number) {
-    const res = await fetch(`http://35.175.244.104:3005/articles/${id}`)
-    const post = res.json()
-    return post
+    let datos;
+    const res = await fetch(`http://localhost:3005/articles/${id}`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+
+}
+
+export async function getRelatedPost(id: number) {
+    let datos;
+    const res = await fetch(`http://localhost:3005/articles/related/${id}`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+
 }
 
 export async function getTrendingPosts(){
-    const res = await fetch("http://35.175.244.104:3005/articles/trending/5")
-    const trendingCarouselData = res.json()
-    return trendingCarouselData
+    let datos;
+    const res = await fetch(`http://localhost:3005/articles/trending/5`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+
 }
 
 export async function getLatestPosts(){
-    const res = await fetch("http://35.175.244.104:3005/articles/latest/5")
-    const recentCarouselData = res.json()
-    return recentCarouselData
+    let datos;
+    const res = await fetch(`http://localhost:3005/articles/latest/5`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+
 }
 
 // feed de cada usuario

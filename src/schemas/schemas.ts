@@ -97,4 +97,3 @@ export const getArticleSchema = z.object({
     }).strict()
     // z.number({ required_error: "Debe haber ua imagen" }),
 }).strict();
-
