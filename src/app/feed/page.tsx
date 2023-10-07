@@ -63,6 +63,7 @@ export default function FeedPage() {
                             username = {item.username}
                             title = {item.title}
                             summary = {item.sanitizedText}
+                            id = {item.id_article}
                         />
                     </div>
                 ))

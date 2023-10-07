@@ -8,6 +8,7 @@ interface FeedArticleCardProps {
   username: string;
   title: string;
   summary: string;
+  id: number;
 }
 
 const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
@@ -16,7 +17,8 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   autor,
   username,
   title,
-  summary
+  summary,
+  id
 }) => {
   return (
     <Card className = "w-[75%] p-unit-lg shadow-lg">
@@ -43,7 +45,9 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
             <p className='line-clamp-[4]'>{summary}</p>
           </div>
           <div className='flex justify-end'>
-            <Button className='bg-[#963ED9] text-white py-2 px-3 rounded-xl'>Leer Artículo</Button>
+            <Button className='bg-[#963ED9] text-white py-2 px-3 rounded-xl'>
+              <a href={`articulo/${id}`}>Leer Artículo</a>
+            </Button>
           </div>
         </div>
       </div>
