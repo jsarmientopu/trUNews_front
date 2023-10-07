@@ -155,6 +155,17 @@ export async function getPost(id: number) {
 
 }
 
+export async function getRelatedPost(id: number) {
+    let datos;
+    const res = await fetch(`http://localhost:3005/articles/related/${id}`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+
+}
+
 export async function getTrendingPosts(){
     let datos;
     const res = await fetch(`http://localhost:3005/articles/trending/5`,{
