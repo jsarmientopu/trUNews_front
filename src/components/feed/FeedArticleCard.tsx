@@ -10,6 +10,8 @@ interface FeedArticleCardProps {
   summary: string;
   id: number;
   idWriter: number;
+  views: number;
+  date: string;
 }
 
 const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
@@ -20,17 +22,21 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   title,
   summary,
   id,
-  idWriter
+  idWriter, 
+  views,
+  date
 }) => {
   return (
-    <Card className = "w-[80%] p-unit-lg shadow-lg">
-      <div className='flex items-center'>
-        <div className='sm-w-none' style={{ flex: 1 }}>
+    <Card className = "w-[80%] p-unit-lg shadow-lg bg-[#F0F2F4]">
+      <div className='sm:block md:flex items-center'>
+        <div className='flex-1'>
           <div className='flex justify-center'>
-            <Image src={imageArticle} alt="Card Image" width={280} />
+            <a href={`articulo/${id}`}>
+              <Image src={imageArticle} alt="Card Image" width={280} isZoomed style={{height: 180}}/>
+            </a>
           </div> 
           <div className='flex items-center justify-center py-4'>
-            <a className="tap-highlight-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 hover:opacity-80 active:opacity-disabled transition-opacity" 
+            <a className="pe-6 tap-highlight-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 hover:opacity-80 active:opacity-disabled transition-opacity" 
               href={`perfil/?search=${idWriter}`}>
               <User   
                 name={autor}
@@ -40,6 +46,7 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
                 }}
               />
             </a>
+            <p className='ps-3 text-sm'>{views} Views</p>
           </div>
         </div>
         <div className='px-4' style={{ flex: 2 }}>
@@ -51,8 +58,11 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
           </div>
           <div className='flex justify-end'>
             <Button className='bg-[#963ED9] text-white py-2 px-3 rounded-xl'>
-              <a href={`articulo/${id}`}>Leer Artículo</a>
+              <a href={`articulo/${id}`}>Read Article</a>
             </Button>
+          </div>
+          <div className='pt-4 flex justify-end text-sm'>
+            Published: {date}
           </div>
         </div>
       </div>
