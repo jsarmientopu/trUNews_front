@@ -3,7 +3,8 @@ import TrendingWriter from "./TrendingWriter";
 import React from 'react'
 import { useCollapse } from 'react-collapsed'
 import { Button } from "@nextui-org/react";
-import {BsChevronDown} from 'react-icons/bs'
+import { BsChevronDown } from 'react-icons/bs'
+import { BsChevronUp } from 'react-icons/bs'
 
 export default function TrendingWriterPanel({ trendingWritersData }: any) {
     const profile_image = 'https://trunews.s3.us-east-2.amazonaws.com/profile/defaultProfile.jpg';
@@ -20,10 +21,18 @@ export default function TrendingWriterPanel({ trendingWritersData }: any) {
         <div>
             <div className="flex justify-center">
                 <Button className="w-full h-12 rounded-tl-lg rounded-tr-lg rounded-bl-none rounded-br-none bg-white" {...getToggleProps()}>
-                    <p className="text-xl font-bold mr-1">
-                        Escritores más leídos
-                    </p>
-                    <BsChevronDown size="1.5em" />
+
+                    {isExpanded ?
+                        <>
+                            <p className="text-xl font-bold mr-1">
+                                Escritores más leídos
+                            </p>
+                            <BsChevronDown size="1.5em" />
+                        </>
+                        : <BsChevronUp className="animate-bounce" size="1.5em" />
+                    }
+
+
                 </Button>
             </div>
 
