@@ -16,7 +16,7 @@ export default function RecommendedArticle({ id, image, writer, title, timeSince
                 <div className="flex flex-col self-start gap-3">
                     <p className="font-bold text-lg">{title}</p>
                     <p className="font-medium text-md">Author: {writer}</p>
-                    <p className="text-sm">Published: {timeSincePosted}</p>
+                    <p className="text-sm">Published {timeSincePosted}</p>
                 </div>
                 </CardHeader>
             </Card>

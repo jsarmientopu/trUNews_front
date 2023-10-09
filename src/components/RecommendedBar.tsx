@@ -4,6 +4,7 @@ import RecommendedArticle from "./RecommendedArticle";
 import { BsBook } from "react-icons/bs";
 import { getRelatedPost } from "@/utils/fetchs";
 import { returnArticles } from "@/dto/article";
+import { parseDate } from "@/utils/parseDate";
 
 const RecommendedBar = ({id}: any)=>{
     const [articles,setArticles] = useState<Array<returnArticles>>()
@@ -26,7 +27,7 @@ const RecommendedBar = ({id}: any)=>{
             <div className="flex flex-col justify-center m-9 gap-8">
             {articles?.length!==0?
                     articles?.map((item:returnArticles, index) => (
-                        <RecommendedArticle key={index} id={item?.id_article} image={item?.image_url} writer={item?.username} title={item?.title} timeSincePosted={item?.date.toString()}/>
+                        <RecommendedArticle key={index} id={item?.id_article} image={item?.image_url} writer={item?.username} title={item?.title} timeSincePosted={parseDate(new Date(item?.date))}/>
                     ))
                 :
                     <>No hay Articulos socio</>
