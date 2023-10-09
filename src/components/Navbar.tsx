@@ -64,6 +64,10 @@ export default function App() {
         "Cerrar sesión"
     ];
 
+    const menuSections = [
+        {"rol":[0,1],"label":"Feed","ref":"/feed"},
+    ]
+
     
     return (
         <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
@@ -199,6 +203,13 @@ export default function App() {
                     Categories
                 </Link>
                 </NavbarItem> */}
+                {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
+                    <NavbarItem key={`${item.label}-${index}`} isActive>
+                            <Link className='text-white' color="foreground" href={{pathname:item.ref}}>
+                                {item.label}
+                            </Link>
+                    </NavbarItem>
+                ))}
                 <NavbarItem>
                 <Link className='text-white' color="foreground" href="#">
                     Communities

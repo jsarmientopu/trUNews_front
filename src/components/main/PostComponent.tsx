@@ -2,7 +2,7 @@
 import { Button, Link } from "@nextui-org/react";
 import { deletePost, getPost } from "@/utils/fetchs";
 import { Image } from "@nextui-org/react";
-import RecommendedBar from "./RecommendedBar";
+import RecommendedBar from "@/components/RecommendedBar";
 import { useEffect, useState } from "react";
 import { article_has_categories, returnArticlesCategory } from "@/dto/article";
 import { decryptedJWT } from "@/dto/users";
