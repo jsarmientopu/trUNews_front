@@ -1,7 +1,7 @@
 
 
-import TrendingCarousel from "@/components/TrendingCarousel"
-import RecentCarousel from "@/components/RecentCarousel"
+import TrendingCarousel from "@/components/main/TrendingCarousel"
+import RecentCarousel from "@/components/main/RecentCarousel"
 import { getLatestPosts } from "@/utils/fetchs";
 import { getTrendingPosts } from "@/utils/fetchs";
 

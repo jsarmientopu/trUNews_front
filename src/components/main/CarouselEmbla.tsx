@@ -5,7 +5,7 @@ import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import { PropsWithChildren, useEffect, useState } from "react";
 import CarouselDots from "./CarouselDots";
 import React from 'react'
-import CarouselControls from "./CarouselControls";
+import CarouselControls from "@/components/main/CarouselControls";
 // Define the props
 type Props = PropsWithChildren & EmblaOptionsType;
 

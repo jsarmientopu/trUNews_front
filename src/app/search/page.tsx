@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from "react";
 import ArticleCard from "@/components/search/ArticleCard";
-import RecentCarousel from "@/components/RecentCarousel";
+import RecentCarousel from "@/components/main/RecentCarousel";
 import { Button } from "@nextui-org/react";
 import UserCard from "@/components/search/UserCard";
 import { getArticleType } from "@/dto/article";
