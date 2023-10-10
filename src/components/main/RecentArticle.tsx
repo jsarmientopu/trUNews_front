@@ -12,7 +12,7 @@ export default function RecentArticle({ id, image, title, timeSincePosted }: any
                     </div>
 
                     <div className="flex justify-center text-center w-60">
-                        <p className="font-bold text-lg">{title}</p>
+                        <p className="font-bold text-lg line-clamp-2">{title}</p>
                     </div>
 
                     <div className="flex justify-center w-60">

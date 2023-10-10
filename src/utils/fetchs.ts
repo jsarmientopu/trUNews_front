@@ -188,3 +188,14 @@ export async function getLatestPosts(){
 
 }
 
+export async function getTrendingWriters(){
+    let datos;
+    const res = await fetch(`http://localhost:3005/users/trending/5`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+
+}
+
