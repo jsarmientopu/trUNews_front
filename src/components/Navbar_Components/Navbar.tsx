@@ -1,6 +1,6 @@
 'use client';
 import { useState,useEffect, useCallback, useRef} from 'react';
-import '../app/globals.css'
+import '../../app/globals.css'
 import {
     Navbar,
     NavbarBrand,
@@ -20,13 +20,13 @@ import verifyToken from '@/utils/utils'
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
-import { SearchIcon } from './navbar/SearchIcon';
-import { useSearchParams } from 'next/navigation'
+import { SearchIcon } from '../navbar/SearchIcon';
+import LoadingButton from './LoadingButton';
 
 export default function App() {
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-1,rol:-1})
+    const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-2,rol:-2})
     const router = useRouter()
     const [serach, setSearch]=useState<string>('')
     const ref= useRef<any>()
@@ -53,8 +53,8 @@ export default function App() {
     // token(); 
 
     const menuButtons = [
-        {"rol":[-1],"label":"Registrarse","ref":"/register"},
-        {"rol":[-1],"label":"Iniciar Sesión","ref":"/login"},
+        {"rol":[-1,-2],"label":"Registrarse","ref":"/register"},
+        {"rol":[-1,-2],"label":"Iniciar Sesión","ref":"/login"},
         {"rol":[0,1],"label":"Perfil","ref":"/perfil",'query':userInfo.userId},
         {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut}      
     ]
@@ -63,7 +63,14 @@ export default function App() {
         "Categorías",
         "Cerrar sesión"
     ];
+<<<<<<< HEAD:src/components/Navbar_Components/Navbar.tsx
+=======
 
+    const menuSections = [
+        {"rol":[0,1],"label":"Feed","ref":"/feed"},
+    ]
+
+>>>>>>> 86e51d4d20f6a7630d3b45578af61e539fe44766:src/components/Navbar.tsx
     
     return (
         <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
@@ -107,10 +114,10 @@ export default function App() {
             </NavbarContent>
             <NavbarContent className="hidden md:flex  gap-4 " justify="center">
                 <Dropdown>
-                    <NavbarItem>
+                    <NavbarItem isActive={userInfo.rol==-1?false:true}>
                         <DropdownTrigger>
                             <Link
-                                className='text-white font-bold' href="#"                            >
+                                className='text-white font-bold' href="#"                          >
                                 Features
                             </Link>
                         </DropdownTrigger>
@@ -199,6 +206,13 @@ export default function App() {
                     Categories
                 </Link>
                 </NavbarItem> */}
+                {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
+                    <NavbarItem key={`${item.label}-${index}`} isActive>
+                            <Link className='text-white' color="foreground" href={{pathname:item.ref}}>
+                                {item.label}
+                            </Link>
+                    </NavbarItem>
+                ))}
                 <NavbarItem>
                 <Link className='text-white' color="foreground" href="#">
                     Communities
@@ -272,27 +286,29 @@ export default function App() {
                 </Dropdown>
 
             </NavbarContent> */}
-            
-            <NavbarContent className='hidden md:flex flex-row  ' justify='end'>
+            <NavbarContent className='hidden md:flex flex-row' justify='end'>
                 {menuButtons.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                         <NavbarItem key={`${item.label}-${index}`}>
-                            {item.ev?
-                                <Button className='bg-white grow' variant="flat" onClick={item.ev}>
-                                    {item.label}
-                                </Button>
-                            :   
-                                item.query?
-                                <Link className='text-black' href={{pathname:item.ref, query:{search:userInfo.userId}}}>
-                                    <Button className='bg-white grow' variant="flat" >
+                            {userInfo.rol==-2?
+                                <LoadingButton key={index} />
+                            :
+                                item.ev?
+                                    <Button className='bg-white grow' variant="flat" onClick={item.ev}>
                                         {item.label}
                                     </Button>
-                                </Link>
-                                :
-                                <Link className='text-black' href={{pathname:item.ref}}>
-                                    <Button className='bg-white grow' variant="flat" >
-                                        {item.label}
-                                    </Button>
-                                </Link>
+                                :   
+                                    item.query?
+                                    <Link className='text-black' href={{pathname:item.ref, query:{search:userInfo.userId}}}>
+                                        <Button className='bg-white grow' variant="flat" >
+                                            {item.label}
+                                        </Button>
+                                    </Link>
+                                    :
+                                    <Link className='text-black' href={{pathname:item.ref}}>
+                                        <Button className='bg-white grow' variant="flat" >
+                                            {item.label}
+                                        </Button>
+                                    </Link>
                             }
                         </NavbarItem>
                 ))}
