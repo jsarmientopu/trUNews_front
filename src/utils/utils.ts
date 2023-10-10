@@ -6,7 +6,7 @@ async function verifyToken(): Promise<decryptedJWT>{
     if(token){
         console.log(JSON.stringify(token))
         let datos;
-        const res = await fetch('http://localhost:3005/users/decryptJWT',{
+        const res = await fetch(`${process.env.BACK_URL}users/decryptJWT`,{
             method: 'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify({'token':token})

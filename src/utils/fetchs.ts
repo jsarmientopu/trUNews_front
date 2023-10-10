@@ -9,7 +9,7 @@ export const getProfile=async(userView:number)=>{
     if(token){
         const info=await verifyToken();
         let datos;
-        const res = await fetch('http://localhost:3005/users/'+userView+'/profile',{
+        const res = await fetch(`${process.env.BACK_URL}users/${userView}/profile`,{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -22,7 +22,7 @@ export const getSaved=async(userView:number)=>{
     const token = getFromLocalStorage('token')
     if(token){
         let datos;
-        const res = await fetch('http://localhost:3005/articles/savedArticles/'+userView,{
+        const res = await fetch(`${process.env.BACK_URL}articles/savedArticles/${userView}`,{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -45,7 +45,7 @@ export const updateProfile=async(datos:getUserType, image:string|null)=>{
     console.log(updateData)
     const token = getFromLocalStorage('token')
     if(token){
-        const res = await fetch('http://localhost:3005/users/'+datos.id_user+'/updateProfile',{
+        const res = await fetch(`${process.env.BACK_URL}users/${datos.id_user}/updateProfile`,{
             method: 'PUT',
             headers:{'Content-Type':'application/json', 'authorization':token},
             body: JSON.stringify(updateData)
@@ -59,7 +59,7 @@ export const updatePassword=async(data:updatePasswordType, id:number)=>{
     var datos;
     const token = getFromLocalStorage('token')
     if(token){
-        const res = await fetch('http://localhost:3005/users/'+id+'/updatePassword',{
+        const res = await fetch(`${process.env.BACK_URL}users/${id}/updatePassword`,{
             method: 'PUT',
             headers:{'Content-Type':'application/json', 'authorization':token},
             body: JSON.stringify(data)
@@ -75,12 +75,12 @@ export const getFollower=async(userView:number, type:[boolean,boolean])=>{
         let datos;
         let res;
         if(type[1]){
-            res = await fetch('http://localhost:3005/users/followers/'+userView,{
+            res = await fetch(`${process.env.BACK_URL}users/followers/${userView}`,{
                 method: 'GET',
                 headers:{'Content-Type':'application/json', 'authorization':token},
             }).then(response => response.json()).then(data => datos=data)
         }else{
-            res = await fetch('http://localhost:3005/users/following/'+userView,{
+            res = await fetch(`${process.env.BACK_URL}users/following/${userView}`,{
                 method: 'GET',
                 headers:{'Content-Type':'application/json', 'authorization':token},
             }).then(response => response.json()).then(data => datos=data)
@@ -96,7 +96,7 @@ export const follow=async(data:getUserType, userView:number)=>{
 
     if(token){
         let datos;
-        const res = await fetch('http://localhost:3005/users/'+userView+'/follow/'+data.id_user,{
+        const res = await fetch(`${process.env.BACK_URL}users/${userView}/follow/${data.id_user}`,{
             method: 'POST',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -110,7 +110,7 @@ export const unfollow=async(data:getUserType, userView:number)=>{
     console.log(data, userView)
     if(token){
         let datos;
-        const res = await fetch('http://localhost:3005/users/'+userView+'/unfollow/'+data.id_user,{
+        const res = await fetch(`${process.env.BACK_URL}users/${userView}/unfollow/${data.id_user}`,{
             method: 'POST',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -121,7 +121,7 @@ export const unfollow=async(data:getUserType, userView:number)=>{
 
 export const squareImage=async(datos:imageType)=>{
     // console.log(datos)
-    const res = await fetch('http://localhost:3005/users/tryImage',{
+    const res = await fetch(`${process.env.BACK_URL}users/tryImage`,{
         method: 'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(datos)
@@ -135,7 +135,7 @@ export async function deletePost(id:number){
     if(token){
         const info=await verifyToken();
         let datos;
-        const res = await fetch(`http://localhost:3005/articles/${id}`,{
+        const res = await fetch(`${process.env.BACK_URL}articles/${id}`,{
             method: 'DELETE',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
@@ -146,7 +146,7 @@ export async function deletePost(id:number){
 
 export async function getPost(id: number) {
     let datos;
-    const res = await fetch(`http://localhost:3005/articles/${id}`,{
+    const res = await fetch(`${process.env.BACK_URL}articles/${id}`,{
         method: 'GET',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(datos)
@@ -157,7 +157,7 @@ export async function getPost(id: number) {
 
 export async function getTrendingPosts(){
     let datos;
-    const res = await fetch(`http://localhost:3005/articles/trending/5`,{
+    const res = await fetch(`${process.env.BACK_URL}articles/trending/5`,{
         method: 'GET',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(datos)
@@ -168,7 +168,7 @@ export async function getTrendingPosts(){
 
 export async function getLatestPosts(){
     let datos;
-    const res = await fetch(`http://localhost:3005/articles/latest/5`,{
+    const res = await fetch(`${process.env.BACK_URL}articles/latest/5`,{
         method: 'GET',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(datos)
