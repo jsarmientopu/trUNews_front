@@ -56,11 +56,6 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
           <div className='py-unit-lg text-justify break-words'>
             <p className='line-clamp-[4]'>{summary}</p>
           </div>
-          <div className='flex justify-end'>
-            <Button className='bg-[#963ED9] text-white py-2 px-3 rounded-xl'>
-              <a href={`articulo/${id}`}>Read Article</a>
-            </Button>
-          </div>
           <div className='pt-4 flex justify-end text-sm'>
             Published: {date}
           </div>
