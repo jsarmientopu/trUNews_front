@@ -63,14 +63,11 @@ export default function App() {
         "Categorías",
         "Cerrar sesión"
     ];
-<<<<<<< HEAD:src/components/Navbar_Components/Navbar.tsx
-=======
 
     const menuSections = [
         {"rol":[0,1],"label":"Feed","ref":"/feed"},
     ]
 
->>>>>>> 86e51d4d20f6a7630d3b45578af61e539fe44766:src/components/Navbar.tsx
     
     return (
         <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
