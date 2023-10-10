@@ -42,8 +42,6 @@ export default function App() {
         newFollows[index] = true;
         setFollow(newFollows as [boolean,boolean]);
 
-        //Can you help me fix the above function? I'm trying to make it so that when you click on the other button, the other one is unselected.
-
     }
 
     useEffect(()=>{
