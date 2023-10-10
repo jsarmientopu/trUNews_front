@@ -2,6 +2,7 @@
 
 import { Button } from "@nextui-org/react"
 import { Image } from "@nextui-org/react"
+
 import Link from "next/link"
 
 export default function TrendingArticle({ id,image, title, description }: any) {
@@ -29,7 +30,7 @@ export default function TrendingArticle({ id,image, title, description }: any) {
                     <div className="flex justify-center items-center">
                         <button className="bg-[#963ED9] text-white py-2 px-3 rounded-xl" title="read-article">
                             <Link href={`articulo/${id}`}>
-                                Leer artículo
+                                Read article
                             </Link>
                         </button>  
                     </div>

@@ -27,7 +27,7 @@ export default function TrendingWriterPanel({ trendingWritersData }: any) {
                     {isExpanded ?
                         <>
                             <p className="text-xl font-bold mr-1">
-                                Escritores más leídos
+                                Trending writers
                             </p>
                             <BsChevronDown size="1.5em" />
                         </>

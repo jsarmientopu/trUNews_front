@@ -20,7 +20,7 @@ const RecentCarouselControls = (props: Props) => {
                         <ImClock size="1.3em" />
 
                     </div>
-                    <p className="font-bold text-2xl">Últimas noticias</p>
+                    <p className="font-bold text-2xl">Latest news</p>
 
                 </div>
 

@@ -16,7 +16,7 @@ const CarouselControls = (props: Props) => {
                     <BsFire size="2em" />
 
                 </div>
-                <p className="font-bold text-4xl">Noticias más vistas</p>
+                <p className="font-bold text-4xl">Trending news</p>
 
             </div>
 
