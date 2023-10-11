@@ -135,9 +135,6 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             setProfileInfo(users);
             if(users.image_url)setImage(users.image_url);setNewImage(users.image_url);
             if(users.articlesByUser)setArticleWriter(users.articlesByUser);
-            // if(profileInfo.id_user!==userInfo.userId){
-            //     setFollow(getFollowing(userView))
-            // }
         })();
     },[])
 
@@ -194,13 +191,13 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
     <div className="w-[80%]">
 
-    <div className="grid grid-rows-1 grid-cols-3 place-items-center  w-full min-h-full bg-[#C1D6E8] gap-4">
+    <div className="grid grid-rows-3 gird-cols-1 lg:grid-rows-1 lg:grid-cols-3 lg:place-items-center  w-full min-h-full bg-[#C1D6E8] gap-1 lg:gap-4 lg:items-center">
     
-        <div className="bg-[#F0F2F4] w-full rounded-[17px] col-span-2 shadow-lg" ref={divRef} >
-            <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 pl-5 sm:pl-28 sm:py-10 gap-4">
-                <div className="flex flex-wrap sm:flex-row h-full w-full gap-10 items-center justify-center">
-                    <div className="w-full sm:w-[30%] h-full">
-                        <Avatar showFallback src={image} className="w-full h-full text-large" isBordered />
+        <div className="bg-[#F0F2F4] w-full rounded-[17px] row-span-2 lg:row-span-1 lg:col-span-2 shadow-lg" ref={divRef} >
+            <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full p-5 md:pl-14 lg:pl-28 sm:py-10 gap-4">
+                <div className="flex flex-wrap sm:flex-row h-full w-full gap-14 sm:gap-10 items-center justify-center ">
+                    <div className="w-[60%] sm:w-[30%] h-full">
+                        <Avatar showFallback src={image} className="w-full h-auto text-large" isBordered />
                         <div className="flex flex-col gap-2 items-center justify-center py-4">
                             {
                             profileInfo.rol==0?
@@ -231,21 +228,22 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         
 
         </div>
-        <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-[17px] justify-center h-full shadow-lg`} >
-            <div className=" flex flex-col items-center justify-center gap-10 w-full sm:w-[90%]">
+        <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-[17px] justify-center lg:h-full shadow-lg`} >
+            <div className=" flex flex-wrap lg:flex-col items-center justify-center gap-4 md:gap-8 lg:gap-4 w-full sm:w-[90%]">
 
-                        <div className=" flex flex-wrap sm:flex-row items-center justify-center gap-6 h-[20%]">
+                        <div className=" flex flex-wrap md:flex-row items-center justify-center gap-4 2xl:gap-6 min-h-[20%]">
                             {profileInfo.rol==1?
-                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
+                                <p className='text-lg font-sans flex flex-wrap sm:flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
                             :
-                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
+                                <p className='text-lg font-sans flex flex-wrap sm:flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
                             }
                             <p id = "0" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
                             <p id = "1" title="View users user follows" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
                         </div>
+                        <div className="flex flex-col justify-center items-center gap-4 h-auto">
                         {profileInfo.id_user==userInfo.userId?
                         <>
-                        <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true)}}>
+                        <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
                             Edit <FiEdit size='1.5em' />
                         </Button>
                         
@@ -268,6 +266,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         }
                         </>
                         }
+                        </div>
                     </div>
         </div>
 
