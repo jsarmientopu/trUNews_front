@@ -4,6 +4,7 @@ import { animated, useSpring } from "react-spring";
 import { useEffect, useState } from "react";
 import { getSaved } from "@/utils/fetchs";
 import { getArticleType } from "@/dto/article";
+import { useViewportScroll } from "framer-motion";
 
 const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo':decryptedJWT, 'userView':number, 'articleWriter':any, 'articlesPage':any})=>{
     const ani = useSpring({
@@ -23,6 +24,7 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
 
     useEffect(() => {
         (async () => {
+            console.log(userView, userInfo)
             if(articlesPage){
                 setSavedArticles(articleWriter)
             }else{
@@ -32,8 +34,8 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
         })();
     },[articlesPage])
 
-    return <animated.div className="flex flex-col bg-[#F0F2F4] w-[80%] rounded-[17px] justify-center items-center shadow-xl " style={ani}>
-            <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 sm:px-16 sm:pt-10 gap-2 bg-[#F0F2F4]">
+    return <animated.div className="flex flex-col bg-[#F0F2F4] md:w-[80%] rounded-[17px] justify-center items-center shadow-xl" style={ani}>
+            <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full lg:w-[95%] py-5 px-5 sm:px-16 sm:pt-10 gap-2 bg-[#F0F2F4]">
                 {articlesPage?
                     <p className="text-2xl">Articulos escritos</p>
                 :
@@ -42,10 +44,10 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
 
             </div>
             
-            <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 sm:px-16 sm:pb-10 pt-0 gap-2 bg-[#F0F2F4]">
+            <div className="flex flex-col lg:flex-row justify-center items-center md:justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
                 {savedArticles.length!==0?
                     savedArticles.map((item:getArticleType, index) => (
-                        <SavedCard key={index} data={item} />
+                        <SavedCard key={index} data={item} mode={articlesPage} userInfo={userInfo} userView={userView} articles={savedArticles} setArticles={setSavedArticles}/>
                     ))
                 :
                     articlesPage?
