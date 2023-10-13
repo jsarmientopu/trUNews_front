@@ -15,7 +15,7 @@ interface FeedArticleCardProps {
   date: string;
   saved: boolean;
   savedUsername: string;
-  categories: Array<string>;
+  categories: Array<any>;
 }
 
 const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
@@ -73,7 +73,7 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
             </div>
             <div className='pt-4 flex justify-end row gap-3 text-sm font-semibold text-zinc-600'>
               {categories.map((item, index) => (
-                <p key={index}>{item}</p>
+                <p key={index}>{item.category.cat_name}</p>
               ))}
             </div>
             <p className='pt-4 flex justify-end text-sm'>
