@@ -44,7 +44,7 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
 
             </div>
             
-            <div className="flex flex-col lg:flex-row justify-center items-center md:justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
+            <div className="flex flex-col lg:flex-wrap lg:flex-row justify-center items-center md:justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
                 {savedArticles.length!==0?
                     savedArticles.map((item:getArticleType, index) => (
                         <SavedCard key={index} data={item} mode={articlesPage} userInfo={userInfo} userView={userView} articles={savedArticles} setArticles={setSavedArticles}/>
