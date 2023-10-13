@@ -5,8 +5,10 @@ const nextConfig = {
     },
     env: {
         BACK_URL: 'http://localhost:3005/',
+        FRONT_URL: 'http://localhost:3000',
         // BACK_URL: 'http://35.175.244.104:3005/', 
     },
+    
 }
 
 module.exports = nextConfig
