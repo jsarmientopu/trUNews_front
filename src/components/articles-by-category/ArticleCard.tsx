@@ -2,21 +2,21 @@ import React from 'react';
 import { Card, CardBody, Image, User } from '@nextui-org/react';
 import '../../app/globals.css'
 
-interface FeedArticleCardProps {
-  imageArticle: string;//
+interface ArticleCardProps {
+  imageArticle: string;
   profileImage: string;
   autor: string;
   username: string;
-  title: string;//
-  summary: string;//
-  id: number;//
-  idWriter: number;//
-  views: number;//
-  date: string;//
-  categories: Array<string>;
+  title: string;
+  summary: string;
+  id: number;
+  idWriter: number;
+  views: number;
+  date: string;
+  categories: Array<any>;
 }
 
-const ArticleCard: React.FC<FeedArticleCardProps> = ({
+const ArticleCard: React.FC<ArticleCardProps> = ({
   imageArticle,
   profileImage,
   autor,
@@ -26,7 +26,7 @@ const ArticleCard: React.FC<FeedArticleCardProps> = ({
   id,
   idWriter, 
   views,
-  date, 
+  date,
   categories
 }) => {
   const redirectToArticle = () => {
@@ -64,6 +64,7 @@ const ArticleCard: React.FC<FeedArticleCardProps> = ({
             </div>
             <div className='pt-4 flex justify-end row gap-3 text-sm font-semibold text-zinc-600'>
               {categories.map((item, index) => (
+                // <p key={index}>{item.category.cat_name}</p>
                 <p key={index}>{item}</p>
               ))}
             </div>

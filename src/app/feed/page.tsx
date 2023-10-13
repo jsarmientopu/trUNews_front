@@ -26,7 +26,8 @@ export default function FeedPage() {
         'profile_image': '',
         'views': 0,
         'saved': false,
-        'savedUsername': ''
+        'savedUsername': '',
+        'article_has_categories': []
     }]);
 
     // Rastreo de articulos visibles en el feed
@@ -86,7 +87,7 @@ export default function FeedPage() {
                         date={item.date.slice(0, 10)}
                         saved={item.saved}
                         savedUsername={item.savedUsername}
-                        categories={["ART", "SPORTS", "POLITICS", "ENTERTAINMENT"]}
+                        categories={item.article_has_categories}
                     />
                     </div>
                 ))}
