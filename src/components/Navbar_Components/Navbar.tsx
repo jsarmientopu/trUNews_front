@@ -20,15 +20,16 @@ import verifyToken from '@/utils/utils'
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
-import { SearchIcon } from '../navbar/SearchIcon';
+import { SearchIcon } from './SearchIcon';
 import LoadingButton from './LoadingButton';
 
-export default function App() {
+export default function App(this: any) {
     
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-2,rol:-2})
     const router = useRouter()
     const [serach, setSearch]=useState<string>('')
+    const [selected, setSelected]=useState<string>('')
     const ref= useRef<any>()
     
     async function token(){
@@ -66,6 +67,7 @@ export default function App() {
 
     const menuSections = [
         {"rol":[0,1],"label":"Feed","ref":"/feed"},
+        {"rol":[1],"label":"New Article","ref":"/crear-articulo"},
     ]
 
     
@@ -109,8 +111,8 @@ export default function App() {
             />
             <Link target='_parent' href={{pathname:'/search', query:{search:serach}}} ref={ref}/>
             </NavbarContent>
-            <NavbarContent className="hidden md:flex  gap-4 " justify="center">
-                <Dropdown>
+            {/* <NavbarContent className="hidden md:flex  gap-4 " justify="center"> */}
+                {/* <Dropdown>
                     <NavbarItem isActive={userInfo.rol==-1?false:true}>
                         <DropdownTrigger>
                             <Link
@@ -136,13 +138,13 @@ export default function App() {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-            </NavbarContent>
+            </NavbarContent> */}
             
             <NavbarContent className="hidden md:flex  gap-4" justify="center">
                 <Dropdown>
-                    <NavbarItem isActive>
+                    <NavbarItem isActive={selected=='Categorias'? true:false}>
                         <DropdownTrigger>
-                            <Link
+                            <Link onClick={()=>setSelected('Categorias')}
                                 className='text-white' href="#" aria-current="page"                            >
                                 Categories
                             </Link>
@@ -204,8 +206,8 @@ export default function App() {
                 </Link>
                 </NavbarItem> */}
                 {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
-                    <NavbarItem key={`${item.label}-${index}`} isActive>
-                            <Link className='text-white' color="foreground" href={{pathname:item.ref}}>
+                    <NavbarItem key={`${item.label}-${index}`} isActive={selected==item.label? true:false}>
+                            <Link className='text-white' color="foreground" href={{pathname:item.ref}} onClick={()=>setSelected(item.label)}>
                                 {item.label}
                             </Link>
                     </NavbarItem>

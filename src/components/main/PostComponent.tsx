@@ -9,6 +9,7 @@ import { decryptedJWT } from "@/dto/users";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
 import { saveArticle } from "@/utils/Articles/fetch";
+import ShareOptions from "../ArticleShare/ShareOptions";
 
 export default function PostComponent({id}: any) {
 
@@ -63,6 +64,7 @@ export default function PostComponent({id}: any) {
                     Guardar artículo
                     </Button>
                      }
+                    <ShareOptions/>
                 </div>
             </div>   
                 <p className="font-bold text-3xl">{article?.title}</p>

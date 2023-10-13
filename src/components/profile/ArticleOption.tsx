@@ -3,8 +3,22 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@ne
 import {BsThreeDotsVertical} from 'react-icons/bs';
 import { alert } from "@/utils/alertHandeler";
 import { unsaveArticle } from "@/utils/Profile/fetch";
+import Swal from 'sweetalert2';
+import { usePathname } from 'next/navigation'
 
 export default function ArticleOption({mode, article, articles, setArticles}:{'mode':boolean, article:any, articles:any, setArticles:any}) {
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+      })
 
     const handleEvent=async(ev:any)=>{
       console.log(ev)
@@ -13,9 +27,16 @@ export default function ArticleOption({mode, article, articles, setArticles}:{'m
         }else if(ev.target.key=='delete'){
           console.log('delete')
         }else{
-          console.log('Copy')
+          navigator.clipboard.writeText(`${process.env.FRONT_URL}/articulo/${article.id_article}`)
+          Toast.fire({
+            icon: 'success',
+            title: 'Link copied'
+          })
         }
+    
     }
+
+
 
     const items = [
         {

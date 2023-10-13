@@ -21,3 +21,19 @@ export async function saveArticle(articleId:number){
     }
     return
 }
+
+export async function getQR(path:string) {
+    if(path){
+        let datos;
+        const res = await fetch(`${process.env.BACK_URL}articles/createQr/?url=${path}`,{
+            method: 'GET',
+            headers:{'Content-Type':'application/json'},
+        }).then(response => response.json()).then(data => datos=data)
+        if(res.err){
+            alert('error', 'Failed Creation QR!', 'Try later!', ()=>{})
+        }else{
+            return res.qr
+        }
+    }
+    return ''
+}
