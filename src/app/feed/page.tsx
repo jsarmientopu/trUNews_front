@@ -7,7 +7,6 @@ import { getFeed } from "@/utils/fetchs";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
 import { redirect } from "next/navigation";
-import { Any } from "react-spring";
 
 export default function FeedPage() {
 
