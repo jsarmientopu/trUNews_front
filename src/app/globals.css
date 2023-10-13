@@ -12,3 +12,7 @@ header{
   max-width: 100% !important;
 }
 
+.article_card:hover {
+  background-color: #e9edf0 !important;
+  transform: scale(1.04);
+}
