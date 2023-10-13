@@ -20,7 +20,7 @@ const RecentCarouselControls = (props: Props) => {
                         <ImClock size="1.3em" />
 
                     </div>
-                    <p className="font-bold text-2xl">Últimas noticias</p>
+                    <p className="font-bold text-2xl">Latest news</p>
 
                 </div>
 
@@ -32,7 +32,8 @@ const RecentCarouselControls = (props: Props) => {
                         }
                     }}
                         disabled={!props.canScrollPrev}
-                        className="mr-6 cursor-pointer select-none">
+                        className="mr-6 cursor-pointer select-none"
+                        title="nav-back">
                         <MdArrowBackIosNew size="1.3em" />
                     </button>
                     <button onClick={() => {
@@ -41,7 +42,8 @@ const RecentCarouselControls = (props: Props) => {
                         }
                     }}
                         disabled={!props.canScrollNext}
-                        className="mr-6 cursor-pointer select-none">
+                        className="mr-6 cursor-pointer select-none"
+                        title="nav-forward">
                         <MdArrowForwardIos size="1.3em" />
                     </button>
                 </div>

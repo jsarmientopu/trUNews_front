@@ -8,7 +8,7 @@ import UserCard from "@/components/search/UserCard";
 import { getArticleType } from "@/dto/article";
 import { getUserType } from "@/dto/users";
 import { useSearchParams } from 'next/navigation';
-import { getSearch } from "@/utils/search/fetch";
+import { getSearch } from "@/utils/Search/fetch";
 
 const App=()=>{   
 

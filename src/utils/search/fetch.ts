@@ -9,13 +9,13 @@ export const getSearch=async(param:string)=>{
         const info=await verifyToken();
         let resT=[];
         let datos;
-        const resUser = await fetch('http://localhost:3005/users/find/'+param,{
+        const resUser = await fetch(`${process.env.BACK_URL}users/find/${param}`,{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)
         console.log(resUser);
         resT.push(resUser);
-        const resArticle = await fetch('http://localhost:3005/articles/find/'+param,{
+        const resArticle = await fetch(`${process.env.BACK_URL}articles/find/${param}`,{
             method: 'GET',
             headers:{'Content-Type':'application/json', 'authorization':token},
         }).then(response => response.json()).then(data => datos=data)

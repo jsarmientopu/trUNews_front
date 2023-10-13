@@ -16,7 +16,7 @@ const CarouselControls = (props: Props) => {
                     <BsFire size="2em" />
 
                 </div>
-                <p className="font-bold text-4xl">Noticias más vistas</p>
+                <p className="font-bold text-4xl">Trending news</p>
 
             </div>
 
@@ -27,7 +27,8 @@ const CarouselControls = (props: Props) => {
                     }
                 }}
                     disabled={!props.canScrollPrev}
-                    className="mr-6 cursor-pointer select-none"  >
+                    className="mr-6 cursor-pointer select-none"
+                    title="nav-back"  >
                     <MdArrowBackIosNew size="2em" />
                 </button>
                 <button onClick={() => {
@@ -36,7 +37,8 @@ const CarouselControls = (props: Props) => {
                     }
                 }}
                     disabled={!props.canScrollNext}
-                    className="mr-6 cursor-pointer select-none" >
+                    className="mr-6 cursor-pointer select-none"
+                    title="nav-forward" >
                     <MdArrowForwardIos size="2em" />
                 </button>
             </div>
