@@ -12,10 +12,10 @@ export default function TrendingCarousel({trendingCarouselData}:any) {
         <div>
             <div className="mb-1 overflow-hidden">
                 <CarouselEmbla loop>
-                    {trendingCarouselData.map((slide:any, index:any) => {
+                    {trendingCarouselData?.map((slide:any, index:any) => {
                         return (
                             <div key={index} className='flex-[0_0_100%]'>
-                                <TrendingArticle id={slide.articles_id_article} image={slide.image_url} title={slide.title} description={slide.text} />
+                                <TrendingArticle id={slide.articles_id_article} image={slide.image_url} title={slide.title} description={slide.sanitizedText} />
                             </div>
                             
                         )
