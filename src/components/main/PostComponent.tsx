@@ -8,11 +8,14 @@ import { article_has_categories, returnArticlesCategory } from "@/dto/article";
 import { decryptedJWT } from "@/dto/users";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
+import { saveArticle } from "@/utils/Articles/fetch";
+import ShareOptions from "../ArticleShare/ShareOptions";
 
 export default function PostComponent({id}: any) {
 
     const [article,setArticle] = useState<returnArticlesCategory>()
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
+    const [saved, setSaved] = useState<boolean>(false)
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -27,6 +30,7 @@ export default function PostComponent({id}: any) {
     useEffect(() => {
         (async () => {
             const article = await getPost(id)
+            console.log(article)
             setArticle(article[0])
         })();
     }, [])
@@ -56,7 +60,11 @@ export default function PostComponent({id}: any) {
                     Borrar artículo
                     </Button>
                     :
-                    <></> }
+                    <Button size='sm' className="mb-2 bg-red-700 text-white" onClick={() => saveArticle(id)}>
+                    Guardar artículo
+                    </Button>
+                     }
+                    <ShareOptions/>
                 </div>
             </div>   
                 <p className="font-bold text-3xl">{article?.title}</p>

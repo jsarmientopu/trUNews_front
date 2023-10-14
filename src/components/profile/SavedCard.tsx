@@ -3,11 +3,14 @@ import { FaEye } from "react-icons/fa";
 import {Image, Button } from "@nextui-org/react";
 import { getArticleType } from "@/dto/article";
 import Link from "next/link";
+import ArticleOption from "./ArticleOption";
 
-const SavedCard = ({data}:{data:getArticleType})=>{
+const SavedCard = ({data, mode, userInfo, userView, articles, setArticles}:{data:getArticleType, mode:boolean, userInfo:any, userView:number, articles:any, setArticles:any})=>{
+            console.log(userView, userInfo)
+
     return <>
-        <div className="flex flex-row rounded-[15px] w-[49%] bg-[#EEEFEF] p-4 gap-3 shadow-lg">
-            <div className="w-[50%]">
+        <div className="flex flex-row rounded-[15px] md:w-[80%] lg:w-[70%] xl:w-[49%] bg-[#EEEFEF] p-4 gap-3 shadow-lg h-60 relative hover:scale-105">
+            <div className="w-[50%] h-[100%] flex flex-col justify-center">
                 <Image
                     className="mr-0"
                     width={'100%'}
@@ -16,9 +19,9 @@ const SavedCard = ({data}:{data:getArticleType})=>{
                     src={data.image_url}
                 />
             </div>
-            <div className="flex flex-col justify-center w-[50%] gap-2">
-                <p className="text-center">{data.title}</p>
-                <Link href={{pathname:`/articulo/${data.id_article}`}} className="flex flex-col">
+            <div className="flex flex-col justify-center items-center sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%] gap-4 pt-6">
+                <p className="text-center max-w-full text-ellipsis overflow-hidden">{data.title}</p>
+                <Link href={{pathname:`/articulo/${data.id_article}`}} className="flex flex-col w-[70%]">
                     <Button className="flex flex-col mx-[10%] py-7 bg-[#0079DC] text-[#F8F8F8]">
                         <div className="flex flex-col items-center text-white">
                             <p className="">Ver articulo</p>
@@ -27,6 +30,13 @@ const SavedCard = ({data}:{data:getArticleType})=>{
                     </Button>
                 </Link>
             </div>
+            {userView==userInfo.userId?
+            <div className="absolute top-0 right-1">
+                    <ArticleOption mode={mode} article={data} articles={articles} setArticles={setArticles}/>
+            </div>
+            :
+            <></>
+            }
         </div>
     </>
 
