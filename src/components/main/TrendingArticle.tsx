@@ -12,11 +12,11 @@ export default function TrendingArticle({ id,image, title, description }: any) {
 
                 <div className="flex justify-center relative mr-9 ml-5">
 
-                    <div className="flex justify-center w-[20rem] md:w-[30rem] lg:w-[45rem] h-72 select-none mb-3 lg:mb-0">
+                    <div className="flex justify-center w-full lg:w-[45rem] h-72 select-none mb-3 lg:mb-0">
                         <img src={image} className="w-full h-full object-cover rounded-lg" alt={`img-${id}`} />
                     </div>
 
-                    <div className="absolute bottom-0 right-50 lg:left-0 p-6 text-white w-[20rem] md:w-[30rem] lg:w-[45rem]">
+                    <div className="absolute bottom-0 left-0 p-6 text-white flex flex-wrap">
                         <p className="font-bold text-3xl drop-shadow-[0_1.5px_1.5px_rgba(0,0,0,100)]">{title}</p>
                     </div>
 
