@@ -50,7 +50,7 @@ export default function ArticlesByCategoryPage({ params }: any) {
                     <div className="flex justify-center py-unit-4" key={index}>
                     <ArticleCard 
                         imageArticle={item.image_url}
-                        profileImage={item.image_url}
+                        profileImage={item.profile_image}
                         autor={`${item.name} ${item.lastname}`}
                         username={item.username}
                         title={item.title}
@@ -59,7 +59,7 @@ export default function ArticlesByCategoryPage({ params }: any) {
                         idWriter={item.id_writer}
                         views={item.views}
                         date={item.date.slice(0, 10)}
-                        categories={["SPORTS", "POLITICS", "ENTERTAINMENT"]}
+                        categories={item.article_has_categories}
                     />
                     </div>
                 ))}

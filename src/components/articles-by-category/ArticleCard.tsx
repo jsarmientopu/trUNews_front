@@ -64,8 +64,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             </div>
             <div className='pt-4 flex justify-end row gap-3 text-sm font-semibold text-zinc-600'>
               {categories.map((item, index) => (
-                // <p key={index}>{item.category.cat_name}</p>
-                <p key={index}>{item}</p>
+                <p key={index}>{item.category.cat_name}</p>
               ))}
             </div>
             <p className='pt-4 flex justify-end text-sm'>
