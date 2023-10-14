@@ -40,8 +40,11 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   return (
     <Card className = "article_card w-[80%] p-unit-lg shadow-lg bg-[#F0F2F4]" isPressable onPress={redirectToArticle} isHoverable>
       <CardBody>
-          <div className='sm:block md:flex items-center'>
+          <div className='sm:block md:flex lg:flex items-center'>
           <div className='flex-1'>
+            <p className='sm:block md:hidden lg:hidden text-center font-bold text-xl pb-2'>
+              {title}
+            </p>
             <div className='flex justify-center'>
               <Image src={imageArticle} alt="Card Image" width={280} isZoomed style={{height: 180}}/>
             </div> 
@@ -59,23 +62,32 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
               <p className='ps-3 text-sm'>{views} Views</p>
             </div>
             {saved &&
-              <div className='flex justify-center py-4 text-sm'>
+              <div className='hidden md:flex ld:flex justify-center py-4 text-sm'>
                 <p className='text-center'>Guardado por: {savedUsername}</p>
               </div>
             }
           </div>
           <div className='px-4' style={{ flex: 2 }}>
-            <p className='text-center font-bold text-3xl'>
-              {title}
-            </p>
-            <div className='py-unit-lg text-justify break-words'>
+            <div className='hidden md:flex lg:flex'>
+              <p className='text-center font-bold text-3xl'>
+                {title}
+              </p>
+            </div>
+            <div className='hidden md:flex lg:flex py-unit-lg text-justify break-words'>
               <p className='line-clamp-[4]'>{summary}</p>
             </div>
-            <div className='pt-4 flex justify-end row gap-3 text-sm font-semibold text-zinc-600'>
+            <div className='pt-4 flex flex-wrap justify-center md:justify-end lg:justify-end row gap-3 lg:text-sm text-xs'>
               {categories.map((item, index) => (
-                <p key={index}>{item.category.cat_name}</p>
+                <p key={index} className='bg-[#963ED9] text-white p-2 rounded-md'>
+                  {item.category.cat_name}
+                </p>
               ))}
             </div>
+            {saved &&
+              <div className='flex md:hidden ld:hidden justify-center py-4 text-sm'>
+                <p className='text-center'>Guardado por: {savedUsername}</p>
+              </div>
+            }
             <p className='pt-4 flex justify-end text-sm'>
               Published: {date} 
             </p>
