@@ -3,12 +3,15 @@ import { FaPenNib } from "react-icons/fa";
 import {GiBookCover} from "react-icons/gi"
 import { FiEdit } from "react-icons/fi";
 import {ImCross, ImCheckmark} from "react-icons/im"
-import {Avatar, Button, Input, Textarea} from "@nextui-org/react";
-import { decryptedJWT, getUserType, imageType } from "@/dto/users";
-import { getProfile, updateProfile, squareImage, follow, unfollow} from "@/utils/fetchs";
+import {Avatar, Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Textarea, useDisclosure} from "@nextui-org/react";
+import { checkPasswordType, decryptedJWT, getUserType, imageType} from "@/dto/users";
+import { getProfile, updateProfile, squareImage, follow, unfollow, checkPassword, deleteAccount} from "@/utils/fetchs";
 import { alert } from "@/utils/alertHandeler";
 import ModalCard from "./ModalCard";
 import { animated, useSpring} from "react-spring";
+import { removeFromLocalStorage } from "@/utils/localStorage";
+import { redirect, useRouter } from "next/navigation";
+import { set } from "zod";
 
 
 const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows, setArticleWriter, articlesPage, setArticlesPage}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any, 'setArticleWriter':any, 'articlesPage':any, 'setArticlesPage':any})=>{
@@ -19,9 +22,9 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         config: { duration: 500 },
         reset: true,
     })
-
-
-
+    const router = useRouter()
+    const cancel = useRef<any>();
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [image,setImage] = useState<string>("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg");
     const [newImage, setNewImage] = useState<string>("https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg");
     const [infoImage, setInfoImage]=useState<imageType>();
@@ -138,6 +141,31 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         })();
     },[])
 
+    const [formPassword, setFormPassword] = useState<checkPasswordType>({'username':'','password':''})
+
+    const submitDeleteForm = async (event:any)=>{
+        const confirm = await checkPassword(formPassword)
+        console.log(profileInfo.username)
+        if(confirm.success){
+            alert('question','You will lose all your data upon deletion','',async()=>{
+                const res = await deleteAccount(profileInfo.id_user)
+                if(res.err){
+                    alert('error','Deletion failed','',()=>{})
+                }
+                else{
+                    removeFromLocalStorage('token');
+                    setTimeout(()=>{router.replace('/login')},2000)
+                }
+            })
+            
+        }else{
+            alert('error','Data invalid','Check your password',()=>{})
+        }
+        setFormPassword({...formPassword})
+
+
+    }
+
     if(edit){
 
         return <animated.div className="bg-white w-[40%] rounded-[17px] shadow-xl opacity-0" style={ani}>
@@ -198,7 +226,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                 <div className="flex flex-wrap sm:flex-row h-full w-full gap-14 sm:gap-10 items-center justify-center ">
                     <div className="w-[60%] sm:w-[30%] h-full">
                         <Avatar showFallback src={image} className="w-full h-auto text-large" isBordered />
-                        <div className="flex flex-col gap-2 items-center justify-center py-4">
+                        <div className="flex flex-row gap-2 items-center justify-center py-4">
                             {
                             profileInfo.rol==0?
                             <Button>
@@ -211,6 +239,38 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                                 Writer
                             </Button>
                             }
+                            <Button color="danger" onPress={onOpen}>
+                                Eliminar Cuenta
+                            </Button>
+                            <Modal
+                                isOpen={isOpen}
+                                onOpenChange={onOpenChange}
+                                scrollBehavior='inside'
+                            >
+                                <ModalContent>
+                                {(onClose) => (
+                                    <>
+                                    <ModalHeader className="flex flex-col gap-1">
+                                        Confirm your password to delete your account
+                                    </ModalHeader>
+                                    <ModalBody>
+                                        <form className="gap-4" >
+                                            <p className='content-start text-sm my-2'>Password</p>
+                                            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='password' type='password' radius = {"md"} placeholder='Password' onChange={(event)=>setFormPassword({username: profileInfo.username ,password: event.target.value})} isRequired/>
+                                        </form>
+                                    </ModalBody>
+                                    <ModalFooter>
+                                        <Button name="cancel" color="primary" variant="light" ref={cancel} onPress={onClose} onClick={onClose}>
+                                        Cancel
+                                        </Button>
+                                        <Button name="delete" color="danger" onPress={submitDeleteForm}>
+                                        Delete
+                                        </Button>
+                                    </ModalFooter>
+                                    </>
+                                )}
+                                </ModalContent>
+                            </Modal>
                         </div>
                     </div>
                     <div className="flex flex-col items-center justify-center w-full sm:w-[60%] h-full">

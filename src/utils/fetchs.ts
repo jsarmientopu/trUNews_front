@@ -69,6 +69,33 @@ export const updatePassword=async(data:updatePasswordType, id:number)=>{
     }
 }
 
+export const checkPassword=async(data:any)=>{
+    var datos;
+    const token = getFromLocalStorage('token')
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}users/checkPassword`,{
+            method: 'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify(data)
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export const deleteAccount=async(id:number)=>{
+    var datos;
+    const token = getFromLocalStorage('token')
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}users/${id}`,{
+            method: 'DELETE',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
 export const getFollower=async(userView:number, type:[boolean,boolean])=>{
     const token = getFromLocalStorage('token')
     if(token){
@@ -157,7 +184,7 @@ export async function getPost(id: number) {
 
 export async function getRelatedPost(id: number) {
     let datos;
-    const res = await fetch(`http://localhost:3005/articles/related/${id}`,{
+    const res = await fetch(`${process.env.BACK_URL}articles/related/${id}`,{
         method: 'GET',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(datos)

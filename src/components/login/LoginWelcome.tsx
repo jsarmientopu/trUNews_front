@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default function LoginWelcome() {
     return (
-        <div className='flex flex-col justify-center items-center mx-7 my-[1.5rem] hidden md:flex '>
+        <div className='flex-col justify-center items-center mx-7 my-[1.5rem] hidden md:flex '>
             <div className='text-center'>
                 <Image
                     src="/images/login-image.png"

@@ -10,12 +10,19 @@ import { getFromLocalStorage } from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
 import { saveArticle } from "@/utils/Articles/fetch";
 import ShareOptions from "../ArticleShare/ShareOptions";
+import {BsFillBookmarkFill} from 'react-icons/bs'
+import {MdDelete} from 'react-icons/md'
+import { alert } from "@/utils/alertHandeler";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 export default function PostComponent({id}: any) {
 
     const [article,setArticle] = useState<returnArticlesCategory>()
     const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [saved, setSaved] = useState<boolean>(false)
+    const router = useRouter()
+
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -39,6 +46,12 @@ export default function PostComponent({id}: any) {
         token()
     },[])
 
+    const confirm = async () => {Swal.fire({
+        title: 'Article deleted successfully',
+        icon: 'success',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Ok'
+      }).then(() => router.replace(`/perfil?search=${article?.id_writer}`))}
 
 
     return (<>
@@ -56,20 +69,24 @@ export default function PostComponent({id}: any) {
                 }
                 <div className="flex grow justify-end">
                     {userInfo.userId==article?.id_writer?
-                    <Button size='sm' className="mb-2 bg-red-700 text-white" onClick={() => deletePost(id)}>
-                    Borrar artículo
+                    <Button size='sm' className="mb-2 bg-red-700 text-white" isIconOnly onClick={() => alert('question','The article will be deleted.','',()=>{deletePost(id); confirm();})}>
+                    <MdDelete/>
                     </Button>
                     :
-                    <Button size='sm' className="mb-2 bg-red-700 text-white" onClick={() => saveArticle(id)}>
-                    Guardar artículo
+                    <Button size='sm' className="mb-2 bg-slate-600 text-white" isIconOnly onClick={() => saveArticle(id)}>
+                    <BsFillBookmarkFill/>
                     </Button>
                      }
-                    <ShareOptions/>
                 </div>
             </div>   
                 <p className="font-bold text-3xl">{article?.title}</p>
                 <p className="font-semibold text-xl text-zinc-700">Author: <Link href={`/perfil?search=${article?.id_writer}`}><p className="font-semibold text-xl text-zinc-700 underline">{article?.username}</p></Link></p>
+                <div className="flex flex-row gap-60">
                 <p className="font-medium text-lg text-zinc-700">{article?.date.toString()}</p>
+                    <div className="flex grow justify-end">
+                    <ShareOptions/>
+                    </div>
+                </div>
                 <div className="flex flex-row w-full justify-center mb-5">
                         <Image
                         src={article?.image_url} 

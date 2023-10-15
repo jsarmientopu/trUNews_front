@@ -4,8 +4,6 @@ import { Avatar, Button, Tooltip} from "@nextui-org/react";
 import Link from "next/link";
 import { GiBookCover } from "react-icons/gi";
 import { FaPenNib } from "react-icons/fa";
-import Router from "next/router";
-
 
 
 const FollowersCard=({data}:any)=>{
