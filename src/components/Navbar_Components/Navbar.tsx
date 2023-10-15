@@ -68,6 +68,21 @@ export default function App() {
         {"rol":[0,1],"label":"Feed","ref":"/feed"},
     ]
 
+    const categories = [
+        "U.S.",
+        "Comedy",
+        "Parenting",
+        "World",
+        "Arts & Culture",
+        "Tech",
+        "Sports"
+    ]
+
+    // redireccion de articulos por categoria
+    const redirectToCategory = (id: number) => {
+        window.location.href = `/articles-by-category/${id}`;
+    };
+
     
     return (
         <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
@@ -122,7 +137,7 @@ export default function App() {
 
                     <DropdownMenu
                         aria-label="ACME features"
-                        className="w-[340px]"
+                        className="w-[15rem]"
                         itemClasses={{
                             base: "gap-4",
                         }}
@@ -150,59 +165,22 @@ export default function App() {
                     </NavbarItem>
 
                     <DropdownMenu
-                        aria-label="ACME features"
-                        className="w-[340px]"
+                        aria-label="News Categories"
+                        className="w-[15rem]"
                         itemClasses={{
                             base: "gap-4",
                         }}
-                    >
-                        <DropdownItem
-                            key="autoscaling"
-                            description="Noticias de deportes"
-                        //startContent={icons.scale}
-                        >
-                            Deportes
-                        </DropdownItem>
-                        <DropdownItem
-                            key="usage_metrics"
-                            description="Noticias de economía"
-                        //startContent={icons.activity}
-                        >
-                            Economía
-                        </DropdownItem>
-                        <DropdownItem
-                            key="production_ready"
-                            description="Noticias de realidad social"
-                        //startContent={icons.flash}
-                        >
-                            Realidad social
-                        </DropdownItem>
-                        <DropdownItem
-                            key="99_uptime"
-                            description="Noticias de salud"
-                        //startContent={icons.server}
-                        >
-                            Salud
-                        </DropdownItem>
-                        <DropdownItem
-                            key="supreme_support"
-                            description="Noticias de entretenimiento"
-                        //startContent={icons.user}
-                        >
-                            Entretenimiento
-                        </DropdownItem>
+                        onAction={(key) => redirectToCategory(parseInt(key) + 1)}>
+                        {categories.map((category, index) => (
+                            <DropdownItem key={index} description={`${category} news`}>
+                                <Link href={`/articles-by-category/${index}`}>
+                                    {category}
+                                </Link>
+                            </DropdownItem>
+                        ))}
                     </DropdownMenu>
                 </Dropdown>
-                {/* <NavbarItem>
-                <Link className='text-white font-bold' href="#">
-                    Features
-                </Link>
-                </NavbarItem> */}
-                {/* <NavbarItem isActive>
-                <Link className='text-white' href="#" aria-current="page">
-                    Categories
-                </Link>
-                </NavbarItem> */}
+
                 {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                     <NavbarItem key={`${item.label}-${index}`} isActive>
                             <Link className='text-white' color="foreground" href={{pathname:item.ref}}>

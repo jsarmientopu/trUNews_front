@@ -77,11 +77,14 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
               <p className='line-clamp-[4]'>{summary}</p>
             </div>
             <div className='pt-4 flex flex-wrap justify-center md:justify-end lg:justify-end row gap-3 lg:text-sm text-xs'>
-              {categories.map((item, index) => (
+              {categories && 
+                <>
+                {categories.map((item, index) => (
                 <p key={index} className='bg-[#963ED9] text-white p-2 rounded-md'>
                   {item.category.cat_name}
                 </p>
               ))}
+              </>}
             </div>
             {saved &&
               <div className='flex md:hidden ld:hidden justify-center py-4 text-sm'>

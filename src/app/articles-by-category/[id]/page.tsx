@@ -31,6 +31,16 @@ export default function ArticlesByCategoryPage({ params }: any) {
         setCurrentPage(page);
     };
 
+    const categories = [
+        "U.S.",
+        "COMEDY",
+        "PARENTING",
+        "WORLD",
+        "ARTS & CULTURE",
+        "TECH",
+        "SPORTS"
+    ]
+
     // fetch de articulos a mostrar en el feed
     useEffect(() => {
         async function fetchData() {
@@ -44,7 +54,7 @@ export default function ArticlesByCategoryPage({ params }: any) {
 
     return (
         <div className="py-2">
-            <p className="text-center font-bold text-3xl p-5">CATEGORY ARTICLES</p>
+            <p className="text-center font-bold text-3xl p-5">{categories[params.id - 1]} ARTICLES</p>
             <div className="hidden md:flex lg:flex justify-center py-unit-4">
                 <Pagination total={Math.ceil(articles.length / itemsPerPage)} page={currentPage} onChange={(page) => handlePageChange(page)} 
                 variant="light" size="lg" showControls siblings={2} radius="full"/>
