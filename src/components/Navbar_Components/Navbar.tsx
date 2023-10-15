@@ -22,6 +22,7 @@ import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
 import { SearchIcon } from './SearchIcon';
 import LoadingButton from './LoadingButton';
+import { getCategories } from '@/utils/fetchs';
 
 export default function App(this: any) {
     
@@ -31,6 +32,20 @@ export default function App(this: any) {
     const [serach, setSearch]=useState<string>('')
     const [selected, setSelected]=useState<string>('')
     const ref= useRef<any>()
+    const [categories, setCategories] = useState<Array<any>>([{
+        'id_category': 0,
+        'cat_name': "",
+    }]);
+
+    // fetch de categorias
+    useEffect(() => {
+        async function fetchData() {
+            const categoriesData = await getCategories();
+            if(categoriesData){
+                setCategories(categoriesData);
+            }
+        }
+        fetchData();}, []);
     
     async function token(){
         const rol =await verifyToken();
@@ -69,6 +84,11 @@ export default function App(this: any) {
         {"rol":[0,1],"label":"Feed","ref":"/feed"},
         {"rol":[1],"label":"New Article","ref":"/crear-articulo"},
     ]
+
+    // redireccion de articulos por categoria
+    const redirectToCategory = (id: number) => {
+        window.location.href = `/articles-by-category/${id}`;
+    };
 
     
     return (
@@ -124,7 +144,7 @@ export default function App(this: any) {
 
                     <DropdownMenu
                         aria-label="ACME features"
-                        className="w-[340px]"
+                        className="w-[15rem]"
                         itemClasses={{
                             base: "gap-4",
                         }}
@@ -152,59 +172,20 @@ export default function App(this: any) {
                     </NavbarItem>
 
                     <DropdownMenu
-                        aria-label="ACME features"
-                        className="w-[340px]"
+                        aria-label="News Categories"
+                        className="w-[15rem] dropdown-menu-scroll"
                         itemClasses={{
                             base: "gap-4",
                         }}
-                    >
-                        <DropdownItem
-                            key="autoscaling"
-                            description="Noticias de deportes"
-                        //startContent={icons.scale}
-                        >
-                            Deportes
-                        </DropdownItem>
-                        <DropdownItem
-                            key="usage_metrics"
-                            description="Noticias de economía"
-                        //startContent={icons.activity}
-                        >
-                            Economía
-                        </DropdownItem>
-                        <DropdownItem
-                            key="production_ready"
-                            description="Noticias de realidad social"
-                        //startContent={icons.flash}
-                        >
-                            Realidad social
-                        </DropdownItem>
-                        <DropdownItem
-                            key="99_uptime"
-                            description="Noticias de salud"
-                        //startContent={icons.server}
-                        >
-                            Salud
-                        </DropdownItem>
-                        <DropdownItem
-                            key="supreme_support"
-                            description="Noticias de entretenimiento"
-                        //startContent={icons.user}
-                        >
-                            Entretenimiento
-                        </DropdownItem>
+                        onAction={(key) => redirectToCategory(parseInt(key) + 1)}>
+                        {categories.map((category, index) => (
+                            <DropdownItem key={index} description={`${category.cat_name} news`}>
+                                {category.cat_name}
+                            </DropdownItem>
+                        ))}
                     </DropdownMenu>
                 </Dropdown>
-                {/* <NavbarItem>
-                <Link className='text-white font-bold' href="#">
-                    Features
-                </Link>
-                </NavbarItem> */}
-                {/* <NavbarItem isActive>
-                <Link className='text-white' href="#" aria-current="page">
-                    Categories
-                </Link>
-                </NavbarItem> */}
+
                 {menuSections.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                     <NavbarItem key={`${item.label}-${index}`} isActive={selected==item.label? true:false}>
                             <Link className='text-white' color="foreground" href={{pathname:item.ref}} onClick={()=>setSelected(item.label)}>

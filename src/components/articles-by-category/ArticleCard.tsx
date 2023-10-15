@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardBody, Image, User } from '@nextui-org/react';
 import '../../app/globals.css'
 
-interface FeedArticleCardProps {
+interface ArticleCardProps {
   imageArticle: string;
   profileImage: string;
   autor: string;
@@ -13,12 +13,10 @@ interface FeedArticleCardProps {
   idWriter: number;
   views: number;
   date: string;
-  saved: boolean;
-  savedUsername: string;
   categories: Array<any>;
 }
 
-const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
+const ArticleCard: React.FC<ArticleCardProps> = ({
   imageArticle,
   profileImage,
   autor,
@@ -28,13 +26,12 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   id,
   idWriter, 
   views,
-  date, 
-  saved, 
-  savedUsername,
+  date,
   categories
 }) => {
+  
   const redirectToArticle = () => {
-    window.location.href = `articulo/${id}`;
+    window.location.href = `../articulo/${id}`;
   };
 
   return (
@@ -61,11 +58,6 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
               </a>
               <p className='ps-3 text-sm'>{views} Views</p>
             </div>
-            {saved &&
-              <div className='hidden md:flex ld:flex justify-center py-4 text-sm'>
-                <p className='text-center'>Guardado por: {savedUsername}</p>
-              </div>
-            }
           </div>
           <div className='px-4' style={{ flex: 2 }}>
             <div className='hidden md:flex lg:flex'>
@@ -86,11 +78,6 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
               ))}
               </>}
             </div>
-            {saved &&
-              <div className='flex md:hidden ld:hidden justify-center py-4 text-sm'>
-                <p className='text-center'>Guardado por: {savedUsername}</p>
-              </div>
-            }
             <p className='pt-4 flex justify-end text-sm'>
               Published: {date} 
             </p>
@@ -101,4 +88,4 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   );
 };
 
-export default FeedArticleCard;
+export default ArticleCard;

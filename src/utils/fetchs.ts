@@ -204,10 +204,43 @@ export async function getFeed(){
     let datos;
 
     if(token){
-        const res = await fetch("http://localhost:3005/articles/feed",{
+        const res = await fetch(`${process.env.BACK_URL}articles/feed`,{
                 method: 'GET',
                 headers:{'Content-Type':'application/json','authorization':token},
             }).then(response => response.json()).then(data => datos=data)
         return res;
     }
+}
+
+// articles by category
+export async function getArticlesByCategory(id: number) {
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}articles/category/${id}`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+}
+
+// all categories
+export async function getCategories() {
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}articles/categories`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+}
+
+// Category by id
+export async function getCategoryById(id: number) {
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}articles/categoryById/${id}`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
 }
