@@ -190,13 +190,12 @@ export async function getLatestPosts(){
 
 export async function getTrendingWriters(){
     let datos;
-    const res = await fetch(`http://localhost:3005/users/trending/5`,{
+    const res = await fetch(`${process.env.BACK_URL}users/trending/5`,{
         method: 'GET',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(datos)
     }).then(response => response.json()).then(data => datos=data)
+    console.log(res)
     return res;
-
 }
 
 // feed de cada usuario
@@ -209,7 +208,6 @@ export async function getFeed(){
                 method: 'GET',
                 headers:{'Content-Type':'application/json','authorization':token},
             }).then(response => response.json()).then(data => datos=data)
-        console.log(res);
         return res;
     }
 }

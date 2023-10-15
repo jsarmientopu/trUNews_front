@@ -7,7 +7,6 @@ import { BsChevronDown } from 'react-icons/bs'
 import { BsChevronUp } from 'react-icons/bs'
 
 export default function TrendingWriterPanel({ trendingWritersData }: any) {
-    const profile_image = 'https://trunews.s3.us-east-2.amazonaws.com/profile/defaultProfile.jpg';
 
     
     const { getCollapseProps, getToggleProps, isExpanded, setExpanded } =
@@ -41,10 +40,13 @@ export default function TrendingWriterPanel({ trendingWritersData }: any) {
             <section {...getCollapseProps()}>
                 <div className="flex flex-wrap justify-center xl:justify-between items-center rounded-tl-2xl rounded-tr-2xl rounded-bl-none rounded-br-none px-10 py-8 bg-[#0079DC]">
                     {
-                        trendingWritersData.map((writer: any, index: any) => {
+                        
+                        trendingWritersData?.map((writer: any, index: any) => {
+                            
                             return (
                                 <div key={index}>
-                                    <TrendingWriter id={writer.users_id_user} profilePic={profile_image} username={writer.username} />
+                                    <TrendingWriter id={writer.users_id_user} profilePic={writer.profile_image} username={writer.username} />
+                                    
                                 </div>
 
                             )
