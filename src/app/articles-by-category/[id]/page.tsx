@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from "react";
 import ArticleCard from "@/components/articles-by-category/ArticleCard";
 import { getArticlesByCategory } from "@/utils/fetchs";
+import { getCategoryById } from "@/utils/fetchs";
 import { Pagination } from '@nextui-org/react';
 
 export default function ArticlesByCategoryPage({ params }: any) {
@@ -23,6 +24,11 @@ export default function ArticlesByCategoryPage({ params }: any) {
         'article_has_categories': []
     }]);
 
+    const [category, setCategory] = useState<Array<any>>([{
+        'id_category':0,
+        'cat_name': "",
+    }]);
+
     // Paginacion de articulos
     const itemsPerPage = 5;
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,16 +36,6 @@ export default function ArticlesByCategoryPage({ params }: any) {
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-
-    const categories = [
-        "U.S.",
-        "COMEDY",
-        "PARENTING",
-        "WORLD",
-        "ARTS & CULTURE",
-        "TECH",
-        "SPORTS"
-    ]
 
     // fetch de articulos a mostrar en el feed
     useEffect(() => {
@@ -52,9 +48,20 @@ export default function ArticlesByCategoryPage({ params }: any) {
 
         fetchData();}, []);
 
+    // fetch de articulo por categoria
+    useEffect(() => {
+        async function fetchData() {
+            const CategoryData = await getCategoryById(params.id);
+            if(CategoryData){
+                setCategory(CategoryData);
+            }
+        }
+
+        fetchData();}, []);
+
     return (
         <div className="py-2">
-            <p className="text-center font-bold text-3xl p-5">{categories[params.id - 1]} ARTICLES</p>
+            <p className="text-center font-bold text-3xl p-5">{category.cat_name} ARTICLES</p>
             <div className="hidden md:flex lg:flex justify-center py-unit-4">
                 <Pagination total={Math.ceil(articles.length / itemsPerPage)} page={currentPage} onChange={(page) => handlePageChange(page)} 
                 variant="light" size="lg" showControls siblings={2} radius="full"/>

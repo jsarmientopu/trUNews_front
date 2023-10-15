@@ -22,6 +22,7 @@ import { decryptedJWT } from '@/dto/users';
 import { useRouter } from 'next/navigation';
 import { SearchIcon } from '../navbar/SearchIcon';
 import LoadingButton from './LoadingButton';
+import { getCategories } from '@/utils/fetchs';
 
 export default function App() {
     
@@ -30,6 +31,20 @@ export default function App() {
     const router = useRouter()
     const [serach, setSearch]=useState<string>('')
     const ref= useRef<any>()
+    const [categories, setCategories] = useState<Array<any>>([{
+        'id_category': 0,
+        'cat_name': "",
+    }]);
+
+    // fetch de categorias
+    useEffect(() => {
+        async function fetchData() {
+            const categoriesData = await getCategories();
+            if(categoriesData){
+                setCategories(categoriesData);
+            }
+        }
+        fetchData();}, []);
     
     async function token(){
         const rol =await verifyToken();
@@ -66,16 +81,6 @@ export default function App() {
 
     const menuSections = [
         {"rol":[0,1],"label":"Feed","ref":"/feed"},
-    ]
-
-    const categories = [
-        "U.S.",
-        "Comedy",
-        "Parenting",
-        "World",
-        "Arts & Culture",
-        "Tech",
-        "Sports"
     ]
 
     // redireccion de articulos por categoria
@@ -166,16 +171,14 @@ export default function App() {
 
                     <DropdownMenu
                         aria-label="News Categories"
-                        className="w-[15rem]"
+                        className="w-[15rem] dropdown-menu-scroll"
                         itemClasses={{
                             base: "gap-4",
                         }}
                         onAction={(key) => redirectToCategory(parseInt(key) + 1)}>
                         {categories.map((category, index) => (
-                            <DropdownItem key={index} description={`${category} news`}>
-                                <Link href={`/articles-by-category/${index}`}>
-                                    {category}
-                                </Link>
+                            <DropdownItem key={index} description={`${category.cat_name} news`}>
+                                {category.cat_name}
                             </DropdownItem>
                         ))}
                     </DropdownMenu>
