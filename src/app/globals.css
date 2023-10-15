@@ -16,3 +16,12 @@ header{
   background-color: #e9edf0 !important;
   transform: scale(1.04);
 }
+
+.dropdown-menu-scroll {
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.dropdown-menu-scroll::-webkit-scrollbar {
+  display: none;
+}

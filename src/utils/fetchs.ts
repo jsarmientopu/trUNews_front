@@ -224,3 +224,25 @@ export async function getArticlesByCategory(id: number) {
     }).then(response => response.json()).then(data => datos=data)
     return res;
 }
+
+// all categories
+export async function getCategories() {
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}articles/categories`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+}
+
+// Category by id
+export async function getCategoryById(id: number) {
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}articles/categoryById/${id}`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    return res;
+}

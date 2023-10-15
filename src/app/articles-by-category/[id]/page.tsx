@@ -3,6 +3,8 @@
 import React, {useState, useEffect} from "react";
 import ArticleCard from "@/components/articles-by-category/ArticleCard";
 import { getArticlesByCategory } from "@/utils/fetchs";
+import { getCategoryById } from "@/utils/fetchs";
+import { Pagination } from '@nextui-org/react';
 
 export default function ArticlesByCategoryPage({ params }: any) {
 
@@ -22,12 +24,18 @@ export default function ArticlesByCategoryPage({ params }: any) {
         'article_has_categories': []
     }]);
 
-    // Rastreo de articulos visibles en el feed
-    const [visibleArticles, setVisibleArticles] = useState(1);
+    const [category, setCategory] = useState<Array<any>>([{
+        'id_category':0,
+        'cat_name': "",
+    }]);
 
-    const handleVerMasClick = () => {
-        setVisibleArticles(prevVisibleArticles => prevVisibleArticles + 10);
-    }
+    // Paginacion de articulos
+    const itemsPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
 
     // fetch de articulos a mostrar en el feed
     useEffect(() => {
@@ -35,7 +43,17 @@ export default function ArticlesByCategoryPage({ params }: any) {
             const articlesByCategoryData = await getArticlesByCategory(params.id);
             if(articlesByCategoryData){
                 setArticles(articlesByCategoryData);
-                setVisibleArticles(10);
+            }
+        }
+
+        fetchData();}, []);
+
+    // fetch de articulo por categoria
+    useEffect(() => {
+        async function fetchData() {
+            const CategoryData = await getCategoryById(params.id);
+            if(CategoryData){
+                setCategory(CategoryData);
             }
         }
 
@@ -43,14 +61,22 @@ export default function ArticlesByCategoryPage({ params }: any) {
 
     return (
         <div className="py-2">
-            <p className="text-center font-bold text-3xl p-5">CATEGORY ARTICLES</p>
-            {articles.length !== 0 && articles.length > 1 ? (
+            <p className="text-center font-bold text-3xl p-5">{category.cat_name} ARTICLES</p>
+            <div className="hidden md:flex lg:flex justify-center py-unit-4">
+                <Pagination total={Math.ceil(articles.length / itemsPerPage)} page={currentPage} onChange={(page) => handlePageChange(page)} 
+                variant="light" size="lg" showControls siblings={2} radius="full"/>
+            </div>
+            <div className="flex md:hidden lg:hidden justify-center py-unit-4">
+                <Pagination total={Math.ceil(articles.length / itemsPerPage)} page={currentPage} onChange={(page) => handlePageChange(page)} 
+                variant="light" size="lg" showControls radius="full"/>
+            </div>
+            {articles.length !== 0 ? (
                 <>
-                {articles.slice(0, visibleArticles).map((item, index) => (
+                {articles.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((item, index) => (
                     <div className="flex justify-center py-unit-4" key={index}>
                     <ArticleCard 
                         imageArticle={item.image_url}
-                        profileImage={item.image_url}
+                        profileImage={item.profile_image}
                         autor={`${item.name} ${item.lastname}`}
                         username={item.username}
                         title={item.title}
@@ -59,29 +85,26 @@ export default function ArticlesByCategoryPage({ params }: any) {
                         idWriter={item.id_writer}
                         views={item.views}
                         date={item.date.slice(0, 10)}
-                        categories={["SPORTS", "POLITICS", "ENTERTAINMENT"]}
+                        categories={item.article_has_categories}
                     />
                     </div>
                 ))}
-                {visibleArticles < articles.length && (
-                    <div className="flex justify-center py-unit-4">
-                    <button onClick={handleVerMasClick} className='bg-primary text-white py-2 px-3 rounded-xl'>
-                        See more
-                    </button>
-                    </div>
-                )}
-                {visibleArticles >= articles.length && (
-                    <div className='text-center font-bold text-2xl p-5'>
-                        There are no more articles to see
-                    </div>
-                )}
+                <div className="hidden md:flex lg:flex justify-center py-unit-4">
+                <Pagination total={Math.ceil(articles.length / itemsPerPage)} page={currentPage} onChange={(page) => handlePageChange(page)} 
+                    variant="light" size="lg" showControls siblings={2} radius="full"/>
+                </div>
+                <div className="flex md:hidden lg:hidden justify-center py-unit-4">
+                    <Pagination total={Math.ceil(articles.length / itemsPerPage)} page={currentPage} onChange={(page) => handlePageChange(page)} 
+                    variant="light" size="lg" showControls radius="full"/>
+                </div>
                 </>)
             :
                 <div className='h-screen bg-[#C1D6E8] text-center font-bold text-2xl p-5'>
                     Nothing to see
                 </div>
-
             }
         </div>
     )
 }
+
+
