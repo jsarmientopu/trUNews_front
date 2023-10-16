@@ -23,6 +23,7 @@ import { useRouter } from 'next/navigation';
 import { SearchIcon } from './SearchIcon';
 import LoadingButton from './LoadingButton';
 import { getCategories } from '@/utils/fetchs';
+import { titleCase, label } from '@/utils/Navbar/utils';
 
 export default function App(this: any) {
     
@@ -69,20 +70,24 @@ export default function App(this: any) {
     // token(); 
 
     const menuButtons = [
-        {"rol":[-1,-2],"label":"Registrarse","ref":"/register"},
-        {"rol":[-1,-2],"label":"Iniciar Sesión","ref":"/login"},
-        {"rol":[0,1],"label":"Perfil","ref":"/perfil",'query':userInfo.userId},
-        {"rol":[0,1],"label":"Cerrar sesion","ref":"/", "ev":logOut}      
+        {"rol":[-1,-2],"label":"Sign Up","ref":"/register"},
+        {"rol":[-1,-2],"label":"Log In","ref":"/login"},
+        {"rol":[0,1,2],"label":"Profile","ref":"/profile",'query':userInfo.userId},
+        {"rol":[0,1,2],"label":"Log Out","ref":"/", "ev":logOut}      
     ]
 
     const menuItems = [
-        "Categorías",
-        "Cerrar sesión"
+        {"rol":[0,1,2],"label":"Feed","ref":"/feed"},
+        {"rol":[1,2],"label":"New Article","ref":"/createArticle"},
+        {"rol":[0,1,2],"label":"Profile","ref":"/profile",'query':userInfo.userId},
+        {"rol":[-1,-2],"label":"Sign Up","ref":"/register"},
+        {"rol":[-1,-2],"label":"Log In","ref":"/login"},
+        {"rol":[0,1,2],"label":"Log Out","ref":"/", "ev":logOut}   
     ];
 
     const menuSections = [
-        {"rol":[0,1],"label":"Feed","ref":"/feed"},
-        {"rol":[1],"label":"New Article","ref":"/crear-articulo"},
+        {"rol":[0,1,2],"label":"Feed","ref":"/feed"},
+        {"rol":[1,2],"label":"New Article","ref":"/createArticle"},
     ]
 
     // redireccion de articulos por categoria
@@ -173,14 +178,14 @@ export default function App(this: any) {
 
                     <DropdownMenu
                         aria-label="News Categories"
-                        className="w-[15rem] dropdown-menu-scroll"
+                        className="w-[15rem] dropdown-menu-scroll flex flex-col items-center"
                         itemClasses={{
                             base: "gap-4",
                         }}
-                        onAction={(key) => redirectToCategory(parseInt(key) + 1)}>
+                        onAction={(key) => redirectToCategory(parseInt(key.toString()) + 1)}>
                         {categories.map((category, index) => (
-                            <DropdownItem key={index} description={`${category.cat_name} news`}>
-                                {category.cat_name}
+                            <DropdownItem key={index} description={`${label()} ${titleCase(category.cat_name)}`}>
+                                {titleCase(category.cat_name)}
                             </DropdownItem>
                         ))}
                     </DropdownMenu>
@@ -278,7 +283,7 @@ export default function App(this: any) {
                                     </Button>
                                 :   
                                     item.query?
-                                    <Link className='text-black' href={{pathname:item.ref, query:{search:userInfo.userId}}}>
+                                    <Link className='text-black' href={`${item.ref}/${userInfo.userId}`}>
                                         <Button className='bg-white grow' variant="flat" >
                                             {item.label}
                                         </Button>
@@ -298,19 +303,23 @@ export default function App(this: any) {
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 />
             </NavbarContent>
-             <NavbarMenu>
-                {menuItems.map((item, index) => (
-                <NavbarMenuItem key={`${item}-${index}`} >
-                    <Link
-                    className="w-full justify-end"
-                    color={
-                        index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
+             <NavbarMenu className='flex flex-col items-end gap-4'>
+                {menuItems.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
+                <NavbarMenuItem key={`${index}`} className='p-4 text-2xl'>
+                    {item.ev?
+                        <Link  className="w-full justify-end" color='warning' href="#" onClick={item.ev}>
+                            {item.label}
+                        </Link>
+                    :   
+                        item.query?
+                        <Link className='w-full justify-end'  color={"foreground"}  href={`${item.ref}/${userInfo.userId}`}>
+                            {item.label}
+                        </Link>
+                        :
+                        <Link className='w-full justify-end'  color={"foreground"}  href={{pathname:item.ref}}>
+                            {item.label}
+                        </Link>
                     }
-                    href="#"
-                    /* size="lg" */
-                    >
-                    {item}
-                    </Link>
                 </NavbarMenuItem>
                 ))}
             </NavbarMenu>

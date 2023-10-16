@@ -37,16 +37,16 @@ export default function CrearArticulo() {
 
         <div className='flex items-center space-x-2 justify-start'>
           <p className='font-bold text-2xl'>
-            Crear artículo
+            Create article
           </p>
           <TfiWrite size='1.5em' />
         </div>
 
-        <div className='justify-end'>
+        {/* <div className='justify-end'>
           <Button className='bg-blue-300' aria-label="vista-previa">
             Vista previa <AiFillEye />
           </Button>
-        </div>
+        </div> */}
 
       </div>
 

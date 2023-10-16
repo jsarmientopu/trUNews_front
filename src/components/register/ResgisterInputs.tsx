@@ -46,21 +46,21 @@ const RegisterInputs=()=>{
                 // This will activate the closest `error.js` Error Boundary
                 // throw new Error('Failed to fetch data')
                 Swal.fire(
-                'Registro de usuario fallido!',
+                'Failed user register',
                 res.err,
                 'error'
                 )
             }else{
                 localStorage.setItem('token',res.token)
                 Swal.fire(
-                'Creación de usuario exitoso!',
+                'Register successful',
                 '',
                 'success'
                 ).then(function(){router.push("/")})
             }
         }catch(error){
                 Swal.fire(
-                'Creación de usuario fallida',
+                'Failed user creation',
                 '',
                 'error'
                 )
@@ -81,17 +81,17 @@ const RegisterInputs=()=>{
         setCpassword(e.target.value);
     };
     
-    const rol=[{value:0,label:'Lector'}, {value:1,label:'Escritor'}]
+    const rol=[{value:0,label:'Reader'}, {value:1,label:'Writer'}]
 
     return <>
         <div className='flex flex-col justify-center mx-7 w-full gap-4'>
             <div className="flex flex-wrap gap-4  md:gap-2 md:flex-nowrap">
-                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="name" radius = {"md"} placeholder='Nombres' onChange={handleChange} isRequired />
-                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="lastname" placeholder='Apellidos' onChange={handleChange} isRequired />
+                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="name" radius = {"md"} placeholder='Name' onChange={handleChange} isRequired />
+                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="lastname" placeholder='Lastname' onChange={handleChange} isRequired />
             </div>
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='text' name="username" radius = {"md"} placeholder='Usuario' onChange={handleChange} isRequired />
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="password" placeholder='Contraseña' onChange={handleChange} isRequired />
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="cpassword" placeholder='Confirmar contraseña' onChange={handleChangeConfirm} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='text' name="username" radius = {"md"} placeholder='Username' onChange={handleChange} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="password" placeholder='Password' onChange={handleChange} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="cpassword" placeholder='Confirm Password' onChange={handleChangeConfirm} isRequired />
             <Select 
                 labelPlacement="outside"
                 label="Seleccione el rol" 
@@ -106,7 +106,7 @@ const RegisterInputs=()=>{
                 ))}
             </Select>
             <div className='flex justify-center'>
-                <Button className='content-center my-4 bg-[#963ED9] ' onClick={sendData} color='primary'>Registrarse</Button>
+                <Button className='content-center my-4 bg-[#963ED9] ' onClick={sendData} color='primary'>Sign up</Button>
                 {/* bg-[#FF461F] */}
             </div>
         </div>

@@ -27,7 +27,7 @@ export default function ArticleOption({mode, article, articles, setArticles}:{'m
         }else if(ev.target.key=='delete'){
           console.log('delete')
         }else{
-          navigator.clipboard.writeText(`${process.env.FRONT_URL}/articulo/${article.id_article}`)
+          navigator.clipboard.writeText(`${process.env.FRONT_URL}/article/${article.id_article}`)
           Toast.fire({
             icon: 'success',
             title: 'Link copied'

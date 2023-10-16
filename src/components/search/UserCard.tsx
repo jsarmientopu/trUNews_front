@@ -3,7 +3,7 @@ import Link from "next/link";
 import {Card, CardFooter, Avatar} from "@nextui-org/react";
 
 const UserCard=({user}:{'user':getUserType})=>{
-    return <Link href={{pathname:'/perfil', query:{search:user.id_user}}} className='w-full'>
+    return <Link href={{pathname:`/profile/${user.id_user}`}} className='w-full'>
         <Card className="w-full">
             <div className="flex flex-col item-center items-center px-3 py-0 text-small text-default-400 w-full">
                 <div className="w-[75%] px-10 pt-6 pb-4">

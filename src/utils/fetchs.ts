@@ -258,6 +258,7 @@ export async function getCategories() {
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify(datos)
     }).then(response => response.json()).then(data => datos=data)
+    console.log(res)
     return res;
 }
 

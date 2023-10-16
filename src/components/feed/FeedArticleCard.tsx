@@ -50,7 +50,7 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
             </div> 
             <div className='flex items-center justify-center pt-4'>
               <a className="pe-6 tap-highlight-transparent data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-focus data-[focus-visible=true]:outline-offset-2 hover:opacity-80 active:opacity-disabled transition-opacity" 
-                href={`perfil/?search=${idWriter}`}>
+                href={`profile/${idWriter}`}>
                 <User   
                   name={autor}
                   description={username}

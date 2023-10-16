@@ -8,13 +8,15 @@ import { article_has_categories, returnArticlesCategory } from "@/dto/article";
 import { decryptedJWT } from "@/dto/users";
 import { getFromLocalStorage } from "@/utils/localStorage";
 import verifyToken from "@/utils/utils";
-import { saveArticle } from "@/utils/Articles/fetch";
+import { saveArticle, unsaveArticle, parseDate } from "@/utils/Articles/fetch";
 import ShareOptions from "../ArticleShare/ShareOptions";
 import {BsFillBookmarkFill} from 'react-icons/bs'
 import {MdDelete} from 'react-icons/md'
 import { alert } from "@/utils/alertHandeler";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
+import { isSaved } from "@/utils/Articles/fetch";
+import { GoBookmarkSlashFill } from "react-icons/go";
 
 export default function PostComponent({id}: any) {
 
@@ -39,6 +41,8 @@ export default function PostComponent({id}: any) {
             const article = await getPost(id)
             console.log(article)
             setArticle(article[0])
+            const savedBool = await isSaved(id)
+            setSaved(savedBool)
         })();
     }, [])
 
@@ -51,7 +55,7 @@ export default function PostComponent({id}: any) {
         icon: 'success',
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'Ok'
-      }).then(() => router.replace(`/perfil?search=${article?.id_writer}`))}
+      }).then(() => router.replace(`/profile/${article?.id_writer}`))}
 
 
     return (<>
@@ -73,16 +77,21 @@ export default function PostComponent({id}: any) {
                     <MdDelete/>
                     </Button>
                     :
-                    <Button size='sm' className="mb-2 bg-slate-600 text-white" isIconOnly onClick={() => saveArticle(id)}>
-                    <BsFillBookmarkFill/>
-                    </Button>
+                    saved?
+                        // <Button size='md' className="mb-2 bg-slate-600 text-white hover:bg-red" isIconOnly onClick={() => saveArticle(id)}>
+                        <GoBookmarkSlashFill size='2rem' onClick={() => unsaveArticle(id, setSaved)}/>
+                        // </Button>
+                        :
+                        // <Button size='sm' className="mb-2 bg-slate-600 text-white" isIconOnly onClick={() => saveArticle(id)}>
+                        <BsFillBookmarkFill size='2rem' onClick={() => saveArticle(id, setSaved)}/>
+                        // </Button>
                      }
                 </div>
             </div>   
                 <p className="font-bold text-3xl">{article?.title}</p>
-                <p className="font-semibold text-xl text-zinc-700">Author: <Link href={`/perfil?search=${article?.id_writer}`}><p className="font-semibold text-xl text-zinc-700 underline">{article?.username}</p></Link></p>
+                <p className="font-semibold text-xl text-zinc-700">Author: <Link href={`/profile/${article?.id_writer}`}><p className="font-semibold text-xl text-zinc-700 underline">{article?.username}</p></Link></p>
                 <div className="flex flex-row gap-60">
-                <p className="font-medium text-lg text-zinc-700">{article?.date.toString()}</p>
+                <p className="font-medium text-lg text-zinc-700">{parseDate(article?.date)}</p>
                     <div className="flex grow justify-end">
                     <ShareOptions/>
                     </div>

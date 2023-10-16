@@ -9,8 +9,8 @@ export default function LoginCard() {
             <div className="flex justify-center pt-3">
             <div className="flex flex-col items-center justify-center h-full" >
                 <p className="justify-center font-bold text-2xl text-[#0079DC] mb-3">TrUNews</p>
-                <p className="justify-center text-base text-black leading-5">¡Bienvenid@ de vuelta!</p>
-                <p className="justify-center text-base text-black leading-5 mb-3">Ingresa tu contraseña para continuar</p>
+                <p className="justify-center text-base text-black leading-5">¡Welcome back!</p>
+                <p className="justify-center text-base text-black leading-5 mb-3">Introduce your password to continue</p>
             </div>
             </div>
             <div className="flex justify-center">

@@ -175,19 +175,19 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                     
                     <div className="flex flex-col items-center justify-center w-full sm:w-[60%] h-full">
                         <div className="flex flex-col justify-center mx-7 w-full gap-4">
-                            <p className='font-bold text-4xl pb-4'>Mi perfil</p>
+                            <p className='font-bold text-4xl pb-4'>My profile</p>
                             <div className="flex flex-wrap gap-4  md:gap-2 md:flex-nowrap">
-                                <Input className="border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.name} color='primary' variant='bordered' type='text' name="name" placeholder='Nombres'  isRequired />
-                                <Input className="border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.lastname} color='primary' variant='bordered' type='text' name="lastname" placeholder='Apellidos'  isRequired />
+                                <Input className="border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.name} color='primary' variant='bordered' type='text' name="name" placeholder='Name'  isRequired />
+                                <Input className="border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.lastname} color='primary' variant='bordered' type='text' name="lastname" placeholder='Lastname'  isRequired />
                             </div>
-                            <Input className=" border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.username} color='primary' variant='bordered' type='text' name="username" radius = {"md"} placeholder='Usuario'  isRequired />
-                            <Input className=" border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.profession} color='primary' variant='bordered' type='text' name="profession" placeholder='Profesión'  />
+                            <Input className=" border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.username} color='primary' variant='bordered' type='text' name="username" radius = {"md"} placeholder='Username'  isRequired />
+                            <Input className=" border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.profession} color='primary' variant='bordered' type='text' name="profession" placeholder='Profession'  />
                             <Textarea
                                 className="w-full sky-600 text-black "
                                 defaultValue={profileInfo.description}
                                 variant='bordered'
                                 minRows={1}
-                                placeholder="Descripción"
+                                placeholder="Description"
                                 name='description'
                                 color="primary"
                                 />
@@ -219,14 +219,14 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
     <div className="w-[80%]">
 
-    <div className="grid grid-rows-3 gird-cols-1 lg:grid-rows-1 lg:grid-cols-3 lg:place-items-center  w-full min-h-full bg-[#C1D6E8] gap-1 lg:gap-4 lg:items-center">
+    <div className="grid grid-rows-2 gird-cols-1 lg:grid-rows-1 lg:grid-cols-3 lg:place-items-center  w-full min-h-full bg-[#C1D6E8] gap-1 lg:gap-4 lg:items-center">
     
-        <div className="bg-[#F0F2F4] w-full rounded-[17px] row-span-2 lg:row-span-1 lg:col-span-2 shadow-lg" ref={divRef} >
+        <div className="bg-[#F0F2F4] w-full rounded-[17px] row-span-1 lg:row-span-1 lg:col-span-2 shadow-lg" ref={divRef} >
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full p-5 md:pl-14 lg:pl-28 sm:py-10 gap-4">
                 <div className="flex flex-wrap sm:flex-row h-full w-full gap-14 sm:gap-10 items-center justify-center ">
                     <div className="w-[60%] sm:w-[30%] h-full">
                         <Avatar showFallback src={image} className="w-full h-auto text-large" isBordered />
-                        <div className="flex flex-row gap-2 items-center justify-center py-4">
+                        <div className="flex flex-wrap flex-row gap-2 items-center justify-center py-4 w-full">
                             {
                             profileInfo.rol==0?
                             <Button>
@@ -239,9 +239,6 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                                 Writer
                             </Button>
                             }
-                            <Button color="danger" onPress={onOpen}>
-                                Eliminar Cuenta
-                            </Button>
                             <Modal
                                 isOpen={isOpen}
                                 onOpenChange={onOpenChange}
@@ -289,29 +286,27 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
         </div>
         <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-[17px] justify-center lg:h-full shadow-lg`} >
-            <div className=" flex flex-wrap lg:flex-col items-center justify-center gap-4 md:gap-8 lg:gap-4 w-full sm:w-[90%]">
+            <div className=" flex flex-wrap lg:flex-col items-center justify-center gap-4 md:gap-8 lg:gap-4 w-full sm:w-[90%] py-10">
 
                         <div className=" flex flex-wrap md:flex-row items-center justify-center gap-4 2xl:gap-6 min-h-[20%]">
                             {profileInfo.rol==1?
-                                <p className='text-lg font-sans flex flex-wrap sm:flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
+                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
                             :
-                                <p className='text-lg font-sans flex flex-wrap sm:flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
+                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
                             }
                             <p id = "0" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
                             <p id = "1" title="View users user follows" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
                         </div>
-                        <div className="flex flex-col justify-center items-center gap-4 h-auto">
+                        <div className="flex flex-col justify-center items-center gap-4 w-full lg:w-auto h-auto">
                         {profileInfo.id_user==userInfo.userId?
                         <>
                         <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
                             Edit <FiEdit size='1.5em' />
                         </Button>
-                        
-                            {profileInfo.id_user==userInfo.userId?
-                            <ModalCard user={profileInfo}></ModalCard>
-                            :
-                            <></>
-                            }
+                        <ModalCard user={profileInfo}></ModalCard>
+                        <Button color="danger" onPress={onOpen}>
+                            Delete Account
+                        </Button>
                         </>
                         :
                         <>

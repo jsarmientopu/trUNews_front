@@ -29,7 +29,7 @@ export default function TrendingArticle({ id,image, title, description }: any) {
                     </div>
                     <div className="flex justify-center items-center">
                         <button className="bg-[#963ED9] text-white py-2 px-3 rounded-xl" title="read-article">
-                            <Link href={`articulo/${id}`}>
+                            <Link href={`article/${id}`}>
                                 Read article
                             </Link>
                         </button>  

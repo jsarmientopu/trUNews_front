@@ -7,8 +7,8 @@ const SignUpCard=()=>{
             <div className="flex justify-center px-5 pt-5 h-full w-4/5 lg:w-[65%]">
             <div className="flex flex-col items-center justify-center " >
                 <p className="flex justify-center font-bold text-2xl text-[#0079DC] mb-3">TrUNews</p>
-                <p className="justify-center text-base text-black leading-5 text-center">Únete para explorar noticias de la comunidad y de las personas de tu interés.</p>
-                <p className="justify-center text-base text-black leading-5 text-center">Ingresa sus datos para continuar</p>
+                <p className="justify-center text-base text-black leading-5 text-center"> Join us to discover the latest news in your community that match your interest.</p>
+                <p className="justify-center text-base text-black leading-5 text-center">Introduce your personal information to continue</p>
             </div>
             </div>
             <div className="flex justify-center w-4/5 lg:w-[65%] pt-3 h-full">

@@ -32,14 +32,14 @@ export default function LoginInputs() {
             // This will activate the closest `error.js` Error Boundary
             // throw new Error('Failed to fetch data')
             Swal.fire(
-            'Inicio de sesión fallido!',
+            'Failed login!',
             res.err,
             'error'
             )
         }else{
             localStorage.setItem('token',res.token)
             Swal.fire(
-            'Inicio de sesión exitoso',
+            'Login successful',
             '',
             'success'
             ).then(function(){router.push("/")})
@@ -50,12 +50,12 @@ export default function LoginInputs() {
 
     return(
         <div className='flex flex-col justify-center mx-7'>
-            <p className='justify-start text-sm my-2'>Usuario</p>
-            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='username' type='text' radius = {"md"} placeholder='Escriba su usuario' isRequired onChange={handleChange}/>
-            <p className='content-start text-sm my-2'>Contraseña</p>
-            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='password' type='password' placeholder='Escriba su contraseña' isRequired  onChange={handleChange}/>
+            <p className='justify-start text-sm my-2'>User</p>
+            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='username' type='text' radius = {"md"} placeholder='Write your username' isRequired onChange={handleChange}/>
+            <p className='content-start text-sm my-2'>Password</p>
+            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='password' type='password' placeholder='Write your password' isRequired  onChange={handleChange}/>
             <div className='flex justify-center'>
-                <Button className='content-center my-4 bg-[#963ED9]' color='primary' onClick={sendData}>Iniciar sesión</Button>
+                <Button className='content-center my-4 bg-[#963ED9]' color='primary' onClick={sendData}>Log In</Button>
             </div>
         </div>
     );

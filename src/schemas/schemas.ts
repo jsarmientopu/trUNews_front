@@ -94,6 +94,7 @@ export const getArticleSchema = z.object({
     writer: z.object({
         id_user:z.number(),
         username: z.string(),
-    }).strict()
+    }).strict(),
+    category: z.array(z.object({category:z.object({cat_name: z.string().optional()})}))
     // z.number({ required_error: "Debe haber ua imagen" }),
 }).strict();

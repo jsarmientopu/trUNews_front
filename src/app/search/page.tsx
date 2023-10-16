@@ -9,13 +9,15 @@ import { getArticleType } from "@/dto/article";
 import { getUserType } from "@/dto/users";
 import { useSearchParams } from 'next/navigation';
 import { getSearch } from "@/utils/search/fetch";
+import { getLatestPosts  } from "@/utils/fetchs";
 
 const App=()=>{   
 
     const [filter, setFilter] = useState<[boolean,boolean,boolean]>([true,false,false])
-    const [searchedArticles, setSearchedArticles]=useState<Array<getArticleType>>([{'id_article':0,'title':'','date':"",'text':'','writer':{'id_user':0,'username':''},'views':0,'image_url':''}])
+    const [searchedArticles, setSearchedArticles]=useState<Array<getArticleType>>([{'id_article':0,'title':'','date':"",'text':'','writer':{'id_user':0,'username':''},'views':0,'image_url':'', 'category':[]}])
     const [searchedUsers, setSearchedUsers]=useState<Array<getUserType>>([{'id_user':0,'username':'benito','name':'','lastname':'', 'rol':-1, 'followersCount':0,'followingsCount':0,'isFollowing':false, 'description':'','image_url':''}])
     const searchParams = useSearchParams().get('search')
+    const [recentCarouselData, setRecentCarouselData] = useState()
     var search:string;
     if(searchParams){
         search=searchParams;
@@ -41,9 +43,12 @@ const App=()=>{
                 if(res[1].err){
                     setSearchedArticles([])
                 }else{
+                    console.log(res[1])
                     setSearchedArticles(res[1])
                 }
             }
+            const recentCarouselData2 = await getLatestPosts();
+            setRecentCarouselData(recentCarouselData2)
         })()
     },[])
 
@@ -99,7 +104,7 @@ const App=()=>{
                 <>No se encontraron resultados</>
 
             }
-            <RecentCarousel/>
+            <RecentCarousel recentCarouselData={recentCarouselData} />
             </div>
         </div>
 }

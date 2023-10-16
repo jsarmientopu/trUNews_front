@@ -21,10 +21,10 @@ const SavedCard = ({data, mode, userInfo, userView, articles, setArticles}:{data
             </div>
             <div className="flex flex-col justify-center items-center sm:w-[70%] md:w-[60%] lg:w-[70%] xl:w-[50%] gap-4 pt-6">
                 <p className="text-center max-w-full text-ellipsis overflow-hidden">{data.title}</p>
-                <Link href={{pathname:`/articulo/${data.id_article}`}} className="flex flex-col w-[70%]">
+                <Link href={{pathname:`/article/${data.id_article}`}} className="flex flex-col w-[70%]">
                     <Button className="flex flex-col mx-[10%] py-7 bg-[#0079DC] text-[#F8F8F8]">
                         <div className="flex flex-col items-center text-white">
-                            <p className="">Ver articulo</p>
+                            <p className="">Read Article</p>
                             <FaEye size='1.5em'/>
                         </div>
                     </Button>

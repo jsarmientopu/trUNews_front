@@ -7,12 +7,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {CheckboxGroup} from "@nextui-org/react";
 import { CustomCheckbox } from './CustomCheckbox'
 
-const ModelInput=({formData, generated, setGenerated, setFormData, setCategory, Category, groupSelected, setGroupSelected}:{'formData':createArticleType, 'generated':boolean, 'setGenerated':any, 'setFormData':Dispatch<SetStateAction<createArticleType>>, 'setCategory':any, 'Category':any, 'groupSelected':any, 'setGroupSelected':any})=>{
+const ModelInput=({formData, generated, setGenerated, setFormData, setCategory, Category, groupSelected, setGroupSelected, loading, setLoading}:{'formData':createArticleType, 'generated':boolean, 'setGenerated':any, 'setFormData':Dispatch<SetStateAction<createArticleType>>, 'setCategory':any, 'Category':any, 'groupSelected':any, 'setGroupSelected':any, loading:any, setLoading:any})=>{
 
     const [title, setTitle]=useState<Array<string>>([])
     const [data, setData]=useState<createArticleType>(formData)
     const [counter, setCounter]=useState<number>(0)
-    const [loading, setLoading]=useState<boolean>(false)
 
     const handleGenerating=async(event:any)=>{
         if(generated){
@@ -42,15 +41,15 @@ const ModelInput=({formData, generated, setGenerated, setFormData, setCategory, 
         setData(formData)
     },[formData])
 
-    if(loading) return <>Loading</>
+    if(loading) return <div className='flex flex-row gap-4 mb-2'>The title and categories are being generated</div>
 
     return <>
     <div className='flex flex-row gap-4 mb-2'>
           <Button className='w-50 bg-[#FF6624] text-[#F8F8F8]' onClick={handleGenerating}>
-            <RiRefreshLine className='fill-[#F8F8F8]' /> {generated? 'Regenerar titulo':'Generar título y categorias'}
+            <RiRefreshLine className='fill-[#F8F8F8]' /> {generated? 'Regenerate title and categories':'Generate the title and categories'}
           </Button>
           <div className='flex flex-column items-center justify-center'>
-            <p> Genera el titulo y las categorias a las que pertenece tu articulo por medio de inteligencia artificial !Pruebalo ya¡</p>
+            <p> Generate the title and the categories to which your article belongs through artificial intelligence! Try it now!</p>
           </div>
         </div>
         <div>
@@ -58,7 +57,8 @@ const ModelInput=({formData, generated, setGenerated, setFormData, setCategory, 
             variant='bordered'
             minRows={1}
             labelPlacement="outside"
-            className="w-full mb-2"
+            className="w-full mb-2 text-3xl text-black"
+            size='lg'
             name='title'
             value={title.length>0?title[counter]:''}
             isDisabled

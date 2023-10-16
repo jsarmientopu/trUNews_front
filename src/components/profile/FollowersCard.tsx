@@ -8,7 +8,7 @@ import { FaPenNib } from "react-icons/fa";
 
 const FollowersCard=({data}:any)=>{
 
-    return<Link target="_parent" href={{pathname:'/perfil', query:{search:data.id_user}}}  className="flex flex-row justify-between gap-10 px-7 w-full  py-2 transition ease-in-out delay-100 hover:scale-110 hover:shadow-lg">
+    return<Link target="_parent" href={{pathname:`/profile/${data.id_user}`}}  className="flex flex-row justify-between gap-10 px-7 w-full  py-2 transition ease-in-out delay-100 hover:scale-110 hover:shadow-lg">
             <div className="w-[25%] items-center"><Avatar className="w-full h-full text-large" src={data.image_url?data.image_url:"https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg"}  isBordered /></div>
             <div className="flex flex-col justify-center w-[40%]">
                 <p className="text-2xl">{data.name}</p>

@@ -22,7 +22,7 @@ const RecommendedBar = ({id}: any)=>{
         <div className="flex-col bg-[#70BBF7] w-full rounded-lg" >
             <div className="flex flex-row m-6 gap-5">
                 <BsBook size="1.5em"/>
-                <p className="font-bold text-xl w-full text-black">Articulos Relacionados</p>
+                <p className="font-bold text-xl w-full text-black">Related Articles</p>
             </div>
             <div className="flex flex-col justify-center m-9 gap-8">
             {articles?.length!==0?

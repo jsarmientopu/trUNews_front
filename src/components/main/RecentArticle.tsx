@@ -1,14 +1,15 @@
 'use client'
 import Link from "next/link"
+import { Image } from "@nextui-org/react"
 export default function RecentArticle({ id, image, title, timeSincePosted }: any) {
     return (
         <div id="container-recent-article" className="flex justify-start">
 
-            <Link href={`articulo/${id}`}>
+            <Link href={`article/${id}`}>
                 <div className="flex flex-col justify-center">
 
-                    <div className="w-60 h-40 2xl:w-96 flex justify-center mb-3">
-                        <img src={image} className="w-full h-full object-cover rounded-lg" alt={`img-${id}`} />
+                    <div className="w-full h-40 2xl:w-96 flex justify-center mb-3">
+                        <Image src={image} className="w-full h-full object-cover rounded-lg" alt={`img-${id}`} />
                     </div>
 
                     <div className="flex justify-center">

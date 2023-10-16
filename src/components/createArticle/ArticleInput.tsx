@@ -1,5 +1,6 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { Button } from '@nextui-org/react';
+import LoadingButton from '../Navbar_Components/LoadingButton';
 import { FaFileUpload } from 'react-icons/fa'
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
@@ -11,8 +12,8 @@ import ModelInput from './ModelInput';
 
 const ArticleInput=({userInfo}:any)=>{
     
-    const [file, setFile] = useState<String>('Añadir archivo nuevo (.txt, .docx, .md)');
-    const [nameImage, setNameImage] = useState<String>('Archivo.png');
+    const [file, setFile] = useState<String>('Add new file (.txt, .docx, .md)');
+    const [nameImage, setNameImage] = useState<String>('File.png');
     const [image,setImage] = useState();
     const [plainText, setPlainText] = useState<string>();
     const [formData, setFormData] = useState<createArticleType>({
@@ -31,6 +32,7 @@ const ArticleInput=({userInfo}:any)=>{
     const imageInputRef = useRef<HTMLInputElement>(null);
     const [generated, setGenerated]=useState<boolean>(false);
     const [groupSelected, setGroupSelected] = useState<Array<string>>([]);
+    const [loading, setLoading]=useState<boolean>(false)
     const router = useRouter();
 
 
@@ -61,16 +63,16 @@ const ArticleInput=({userInfo}:any)=>{
     return <>
     <div className='justify-start mb-8'>
         <p className='font-bold text-lg'>
-          Imagen
+          Image
         </p>
         <p className='text-base mb-2'>
-          Añadir imagen principal para el artículo
+          Add articles´s main image
         </p>
         <div className='flex items-center'>
 
           <div>
-            <Button className='bg-blue-400 h-9 w-[6.5rem] mr-4' onClick={()=>{imageInputRef.current?.click()}}>
-              Subir imagen
+            <Button className='bg-blue-400 h-9 w-[7rem] mr-4' onClick={()=>{imageInputRef.current?.click()}}>
+              Upload Image
             </Button>
             <input className='hidden' id='input_image' name='input_Image' key='1' type='file' ref={imageInputRef} onChange={handleImageChange} accept='image/*'/>
           </div>
@@ -90,12 +92,11 @@ const ArticleInput=({userInfo}:any)=>{
 
       <div className='justify-start'>
         <p className='font-bold text-lg'>
-          Contenido
+          Content
         </p>
         <p className='text-base mb-2'>
-          Añadir contenido para el artículo que será creado. Puede importarse como archivo de word, txt o md o escribirse en el campo de texto.
-          Tenga en cuenta que el estilo de viluazación de la noticia será el mismo el cual usted genere en el campo de texto, agregando únicamente una imagen (Subida anteriormente)
-          y el titulo al inicio de esta misma.
+          Add content for the article that will be created. It can be imported as a Word, TXT, or MD file, or written in the text field.  
+          Please note that the formatting of the article will remain the same as what you generate in the text field, with the addition of only an image (previously uploaded) and the title at the beginning of the article
         </p>
         <div className='mb-2' >
           <Button className='bg-gray-300' onClick={()=>{fileInputRef.current?.click()}}>
@@ -133,11 +134,14 @@ const ArticleInput=({userInfo}:any)=>{
     />
   </div>
       <div>
-        <ModelInput formData={formData} generated={generated} setGenerated={setGenerated} setFormData={setFormData} setCategory={setCategory} Category={Category} groupSelected={groupSelected} setGroupSelected={setGroupSelected}/>
-
+        <ModelInput formData={formData} generated={generated} setGenerated={setGenerated} setFormData={setFormData} setCategory={setCategory} Category={Category} groupSelected={groupSelected} setGroupSelected={setGroupSelected} loading={loading} setLoading={setLoading}/>
+        {loading?
+        <LoadingButton/>
+          :
         <Button className='bg-[#963ED9] mb-2 w-36 text-white' onClick={sendData}>
-          <MdOutlineCreate /> Crear artículo
+          <MdOutlineCreate /> Create article
         </Button>
+        }
 
 
       </div>
