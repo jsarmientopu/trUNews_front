@@ -35,7 +35,7 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
         })();
     },[articlesPage])
 
-    return <animated.div className="flex flex-col bg-[#F0F2F4] md:w-[80%] rounded-[17px] justify-center items-center shadow-xl" style={ani}>
+    return <animated.div className="flex flex-col bg-[#F0F2F4] md:w-[80%] rounded-2xl justify-center items-center shadow-xl" style={ani}>
             <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full lg:w-[95%] py-5 px-5 sm:px-16 sm:pt-10 gap-2 bg-[#F0F2F4]">
                 {articlesPage?
                     <p className="text-2xl">Written Articles</p>

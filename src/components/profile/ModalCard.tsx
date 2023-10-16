@@ -50,10 +50,10 @@ const ModalCard=({user}:{'user':getUserType})=>{
                     <p>Please complete the next form to update your password.</p>
                     <form className="gap-4" >
                         <p className='content-start text-sm my-2'>Old Password</p>
-                        <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='password' type='password' radius = {"md"} placeholder='Password' onChange={(event)=>setUpdatePassword({...infoUpdatePassword,'currentPassword':event.target.value})} isRequired/>
+                        <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='password' type='password' radius = {"md"} placeholder='Password' onChange={(event)=>setUpdatePassword({...infoUpdatePassword,'currentPassword':event.target.value})} isRequired/>
                         <p className='content-start text-sm my-2'>New Password</p>
-                        <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px] mb-4" name='newPassword' type='password' placeholder='New Password' onChange={(event)=>setUpdatePassword({...infoUpdatePassword,'newPassword':event.target.value})} isRequired/>
-                        <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='newPassword2' type='password' placeholder='Confirm Password' onChange={(event)=>setConfirm(event.target.value)} isRequired/>
+                        <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl mb-4" name='newPassword' type='password' placeholder='New Password' onChange={(event)=>setUpdatePassword({...infoUpdatePassword,'newPassword':event.target.value})} isRequired/>
+                        <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='newPassword2' type='password' placeholder='Confirm Password' onChange={(event)=>setConfirm(event.target.value)} isRequired/>
                     </form>
                 </ModalBody>
                 <ModalFooter>

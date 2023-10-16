@@ -9,7 +9,7 @@ const SavedCard = ({data, mode, userInfo, userView, articles, setArticles}:{data
             console.log(userView, userInfo)
 
     return <>
-        <div className="flex flex-row rounded-[15px] md:w-[80%] lg:w-[70%] xl:w-[49%] bg-[#EEEFEF] p-4 gap-3 shadow-lg h-60 relative hover:scale-105">
+        <div className="flex flex-row rounded-2xl md:w-[80%] lg:w-[70%] xl:w-[49%] bg-[#EEEFEF] p-4 gap-3 shadow-lg h-60 relative hover:scale-105">
             <div className="w-[50%] h-[100%] flex flex-col justify-center">
                 <Image
                     className="mr-0"

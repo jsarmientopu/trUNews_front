@@ -86,17 +86,17 @@ const RegisterInputs=()=>{
     return <>
         <div className='flex flex-col justify-center mx-7 w-full gap-4'>
             <div className="flex flex-wrap gap-4  md:gap-2 md:flex-nowrap">
-                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="name" radius = {"md"} placeholder='Name' onChange={handleChange} isRequired />
-                <Input className="border-2 border-sky-600 rounded-[13px]" type='text' name="lastname" placeholder='Lastname' onChange={handleChange} isRequired />
+                <Input className="border-2 border-sky-600 rounded-xl" type='text' name="name" radius = {"md"} placeholder='Name' onChange={handleChange} isRequired />
+                <Input className="border-2 border-sky-600 rounded-xl" type='text' name="lastname" placeholder='Lastname' onChange={handleChange} isRequired />
             </div>
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='text' name="username" radius = {"md"} placeholder='Username' onChange={handleChange} isRequired />
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="password" placeholder='Password' onChange={handleChange} isRequired />
-            <Input className=" mr-8 border-2 border-sky-600 rounded-[13px]" type='password' name="cpassword" placeholder='Confirm Password' onChange={handleChangeConfirm} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-xl" type='text' name="username" radius = {"md"} placeholder='Username' onChange={handleChange} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-xl" type='password' name="password" placeholder='Password' onChange={handleChange} isRequired />
+            <Input className=" mr-8 border-2 border-sky-600 rounded-xl" type='password' name="cpassword" placeholder='Confirm Password' onChange={handleChangeConfirm} isRequired />
             <Select 
                 labelPlacement="outside"
                 label="Seleccione el rol" 
                 name='rol'
-                className="border-2 border-sky-600 rounded-[13px] my-3"
+                className="border-2 border-sky-600 rounded-xl my-3"
                 onChange={handleChange} 
             >
                 {rol.map((rol) => (
