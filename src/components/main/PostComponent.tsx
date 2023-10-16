@@ -1,5 +1,5 @@
 'use client'
-import { Button, Link } from "@nextui-org/react";
+import { Button, Link, user } from "@nextui-org/react";
 import { deletePost, getPost } from "@/utils/fetchs";
 import { Image } from "@nextui-org/react";
 import RecommendedBar from "@/components/RecommendedBar";
@@ -72,18 +72,20 @@ export default function PostComponent({id}: any) {
                         <>No hay Articulos socio</>
                 }
                 <div className="flex grow justify-end">
-                    {userInfo.userId==article?.id_writer?
+                    {userInfo.userId==article?.id_writer || userInfo.rol==2?
                     <Button size='sm' className="mb-2 bg-red-700 text-white" isIconOnly onClick={() => alert('question','The article will be deleted.','',()=>{deletePost(id); confirm();})}>
                     <MdDelete/>
                     </Button>
-                    :
-                    saved?
+                    :<></>
+                    }
+                    {
+                    saved && userInfo.userId!=article?.id_writer?
                         // <Button size='md' className="mb-2 bg-slate-600 text-white hover:bg-red" isIconOnly onClick={() => saveArticle(id)}>
-                        <GoBookmarkSlashFill size='2rem' onClick={() => unsaveArticle(id, setSaved)}/>
+                    <GoBookmarkSlashFill size='2rem' onClick={() => unsaveArticle(id, setSaved)}/>
                         // </Button>
-                        :
+                    :
                         // <Button size='sm' className="mb-2 bg-slate-600 text-white" isIconOnly onClick={() => saveArticle(id)}>
-                        <BsFillBookmarkFill size='2rem' onClick={() => saveArticle(id, setSaved)}/>
+                    <BsFillBookmarkFill size='2rem' onClick={() => saveArticle(id, setSaved)}/>
                         // </Button>
                      }
                 </div>

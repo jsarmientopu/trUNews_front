@@ -299,16 +299,21 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         </div>
                         <div className="flex flex-col justify-center items-center gap-4 w-full lg:w-auto h-auto">
                         {profileInfo.id_user==userInfo.userId?
-                        <>
                         <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
                             Edit <FiEdit size='1.5em' />
                         </Button>
+                        :<> </>
+                        }
+                        {profileInfo.id_user==userInfo.userId||userInfo.rol==2?
+                        <>
                         <ModalCard user={profileInfo}></ModalCard>
                         <Button color="danger" onPress={onOpen}>
                             Delete Account
                         </Button>
                         </>
-                        :
+                        :<></>
+                        }
+                        {profileInfo.id_user!=userInfo.userId||userInfo.rol==2?
                         <>
                         {profileInfo.isFollowing?
                             <Button color="primary" onClick={async()=>{const res = await unfollow(profileInfo,userInfo.userId); if(!res.error)setProfileInfo({...profileInfo,'isFollowing':false})}}>
@@ -320,6 +325,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                             </Button>
                         }
                         </>
+                        :<></>
                         }
                         </div>
                     </div>
