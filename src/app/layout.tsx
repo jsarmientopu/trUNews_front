@@ -1,4 +1,3 @@
-'use client'
 import { Montserrat } from 'next/font/google'
 
 import './globals.css'
@@ -6,7 +5,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from './providers'
 import Navbar from '@/components/Navbar_Components/Navbar'
-import { usePathname } from 'next/navigation';
 
 const montserrat = Montserrat({
   weight:["300","400","500","700"],
@@ -27,15 +25,12 @@ export default function RootLayout({
   children: React.ReactNode
 }){
 
-  const pathname = usePathname()
-  const isLoginPage= (pathname==='/login' || pathname==='/register')
-
   return (
     <html lang="en" className='scroll-smooth'>
       <body className={montserrat.className}>
         <Providers>
           <>
-          {!isLoginPage &&(<Navbar /> )}
+          <Navbar />
             {children}
           </>
         </Providers>

@@ -24,6 +24,7 @@ import { SearchIcon } from './SearchIcon';
 import LoadingButton from './LoadingButton';
 import { getCategories } from '@/utils/fetchs';
 import { titleCase, label } from '@/utils/Navbar/utils';
+import { usePathname } from 'next/navigation';
 import { Roles } from '@/utils/rolDefinition';
 
 export default function App(this: any) {
@@ -96,6 +97,10 @@ export default function App(this: any) {
         window.location.href = `/articles-by-category/${id}`;
     };
 
+    const pathname = usePathname()
+    if (pathname==='/login' || pathname==='/register'){
+        return <></>
+    }
     
     return (
         <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
