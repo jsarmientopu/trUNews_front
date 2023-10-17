@@ -228,7 +228,7 @@ export default function App(this: any) {
 
                     <DropdownMenu
                         aria-label="ACME features"
-                        className="w-[340px]"
+                        className="w-full"
                         itemClasses={{
                             base: "gap-4",
                         }}

@@ -171,7 +171,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
     if(edit){
 
-        return <animated.div className="bg-white w-[40%] rounded-[17px] shadow-xl opacity-0" style={ani}>
+        return <animated.div className="bg-white w-[40%] rounded-2xl shadow-xl opacity-0" style={ani}>
 
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full py-5 px-5 sm:px-16 sm:py-10 gap-4">
                 <form className="flex flex-wrap sm:flex-row h-full w-full gap-10 items-center justify-center" onSubmit={submitForm}>
@@ -180,11 +180,11 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         <div className="flex flex-col justify-center mx-7 w-full gap-4">
                             <p className='font-bold text-4xl pb-4'>My profile</p>
                             <div className="flex flex-wrap gap-4  md:gap-2 md:flex-nowrap">
-                                <Input className="border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.name} color='primary' variant='bordered' type='text' name="name" placeholder='Name'  isRequired />
-                                <Input className="border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.lastname} color='primary' variant='bordered' type='text' name="lastname" placeholder='Lastname'  isRequired />
+                                <Input className="border-2 sky-600 rounded-xl " defaultValue={profileInfo.name} color='primary' variant='bordered' type='text' name="name" placeholder='Name'  isRequired />
+                                <Input className="border-2 sky-600 rounded-xl " defaultValue={profileInfo.lastname} color='primary' variant='bordered' type='text' name="lastname" placeholder='Lastname'  isRequired />
                             </div>
-                            <Input className=" border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.username} color='primary' variant='bordered' type='text' name="username" radius = {"md"} placeholder='Username'  isRequired />
-                            <Input className=" border-2 sky-600 rounded-[13px] " defaultValue={profileInfo.profession} color='primary' variant='bordered' type='text' name="profession" placeholder='Profession'  />
+                            <Input className=" border-2 sky-600 rounded-xl " defaultValue={profileInfo.username} color='primary' variant='bordered' type='text' name="username" radius = {"md"} placeholder='Username'  isRequired />
+                            <Input className=" border-2 sky-600 rounded-xl " defaultValue={profileInfo.profession} color='primary' variant='bordered' type='text' name="profession" placeholder='Profession'  />
                             <Textarea
                                 className="w-full sky-600 text-black "
                                 defaultValue={profileInfo.description}
@@ -224,7 +224,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
 
     <div className="grid grid-rows-2 gird-cols-1 lg:grid-rows-1 lg:grid-cols-3 lg:place-items-center  w-full min-h-full bg-[#C1D6E8] gap-1 lg:gap-4 lg:items-center">
     
-        <div className="bg-[#F0F2F4] w-full rounded-[17px] row-span-1 lg:row-span-1 lg:col-span-2 shadow-lg" ref={divRef} >
+        <div className="bg-[#F0F2F4] w-full rounded-2xl row-span-1 lg:row-span-1 lg:col-span-2 shadow-lg" ref={divRef} >
             <div className="flex flex-wrap sm:flex-row justify-start h-[50%] sm:h-full w-full p-5 md:pl-14 lg:pl-28 sm:py-10 gap-4">
                 <div className="flex flex-wrap sm:flex-row h-full w-full gap-14 sm:gap-10 items-center justify-center ">
                     <div className="w-[60%] sm:w-[30%] h-full">
@@ -256,7 +256,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                                     <ModalBody>
                                         <form className="gap-4" >
                                             <p className='content-start text-sm my-2'>Password</p>
-                                            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-[13px]" name='password' type='password' radius = {"md"} placeholder='Password' onChange={(event)=>setFormPassword({username: profileInfo.username ,password: event.target.value})} isRequired/>
+                                            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='password' type='password' radius = {"md"} placeholder='Password' onChange={(event)=>setFormPassword({username: profileInfo.username ,password: event.target.value})} isRequired/>
                                         </form>
                                     </ModalBody>
                                     <ModalFooter>
@@ -288,7 +288,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         
 
         </div>
-        <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-[17px] justify-center lg:h-full shadow-lg`} >
+        <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-2xl justify-center lg:h-full shadow-lg`} >
             <div className=" flex flex-wrap lg:flex-col items-center justify-center gap-4 md:gap-8 lg:gap-4 w-full sm:w-[90%] py-10">
 
                         <div className=" flex flex-wrap md:flex-row items-center justify-center gap-4 2xl:gap-6 min-h-[20%]">
