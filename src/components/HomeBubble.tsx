@@ -1,5 +1,5 @@
 import { Button, Link, Image } from "@nextui-org/react"
-
+    
 
 const HomeBubble=()=>{
     return (<>
