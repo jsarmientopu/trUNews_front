@@ -12,6 +12,7 @@ import { animated, useSpring} from "react-spring";
 import { removeFromLocalStorage } from "@/utils/localStorage";
 import { redirect, useRouter } from "next/navigation";
 import { set } from "zod";
+import { Roles } from "@/utils/rolDefinition";
 
 
 const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows, setArticleWriter, articlesPage, setArticlesPage}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any, 'setArticleWriter':any, 'articlesPage':any, 'setArticlesPage':any})=>{
@@ -36,7 +37,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         'rol':0,
         'profession':'',
         'description':'',
-        'image_url':'',
+        'profile_image':'',
         'followersCount':0,
         'followingsCount':0,
         'isFollowing':false,
@@ -110,9 +111,9 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             }
             if(!res.error){
                 setProfileInfo(sentData)
-                if(res.image_url){
-                    console.log(res.image_url)
-                    setImage(res.image_url); setNewImage(res.image_url);
+                if(res.profile_image){
+                    console.log(res.profile_image)
+                    setImage(res.profile_image); setNewImage(res.profile_image);
                 }
                 setTimeout(()=>{},2800)
                 setEdit(false)
@@ -136,7 +137,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             const users = await getProfile(userView);
             console.log(users)
             setProfileInfo(users);
-            if(users.image_url)setImage(users.image_url);setNewImage(users.image_url);
+            if(users.profile_image)setImage(users.profile_image);setNewImage(users.profile_image);
             if(users.articlesByUser)setArticleWriter(users.articlesByUser);
         })();
     },[])
@@ -146,14 +147,16 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
     const submitDeleteForm = async (event:any)=>{
         const confirm = await checkPassword(formPassword)
         console.log(profileInfo.username)
-        if(confirm.success){
+        if(confirm.success || userInfo.rol==Roles.admin){
             alert('question','You will lose all your data upon deletion','',async()=>{
                 const res = await deleteAccount(profileInfo.id_user)
                 if(res.err){
                     alert('error','Deletion failed','',()=>{})
                 }
                 else{
-                    removeFromLocalStorage('token');
+                    if(userInfo.rol!=Roles.admin){
+                        removeFromLocalStorage('token');
+                    }
                     setTimeout(()=>{router.replace('/login')},2000)
                 }
             })
@@ -228,7 +231,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         <Avatar showFallback src={image} className="w-full h-auto text-large" isBordered />
                         <div className="flex flex-wrap flex-row gap-2 items-center justify-center py-4 w-full">
                             {
-                            profileInfo.rol==0?
+                            profileInfo.rol==Roles.lector?
                             <Button>
                             <GiBookCover size='1.5em'  /> 
                                 Reader
@@ -289,7 +292,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
             <div className=" flex flex-wrap lg:flex-col items-center justify-center gap-4 md:gap-8 lg:gap-4 w-full sm:w-[90%] py-10">
 
                         <div className=" flex flex-wrap md:flex-row items-center justify-center gap-4 2xl:gap-6 min-h-[20%]">
-                            {profileInfo.rol==1?
+                            {profileInfo.rol==Roles.escritor?
                                 <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
                             :
                                 <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
@@ -299,21 +302,22 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         </div>
                         <div className="flex flex-col justify-center items-center gap-4 w-full lg:w-auto h-auto">
                         {profileInfo.id_user==userInfo.userId?
+                        <>
                         <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
                             Edit <FiEdit size='1.5em' />
                         </Button>
+                        <ModalCard user={profileInfo}></ModalCard></>
                         :<> </>
                         }
-                        {profileInfo.id_user==userInfo.userId||userInfo.rol==2?
+                        {profileInfo.id_user==userInfo.userId||userInfo.rol==Roles.admin?
                         <>
-                        <ModalCard user={profileInfo}></ModalCard>
-                        <Button color="danger" onPress={onOpen}>
+                        <Button color="danger" onPress={userInfo.rol==Roles.admin?submitDeleteForm:onOpen}>
                             Delete Account
                         </Button>
                         </>
                         :<></>
                         }
-                        {profileInfo.id_user!=userInfo.userId||userInfo.rol==2?
+                        {profileInfo.id_user!=userInfo.userId||userInfo.rol==Roles.admin?
                         <>
                         {profileInfo.isFollowing?
                             <Button color="primary" onClick={async()=>{const res = await unfollow(profileInfo,userInfo.userId); if(!res.error)setProfileInfo({...profileInfo,'isFollowing':false})}}>

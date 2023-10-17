@@ -17,7 +17,7 @@ export default function RecentCarousel({ recentCarouselData }: any) {
                 <RecentCarouselEmbla loop align="start" >
                     {recentCarouselData?.map((slide: any, index: any) => {
                         return (
-                            <div key={index} className='flex flex-row justify-center mr-5 lg:mr-0'>
+                            <div key={index} className='flex-[0_0_25%] flex-row justify-center mr-5 lg:mr-3'>
                                 <RecentArticle id={slide.article_id} image={slide.image_url} title={slide.title} timeSincePosted={slide.date} />
                             </div>
 

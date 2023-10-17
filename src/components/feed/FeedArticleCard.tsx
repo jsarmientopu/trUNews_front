@@ -34,7 +34,7 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
   categories
 }) => {
   const redirectToArticle = () => {
-    window.location.href = `articulo/${id}`;
+    window.location.href = `article/${id}`;
   };
 
   return (

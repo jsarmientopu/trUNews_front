@@ -24,7 +24,7 @@ export default function ArticlesByCategoryPage({ params }: any) {
         'article_has_categories': []
     }]);
 
-    const [category, setCategory] = useState<Array<any>>([{
+    const [category, setCategory] = useState<any>([{
         'id_category':0,
         'cat_name': "",
     }]);
@@ -52,6 +52,7 @@ export default function ArticlesByCategoryPage({ params }: any) {
     useEffect(() => {
         async function fetchData() {
             const CategoryData = await getCategoryById(params.id);
+            console.log(CategoryData)
             if(CategoryData){
                 setCategory(CategoryData);
             }

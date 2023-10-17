@@ -22,7 +22,8 @@ export default function LoginInputs() {
 
     async function sendData() {
         let datos;
-        const res = await fetch('http://localhost:3005/users/checkPassword',{
+        const res = await fetch(`${process.env.BACK_URL}users/checkPassword`,{
+        // const res = await fetch('http://localhost:3005/users/checkPassword',{
             method: 'POST',
             headers:{'Content-Type':'application/json'},
             body:JSON.stringify(formData),

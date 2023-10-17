@@ -47,7 +47,7 @@ const RecentCarouselEmbla = ({ children, ...options }: Props) => {
                 {/* 4. We pass the children as-is so that the outside component can style it accordingly */}
                 <div className="flex">{children}</div>
             </div>
-            <RecentCarouselDots itemsLength={length} selectedIndex={selectedIndex} />
+            <RecentCarouselDots key={2} itemsLength={length} selectedIndex={selectedIndex} />
         </>
     );
 };

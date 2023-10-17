@@ -18,7 +18,7 @@ export const getUserSchema = z.object({
     rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
     profession: z.string().optional(),
     description: z.string().optional(),
-    image_url: z.string().optional(),
+    profile_image: z.string().optional(),
     followersCount: z.number(),
     followingsCount: z.number(),    
     isFollowing: z.boolean(),
@@ -57,7 +57,7 @@ export const getFollowerSchema = z.object({
     lastname: z.string({required_error:"debe haber lastname"}),
     username: z.string({required_error:"debe haber username"}),
     rol: z.number({required_error:"debe haber rol"}),
-    image_url: z.string({required_error:"debe haber imagen"})
+    profile_image: z.string({required_error:"debe haber imagen"})
 }).strict()
 
 export const decryptJWTSchema = z.object({

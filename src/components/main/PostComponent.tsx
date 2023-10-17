@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { isSaved } from "@/utils/Articles/fetch";
 import { GoBookmarkSlashFill } from "react-icons/go";
+import { Roles } from "@/utils/rolDefinition";
 
 export default function PostComponent({id}: any) {
 
@@ -42,6 +43,7 @@ export default function PostComponent({id}: any) {
             console.log(article)
             setArticle(article[0])
             const savedBool = await isSaved(id)
+            console.log(savedBool)
             setSaved(savedBool)
         })();
     }, [])
@@ -72,14 +74,14 @@ export default function PostComponent({id}: any) {
                         <>No hay Articulos socio</>
                 }
                 <div className="flex grow justify-end">
-                    {userInfo.userId==article?.id_writer || userInfo.rol==2?
+                    {userInfo.userId==article?.id_writer || userInfo.rol==Roles.admin?
                     <Button size='sm' className="mb-2 bg-red-700 text-white" isIconOnly onClick={() => alert('question','The article will be deleted.','',()=>{deletePost(id); confirm();})}>
                     <MdDelete/>
                     </Button>
                     :<></>
                     }
-                    {
-                    saved && userInfo.userId!=article?.id_writer?
+                    {userInfo.userId!=article.id_writer?
+                    saved?
                         // <Button size='md' className="mb-2 bg-slate-600 text-white hover:bg-red" isIconOnly onClick={() => saveArticle(id)}>
                     <GoBookmarkSlashFill size='2rem' onClick={() => unsaveArticle(id, setSaved)}/>
                         // </Button>
@@ -87,6 +89,7 @@ export default function PostComponent({id}: any) {
                         // <Button size='sm' className="mb-2 bg-slate-600 text-white" isIconOnly onClick={() => saveArticle(id)}>
                     <BsFillBookmarkFill size='2rem' onClick={() => saveArticle(id, setSaved)}/>
                         // </Button>
+                    :<></>
                      }
                 </div>
             </div>   

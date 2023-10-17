@@ -18,7 +18,7 @@ const FollowersPage=({follows,fixFollows, userView} : any)=>{
     const [followers, setFollowers]=useState<Array<getFollowerType>>([{
         'id_user':0,
         'username':'',
-        'image_url':'',
+        'profile_image':'',
         'name':'',
         'lastname':'',
         'rol':0

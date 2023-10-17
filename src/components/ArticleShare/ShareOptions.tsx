@@ -62,11 +62,11 @@ const ShareOptions=()=>{
         >
         <TelegramIcon size={32} round />
         </TelegramShareButton>
-      <EmailShareButton 
+      {/* <EmailShareButton 
         blankTarget
         url={process.env.FRONT_URL+pathname}> 
         <EmailIcon size={32} round /> 
-      </EmailShareButton> 
+      </EmailShareButton>  */}
       <Button className='flex flex-col justify-center' onClick={copyToClipboard} isIconOnly radius='full' size='sm'><BiLink/></Button>
       <QR path={process.env.FRONT_URL+pathname}></QR>
 

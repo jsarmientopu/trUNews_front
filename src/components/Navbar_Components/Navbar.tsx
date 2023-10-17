@@ -24,6 +24,7 @@ import { SearchIcon } from './SearchIcon';
 import LoadingButton from './LoadingButton';
 import { getCategories } from '@/utils/fetchs';
 import { titleCase, label } from '@/utils/Navbar/utils';
+import { Roles } from '@/utils/rolDefinition';
 
 export default function App(this: any) {
     
@@ -72,22 +73,22 @@ export default function App(this: any) {
     const menuButtons = [
         {"rol":[-1,-2],"label":"Sign Up","ref":"/register"},
         {"rol":[-1,-2],"label":"Log In","ref":"/login"},
-        {"rol":[0,1,2],"label":"Profile","ref":"/profile",'query':userInfo.userId},
-        {"rol":[0,1,2],"label":"Log Out","ref":"/", "ev":logOut}      
+        {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Profile","ref":"/profile",'query':userInfo.userId},
+        {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Log Out","ref":"/", "ev":logOut}      
     ]
 
     const menuItems = [
-        {"rol":[0,1,2],"label":"Feed","ref":"/feed"},
-        {"rol":[1,2],"label":"New Article","ref":"/createArticle"},
-        {"rol":[0,1,2],"label":"Profile","ref":"/profile",'query':userInfo.userId},
+        {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Feed","ref":"/feed"},
+        {"rol":[Roles.escritor, Roles.admin],"label":"New Article","ref":"/createArticle"},
+        {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Profile","ref":"/profile",'query':userInfo.userId},
         {"rol":[-1,-2],"label":"Sign Up","ref":"/register"},
         {"rol":[-1,-2],"label":"Log In","ref":"/login"},
-        {"rol":[0,1,2],"label":"Log Out","ref":"/", "ev":logOut}   
+        {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Log Out","ref":"/", "ev":logOut}   
     ];
 
     const menuSections = [
-        {"rol":[0,1,2],"label":"Feed","ref":"/feed"},
-        {"rol":[1,2],"label":"New Article","ref":"/createArticle"},
+        {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Feed","ref":"/feed"},
+        {"rol":[Roles.escritor, Roles.admin],"label":"New Article","ref":"/createArticle"},
     ]
 
     // redireccion de articulos por categoria
@@ -134,7 +135,7 @@ export default function App(this: any) {
                 onChange={(event)=>{setSearch(event.target.value)}}
                 onKeyDown={(event)=>{if(event.key=='Enter'){ref.current.click()}}}
             />
-            <Link target='_parent' href={{pathname:'/search', query:{search:serach}}} ref={ref}/>
+            <Link target='_parent' href={{pathname:'/search', query:{q:serach}}} ref={ref}/>
             </NavbarContent>
             {/* <NavbarContent className="hidden md:flex  gap-4 " justify="center"> */}
                 {/* <Dropdown>

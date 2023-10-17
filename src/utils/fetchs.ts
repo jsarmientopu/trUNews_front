@@ -40,7 +40,7 @@ export const updateProfile=async(datos:getUserType, image:string|null)=>{
         'lastname':datos.lastname,
         'description':datos.description,
         'profession':datos.profession,
-        'image_url':image,
+        'profile_image':image,
     } as Partial<updateUserType>;
     console.log(updateData)
     const token = getFromLocalStorage('token')

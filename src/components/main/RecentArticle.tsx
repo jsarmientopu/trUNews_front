@@ -8,8 +8,8 @@ export default function RecentArticle({ id, image, title, timeSincePosted }: any
             <Link href={`article/${id}`}>
                 <div className="flex flex-col justify-center">
 
-                    <div className="w-full h-40 2xl:w-96 flex justify-center mb-3">
-                        <Image src={image} className="w-full h-full object-cover rounded-lg" alt={`img-${id}`} />
+                    <div className="w-full h-48 2xl:w-96 flex justify-center mb-3">
+                        <img src={image} className="w-full h-full object-cover rounded-lg" alt={`img-${id}`} />
                     </div>
 
                     <div className="flex justify-center">

@@ -6,6 +6,7 @@ import { decryptedJWT } from '@/dto/users'
 import verifyToken from '@/utils/utils'
 import { useRouter } from 'next/navigation'
 import { useState,useEffect } from 'react'
+import { Roles } from '@/utils/rolDefinition';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +25,7 @@ export default function Layout({
 
     async function token(){
         const rol =await verifyToken();
-        if(rol.rol!=1){
+        if(rol.rol!=Roles.escritor){
             router.push("/");
         }
     }

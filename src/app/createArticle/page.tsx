@@ -8,6 +8,7 @@ import { decryptedJWT } from '@/dto/users'
 import verifyToken from '@/utils/utils'
 import {getFromLocalStorage} from '@/utils/localStorage'
 import ArticleInput from '@/components/createArticle/ArticleInput'
+import { Roles } from '@/utils/rolDefinition'
 
 export default function CrearArticulo() {
   const [userInfo,setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
@@ -27,7 +28,7 @@ export default function CrearArticulo() {
     },[]);
 
     if(userInfo.userId==-2) return <p>Loading..</p>;
-    if(userInfo.userId==0 || userInfo.userId==-1) router.push('/');
+    if(userInfo.userId==Roles.lector || userInfo.userId==-1) router.push('/');
 
 
   return (

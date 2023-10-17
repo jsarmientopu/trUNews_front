@@ -31,7 +31,7 @@ export default function RootLayout({
   const isLoginPage= (pathname==='/login' || pathname==='/register')
 
   return (
-    <html lang="en">
+    <html lang="en" className='scroll-smooth'>
       <body className={montserrat.className}>
         <Providers>
           <>

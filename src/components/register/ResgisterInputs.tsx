@@ -36,7 +36,8 @@ const RegisterInputs=()=>{
         try{
             createUserSchema.parse(formData);
             let datos;
-            const res = await fetch('http://localhost:3005/users/create',{
+            const res = await fetch(`${process.env.BACK_URL}users/create`,{
+            // const res = await fetch( 'http://localhost:3005/users/create',{
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(formData),
@@ -81,7 +82,7 @@ const RegisterInputs=()=>{
         setCpassword(e.target.value);
     };
     
-    const rol=[{value:0,label:'Reader'}, {value:1,label:'Writer'}]
+    const rol=[{value:2,label:'Reader'}, {value:1,label:'Writer'}]
 
     return <>
         <div className='flex flex-col justify-center mx-7 w-full gap-4'>
