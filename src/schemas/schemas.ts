@@ -5,7 +5,7 @@ export const createUserSchema = z.object({
     name: z.string({ required_error:"Debe haber name"}),
     password: z.string(),
     lastname: z.string({ required_error: "Debe haber lastname"}),
-    rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
+    rol: z.number().refine(value => value == 1 ||  value == 2 ||  value == 0, {message: "Debe ser 0, 1 o 2"}),
     profession: z.string().optional(),
     description: z.string().optional()
 }).strict();
@@ -15,7 +15,7 @@ export const getUserSchema = z.object({
     username: z.string({required_error: "Debe haber un username UNICO"}),
     name: z.string({ required_error:"Debe haber name"}),
     lastname: z.string({ required_error: "Debe haber lastname"}),
-    rol: z.number().refine(value => value === 0 ||  value === 1, {message: "Debe ser 0 o 1"}),
+    rol: z.number().refine(value => (value == 1 ||  value == 2 ||  value == 0), {message: "Debe ser 0, 1 o 2"}),
     profession: z.string().optional(),
     description: z.string().optional(),
     profile_image: z.string().optional(),
