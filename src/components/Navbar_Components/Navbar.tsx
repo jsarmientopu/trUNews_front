@@ -66,6 +66,7 @@ export default function App(this: any) {
         }
         router.refresh()
         router.push("/")
+        window.location.reload();
         token()
     }
 

@@ -43,7 +43,7 @@ export default function LoginInputs() {
             'Login successful',
             '',
             'success'
-            ).then(function(){router.push("/")})
+            ).then(function(){router.push("/"); window.location.reload();})
         }
         
         return

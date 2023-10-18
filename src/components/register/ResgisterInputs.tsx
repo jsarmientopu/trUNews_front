@@ -36,6 +36,7 @@ const RegisterInputs=()=>{
         try{
             createUserSchema.parse(formData);
             let datos;
+            console.log(formData)
             const res = await fetch(`${process.env.BACK_URL}users/create`,{
             // const res = await fetch( 'http://localhost:3005/users/create',{
                 method: 'POST',
@@ -57,7 +58,7 @@ const RegisterInputs=()=>{
                 'Register successful',
                 '',
                 'success'
-                ).then(function(){router.push("/")})
+                ).then(function(){router.push("/"); window.location.reload();})
             }
         }catch(error){
                 Swal.fire(
