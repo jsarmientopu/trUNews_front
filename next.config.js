@@ -5,7 +5,8 @@ const nextConfig = {
     },
     env: {
         // BACK_URL: 'http://localhost:3005/',
-        BACK_URL: 'http://3.89.38.183:3005/', 
+        // BACK_URL: 'https://3.89.38.183:3005/', 
+        BACK_URL: 'https://obliging-boar-inherently.ngrok-free.app/', 
 
 
         FRONT_URL: 'https://trunews-front-lac.vercel.app',
