@@ -115,7 +115,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                     console.log(res.profile_image)
                     setImage(res.profile_image); setNewImage(res.profile_image);
                 }
-                setTimeout(()=>{},2800)
+                setTimeout(()=>{},4000)
                 setEdit(false)
             }
         })
