@@ -14,7 +14,7 @@ export default function FeedPage() {
     const [userInfo, setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [articlesFeed, setArticlesFeed] = useState<Array<any>>([{
         'date':'',
-        'id_article': 0,
+        'id_article': -1,
         'id_writer': 0,
         'image_url': '',
         'lastname': '',

@@ -1,11 +1,17 @@
 import { getArticleType } from "@/dto/article";
 import Link from "next/link";
 import {Card, CardFooter, Image} from "@nextui-org/react";
+import SkeletonCard from "../SkeletonCard";
 
 const ArticleCard=({article}:{'article':getArticleType})=>{
     const dat1 = new Date(article.date);
     const now = new Date(Date.now());
     const diff = Math.ceil((now.getTime()-dat1.getTime()) / (1000 * 60 * 60 * 24))-1;
+
+    if(article.id_article==-1){
+        return <SkeletonCard mode={1}></SkeletonCard>
+    }
+
     return <Link href={{pathname:`/article/${article.id_article}`}} className='w-full'>
         <Card className="w-full">
             <div className="flex flex-col item-center items-center px-3 py-0 text-small text-default-400">

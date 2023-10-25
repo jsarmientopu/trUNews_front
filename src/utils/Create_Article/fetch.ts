@@ -34,6 +34,7 @@ export async function createArticle(formData:createArticleType, categories:Array
         }).then(response => response.json()).then(data => datos=data)
         console.log(res);
         if (res.err || res.error) {
+            console.log(res.err)
             alert('error', 'Failed article creation!', res.err, ()=>{})
         }else{
             const category = await fetch(`${process.env.BACK_URL}articles/create/categories`,{
@@ -50,7 +51,11 @@ export async function createArticle(formData:createArticleType, categories:Array
 
         }
     }else{
-        alert('error', 'Failed article creation!', 'Incorrect information', ()=>{})
+        if(categories.length<=0){
+            alert('error', 'Failed article creation!', 'Select at least one category', ()=>{})
+        }else{
+            alert('error', 'Failed article creation!', 'Add your text', ()=>{})
+        }
     }
 
 }
