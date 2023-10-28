@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images : {
-        domains:['picsum.photos',"loremflickr.com","trunews.s3.us-east-2.amazonaws.com"]
+        domains:['picsum.photos',"loremflickr.com","trunews.s3.us-east-2.amazonaws.com","trunews.s3.amazonaws.com"]
     },
     env: {
         // BACK_URL: 'http://localhost:3005/',

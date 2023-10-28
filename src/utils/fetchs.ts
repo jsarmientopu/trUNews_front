@@ -272,3 +272,14 @@ export async function getCategoryById(id: number) {
     }).then(response => response.json()).then(data => datos=data)
     return res;
 }
+
+export async function getCommunities() {
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}communities`,{
+        method: 'GET',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(datos)
+    }).then(response => response.json()).then(data => datos=data)
+    console.log(res)
+    return res;
+}
