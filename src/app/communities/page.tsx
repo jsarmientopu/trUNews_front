@@ -45,7 +45,7 @@ function page() {
         <div id="container">
             <div className='p-3'>
 
-                <p className='text-black font-bold text-7xl flex justify-center mb-3'>
+                <p className='text-black font-bold text-5xl lg:text-7xl flex justify-center mb-3'>
                     Communities
                 </p>
 

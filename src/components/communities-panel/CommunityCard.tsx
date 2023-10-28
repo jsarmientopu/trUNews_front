@@ -28,7 +28,7 @@ function CommunityCard() {
         <div onClick={() => set(state => !state)} className='relative'>
             <a.div
 
-                className={`backside cursor-pointer absolute top-5 left-0 p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 to-indigo-600 ${flipped ? "z-10" : ''}`}
+                className={`backside cursor-pointer absolute top-5 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 to-indigo-600 ${flipped ? "z-10" : ''}`}
                 style={{
                     opacity,
                     transform,
@@ -36,13 +36,13 @@ function CommunityCard() {
                 }}
             >
                 <div className='flex justify-center'>
-                    <p className='mx-4 my-4 font-medium line-clamp-[14] text-justify text-white select-none'>
-                        This is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description this is a sample description
+                    <p className='mx-4 font-medium line-clamp-[14] text-justify text-white select-none'>
+                        This is a sample description this is a sample description this is a sample description 
                     </p>
                 </div>
 
                 <div className='flex justify-center'>
-                    <Button className='mx-4 my-4 w-52 h-10 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1 z-50'>
+                    <Button className='w-52 h-10 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1 z-50'>
 
                         <p className='text-center text-white font-medium text-2xl'>
                             Read more
@@ -55,7 +55,7 @@ function CommunityCard() {
 
             </a.div>
 
-            <a.div className='frontside cursor-pointer mt-5 p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-cyan-400 via-blue-400 to-purple-400 z-50' style={{ opacity: opacity.to(o => 1 - o), transform }}>
+            <a.div className='frontside cursor-pointer mt-5 p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-blue-400 via-sky-400 to-cyan-500 z-50' style={{ opacity: opacity.to(o => 1 - o), transform }}>
 
                 <div className='break-words'>
                     <p className='text-center font-bold text-2xl line-clamp-2 select-none'>
