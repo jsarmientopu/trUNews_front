@@ -25,3 +25,11 @@ header{
 .dropdown-menu-scroll::-webkit-scrollbar {
   display: none;
 }
+
+.icon_button {
+  font-size: 3rem !important;
+}
+
+.icon_button:hover {
+  transform: scale(1.2);
+}
