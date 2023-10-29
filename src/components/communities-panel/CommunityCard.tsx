@@ -28,7 +28,7 @@ function CommunityCard({title, profile_image, cats, members, description}:any) {
         <div onClick={() => set(state => !state)} className='relative mb-2'>
             <a.div
 
-                className={`backside cursor-pointer absolute top-0 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 to-indigo-600 ${flipped ? "z-10" : ''}`}
+                className={`backside cursor-pointer absolute top-0 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 via-purple-600 to-indigo-600 ${flipped ? "z-10" : ''}`}
                 style={{
                     opacity,
                     transform,

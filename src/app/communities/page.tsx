@@ -40,6 +40,7 @@ function page() {
         })();
     }, [])
 
+    let currentCommunities = []
 
     return (
         <div id="container" className='bg-[#C1D6E8] h-screen'>
@@ -67,6 +68,7 @@ function page() {
                     {communitiesData?.map((com: any, index: any) => {
                         const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
                         if (checkedBoxes.some(element => communityCatNames.includes(element))) {
+
                             return (
                                 <div key={index}>
                                     <CommunityCard title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
