@@ -16,13 +16,13 @@ export async function getCommunityById(id: number) {
 }
 
 // Feed community
-export async function getCommunityFeed() {
+export async function getCommunityFeed(idCommunity: number) {
 
     const token = getFromLocalStorage('token')
     let datos;
     
     if(token){
-        const res = await fetch(`${process.env.BACK_URL}communities/feed`,{
+        const res = await fetch(`${process.env.BACK_URL}communities/feed/?communityId=${idCommunity}`,{
                 method: 'GET',
                 headers:{'Content-Type':'application/json','authorization':token},
             }).then(response => response.json()).then(data => datos=data)
