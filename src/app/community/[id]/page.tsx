@@ -3,8 +3,10 @@
 import React, {useState, useEffect} from "react";
 import { getCommunityById, getCommunityFeed } from "@/utils/Communities/fetch"
 import CommunityArticleCard from "@/components/community/CommunityArticleCard";
-import { Image, Avatar, Divider, Button } from '@nextui-org/react';
+import { Image, Avatar, Divider, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, cn } from '@nextui-org/react';
 import '../../globals.css'
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { SlOptionsVertical } from "react-icons/sl";
 
 export default function CommunityPage({ params }: any) {
 
@@ -24,6 +26,8 @@ export default function CommunityPage({ params }: any) {
         'membersCount': 0
 
     }]);
+
+    const [edit, setEdit] = useState<boolean>(false);
 
     // articles feed
     const [articles, setArticles] = useState<Array<any>>([{
@@ -90,14 +94,36 @@ export default function CommunityPage({ params }: any) {
                 <div className='flex justify-center pt-5'>
                     <Image src={community.banner_url} alt="Banner Community" />
                 </div> 
-                <div className="flex items-center justify-center gap-80 gap-96">
+                <div className="flex items-center justify-center gap-96">
                     <Avatar src={community.avatar_url} size="lg" />
                     <p className="font-bold text-2xl">
                         {community.name}
                     </p>
-                    <span className="material-symbols-outlined icon_button">
-                        <a href="#">more_vert</a>
-                    </span>
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button isIconOnly variant="light">
+                                <SlOptionsVertical/>
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{key=='edit'? setEdit(true): deleteCommunity(params.id)}}>
+                            <DropdownItem
+                            key="edit"
+                            description="Edit the community"
+                            startContent={<AiFillEdit/>}
+                            >
+                            Edit Community
+                            </DropdownItem>
+                            <DropdownItem
+                            key="delete"
+                            className="text-danger"
+                            color="danger"
+                            description="Permanently delete the community"
+                            startContent={<AiFillDelete/>}
+                            >
+                            Delete Community
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </div>
                 <p className="text-lg text-justify">
                     {community.description}
