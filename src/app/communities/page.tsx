@@ -42,14 +42,14 @@ function page() {
 
 
     return (
-        <div id="container">
-            <div className='p-3'>
+        <div id="container" className='bg-[#C1D6E8] h-screen'>
+            <div className='p-3 bg-[#C1D6E8]'>
 
                 <p className='text-black font-bold text-5xl lg:text-7xl flex justify-center mb-3'>
                     Communities
                 </p>
 
-                <div className='p-4 bg-[#963ED9] flex gap-4 flex-wrap align-middle justify-center rounded-2xl'>
+                <div className='p-4 bg-[#963ED9] flex gap-4 flex-wrap align-middle justify-center rounded-2xl mb-5'>
                     {categoriesData?.map((category: any, index: any) => {
                         return (
                             <div key={index}>
@@ -63,12 +63,13 @@ function page() {
                     })}
                 </div>
 
-                <div>
-                    {test.map((testCom: any, index: any) => {
-                        if (checkedBoxes.some(element => testCom.categories.includes(element))) {
+                <div className='flex justify-center gap-8 flex-wrap'>
+                    {communitiesData?.map((com: any, index: any) => {
+                        const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
+                        if (checkedBoxes.some(element => communityCatNames.includes(element))) {
                             return (
                                 <div key={index}>
-                                    <p>{testCom.name}</p>
+                                    <CommunityCard title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
                                 </div>
                             )
                         } else {
@@ -77,13 +78,14 @@ function page() {
                     })}
                 </div>
 
-                <div className='mt-5 flex justify-center gap-8 flex-wrap'>
+
+                {/* <div className='mt-5 flex justify-center gap-8 flex-wrap'>
                     <CommunityCard />
                     <CommunityCard />
                     <CommunityCard />
                     <CommunityCard />
                     <CommunityCard />
-                </div>
+                </div> */}
 
             </div>
         </div>

@@ -11,7 +11,7 @@ import { useEffect } from 'react';
 import { useSpring, a } from '@react-spring/web'
 
 
-function CommunityCard() {
+function CommunityCard({title, profile_image, cats, members, description}:any) {
 
     const linkImage = "https://revistaastronauta.com/wp-content/uploads/2022/05/music.jpg"
     const categories = ["WORLD NEWS", "TECH", "TECH", "TECH", "TECH", "TECH", "TECH"]
@@ -25,10 +25,10 @@ function CommunityCard() {
 
 
     return (
-        <div onClick={() => set(state => !state)} className='relative'>
+        <div onClick={() => set(state => !state)} className='relative mb-2'>
             <a.div
 
-                className={`backside cursor-pointer absolute top-5 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 to-indigo-600 ${flipped ? "z-10" : ''}`}
+                className={`backside cursor-pointer absolute top-0 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 to-indigo-600 ${flipped ? "z-10" : ''}`}
                 style={{
                     opacity,
                     transform,
@@ -37,7 +37,7 @@ function CommunityCard() {
             >
                 <div className='flex justify-center'>
                     <p className='mx-4 font-medium line-clamp-[14] text-justify text-white select-none'>
-                        This is a sample description this is a sample description this is a sample description 
+                        {description}
                     </p>
                 </div>
 
@@ -55,21 +55,21 @@ function CommunityCard() {
 
             </a.div>
 
-            <a.div className='frontside cursor-pointer mt-5 p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-blue-400 via-sky-400 to-cyan-500 z-50' style={{ opacity: opacity.to(o => 1 - o), transform }}>
+            <a.div className='frontside cursor-pointer p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-blue-400 via-sky-400 to-cyan-500 z-50' style={{ opacity: opacity.to(o => 1 - o), transform }}>
 
                 <div className='break-words'>
                     <p className='text-center font-bold text-2xl line-clamp-2 select-none'>
-                        Sample title
+                        {title}
                     </p>
                 </div>
                 <div className='flex justify-center'>
-                    <Image className='shadow-2xl h-48 w-48 object-cover mb-1 select-none' radius='full' alt='test' src={linkImage} />
+                    <Image className='shadow-2xl h-48 w-48 object-cover mb-1 select-none' radius='full' alt='test' src={profile_image} />
                 </div>
                 <div className='flex gap-2 justify-center flex-wrap'>
-                    {categories.map((cat: any, index: any) => {
+                    {cats.map((cat: any, index: any) => {
                         return (
                             <div key={index} className='bg-[#963ED9] p-1 rounded-md'>
-                                <p className='text-white text-sm text-center font-medium select-none'>
+                                <p className='text-white text-[0.65rem] text-center font-medium select-none'>
                                     {cat}
                                 </p>
                             </div>
@@ -78,7 +78,7 @@ function CommunityCard() {
                 </div>
                 <div className='flex justify-center'>
                     <p className='text-zinc-800 select-none'>
-                        100 members
+                        {members} members
                     </p>
                 </div>
                 <div className='flex justify-center'>
