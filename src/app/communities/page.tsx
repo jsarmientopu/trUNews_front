@@ -64,7 +64,7 @@ function page() {
                     })}
                 </div>
 
-                <div className='flex justify-center gap-8 flex-wrap'>
+                <div className='flex justify-center gap-12 flex-wrap'>
                     {communitiesData?.map((com: any, index: any) => {
                         const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
                         if (checkedBoxes.some(element => communityCatNames.includes(element))) {
@@ -79,15 +79,6 @@ function page() {
                         }
                     })}
                 </div>
-
-
-                {/* <div className='mt-5 flex justify-center gap-8 flex-wrap'>
-                    <CommunityCard />
-                    <CommunityCard />
-                    <CommunityCard />
-                    <CommunityCard />
-                    <CommunityCard />
-                </div> */}
 
             </div>
         </div>

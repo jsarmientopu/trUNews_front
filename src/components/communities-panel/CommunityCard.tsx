@@ -1,20 +1,14 @@
 'use client'
 import React from 'react';
-import { Card } from '@nextui-org/react';
 import { Image } from '@nextui-org/react';
 import { Button } from '@nextui-org/react';
-import { PiCursorClick } from 'react-icons/pi'
-import { TbHandClick } from 'react-icons/tb'
 import { BsHandIndexThumb } from 'react-icons/bs'
 import { useState } from 'react';
-import { useEffect } from 'react';
+
 import { useSpring, a } from '@react-spring/web'
 
 
 function CommunityCard({title, profile_image, cats, members, description}:any) {
-
-    const linkImage = "https://revistaastronauta.com/wp-content/uploads/2022/05/music.jpg"
-    const categories = ["WORLD NEWS", "TECH", "TECH", "TECH", "TECH", "TECH", "TECH"]
 
     const [flipped, set] = useState(false)
     const { transform, opacity } = useSpring({
@@ -94,52 +88,8 @@ function CommunityCard({title, profile_image, cats, members, description}:any) {
 
             </a.div>
 
-
-
         </div>
     )
-
-
-    return (
-        <div className='mt-5 p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-cyan-500 from-60% to-blue-500'>
-
-            <div className='break-words'>
-                <p className='text-center font-bold text-2xl line-clamp-2'>
-                    Sample long titleSample long titleSample long titleSample long title
-                </p>
-            </div>
-            <div className='flex justify-center'>
-                <Image className='h-48 w-48 object-cover mb-1' radius='full' alt='test' src={linkImage} />
-            </div>
-            <div className='flex gap-2 justify-center flex-wrap'>
-                {categories.map((cat: any, index: any) => {
-                    return (
-                        <div key={index} className='bg-[#963ED9] p-1 rounded-md'>
-                            <p className='text-white text-sm text-center font-medium'>
-                                {cat}
-                            </p>
-                        </div>
-                    )
-                })}
-            </div>
-            <div className='flex justify-center'>
-                <p className='text-zinc-800'>
-                    100 members
-                </p>
-            </div>
-            <div className='flex justify-center'>
-                <Button className='w-30 h-10 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1'>
-
-                    <p className='text-center text-white font-medium text-2xl'>
-                        Join
-                    </p>
-                    <BsHandIndexThumb color="white" size="2em" className="rotate-[-45deg]" />
-                </Button>
-            </div>
-
-
-        </div>
-    );
 }
 
 export default CommunityCard;
