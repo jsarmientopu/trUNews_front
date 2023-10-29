@@ -158,51 +158,6 @@ export default function CommunityPage({ params }: any) {
                     </div>
                 </div>
             }
-            {/* Feed zone */}
-            {community.isMember &&
-            
-                <div className="py-2">
-                    {articles.length !== 0 && articles.length > 1 ? (
-                        <>
-                        {articles.slice(0, visibleArticles).map((item, index) => (
-                            <div className="flex justify-center py-unit-4" key={index}>
-                            <CommunityArticleCard 
-                                imageArticle={item.image_url}
-                                profileImage={item.profile_image}
-                                autor={`${item.name} ${item.lastname}`}
-                                username={item.username}
-                                title={item.title}
-                                summary={item.sanitizedText}
-                                id={item.id_article}
-                                idWriter={item.id_writer}
-                                views={item.views}
-                                date={item.date.slice(0, 10)}
-                                categories={item.article_has_categories}
-                            />
-                            </div>
-                        ))}
-                        {visibleArticles < articles.length && (
-                            <div className="flex justify-center py-unit-4">
-                            <button onClick={handleVerMasClick} className='bg-primary text-white py-2 px-3 rounded-xl'>
-                                See more
-                            </button>
-                            </div>
-                        )}
-                        {visibleArticles >= articles.length && (
-                            <div className='text-center font-bold text-2xl p-5'>
-                                There are no more articles to see
-                            </div>
-                        )}
-                        </>)
-                    :
-                        <div className='h-screen text-center font-bold text-2xl p-5'>
-                            Nothing to see
-                        </div>
-
-                    }
-                </div>
-            }
-            {/* End Feed zone */}
         </div>
     )
 }
