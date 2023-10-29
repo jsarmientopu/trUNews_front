@@ -38,7 +38,7 @@ export async function deleteCommunity(idCommunity: number) {
     let datos;
     const user = await verifyToken()
     if(token){
-        const res = await fetch(`${process.env.BACK_URL}communities/${user.userId}/delete/${idCommunity}`,{
+        const res = await fetch(`${process.env.BACK_URL}communities/delete/${user.userId}/${idCommunity}`,{
                 method: 'DELETE',
                 headers:{'Content-Type':'application/json','authorization':token},
             }).then(response => response.json()).then(data => datos=data)
