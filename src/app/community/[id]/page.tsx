@@ -78,7 +78,7 @@ export default function CommunityPage({ params }: any) {
         <div>
             {/* Presentation zone */}
             <div className="py-2 px-10">
-                <div className='pt-4 ps-14 flex flex-wrap row gap-3 text-sm'>
+                <div className='pt-4 md:ps-14 lg:ps-14 flex flex-wrap gap-3 text-xs md:text-sm lg:text-sm'>
                     {community.community_has_categories && 
                         <>
                         {community.community_has_categories.map((item: any, index: number) => (
@@ -88,24 +88,26 @@ export default function CommunityPage({ params }: any) {
                     ))}
                     </>}
                 </div>
-                <div className='flex justify-center p-6'>
+                <div className='flex justify-center md:p-6 lg:p-6 pt-6 pb-6'>
                     <Image src={community.banner_url} alt="Banner Community"/>
                 </div> 
-                <div className="grid  grid-cols-8 ps-20 pe-20">
-                    <div className="col-span-7 flex items-center gap-6">
-                        <Avatar src={community.avatar_url} className="w-20 h-20 text-large" isBordered/>
-                        <p className="font-bold text-4xl">
+                <div className="grid  grid-cols-8 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20">
+                    <div className="col-span-1 flex items-center">
+                        <Avatar src={community.avatar_url} className="w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24" isBordered/>
+                    </div>
+                    <div className="col-span-6 flex items-center ps-6">
+                        <p className="font-bold text-2xl md:text-3xl lg:text-4xl">
                             {community.name}
                         </p>
                     </div>
                     { community.isCreator ?
-                        <div className="flex justify-end pe-5 col-span-1">
+                        <div className="flex justify-end pe-5 col-span-1 items-center">
                             <span className="material-symbols-outlined icon_button">
                                 <a href="#">settings</a>
                             </span>
                         </div>
                         : community.isMember ?
-                        <div className="flex justify-end pe-5 col-span-1">
+                        <div className="flex justify-end pe-5 col-span-1 items-center">
                             <span className="material-symbols-outlined icon_button">
                                 <a href="#">more_vert</a>
                             </span>
@@ -114,7 +116,7 @@ export default function CommunityPage({ params }: any) {
                         <></>
                     }
                 </div>
-                <div className="p-10 ps-20 pe-20">
+                <div className="pt-5 md:p-10 lg:p-10 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20 ">
                     <p className="text-lg text-justify">
                         {community.description}
                     </p>
@@ -122,20 +124,19 @@ export default function CommunityPage({ params }: any) {
                 
             </div>
             {/* End Presentation zone */}
+            <Divider className="my-4" />
             {community.isMember ?
-                <>
-                    <Divider className="my-4" />
-                    <div className="flex justify-center p-5">
-                        <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                            <a href="#" className="flex items-center gap-2">
-                                Post 
-                                <span className="material-symbols-outlined">
-                                stylus
-                                </span>
-                            </a>
-                        </Button>
-                    </div>
-                </>
+                
+                <div className="flex justify-center p-5">
+                    <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
+                        <a href="#" className="flex items-center gap-2">
+                            Post 
+                            <span className="material-symbols-outlined">
+                            stylus
+                            </span>
+                        </a>
+                    </Button>
+                </div>
                 :
                 <div className="pb-16">
                     <div className="flex justify-center p-5">
@@ -151,7 +152,7 @@ export default function CommunityPage({ params }: any) {
                         </span>
                     </div>
                     <div>
-                        <p className='text-center font-bold text-3xl p-5'>
+                        <p className='text-center font-bold text-2xl md:text-3xl lg:text-3xl p-5'>
                             Join this community to see <br></br>
                             its contents
                         </p>
