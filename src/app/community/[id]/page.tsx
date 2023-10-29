@@ -1,9 +1,11 @@
 'use client'
 
 import React, {useState, useEffect} from "react";
-import { getCommunityById, getCommunityFeed } from "@/utils/Communities/fetch"
+import { getCommunityById, getCommunityFeed, joinCommunity } from "@/utils/Communities/fetch"
 import CommunityArticleCard from "@/components/community/CommunityArticleCard";
 import { Image, Avatar, Divider, Button } from '@nextui-org/react';
+import { decryptedJWT } from '@/dto/users';
+import verifyToken from '@/utils/utils'
 import '../../globals.css'
 
 export default function CommunityPage({ params }: any) {
@@ -42,6 +44,9 @@ export default function CommunityPage({ params }: any) {
         'article_has_categories': []
     }]);
 
+    // info user
+    const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-2,rol:-2})
+
     // Rastreo de articulos visibles en el feed
     const [visibleArticles, setVisibleArticles] = useState(1);
 
@@ -73,6 +78,20 @@ export default function CommunityPage({ params }: any) {
         }
 
         fetchData();}, []);
+
+    async function token(){
+        const rol =await verifyToken();
+        setInfoUser(rol);
+    }
+    
+    useEffect(()=>{
+        token();
+    },[]);
+
+    // fetch unirse a una comunidad
+    function jointoCommunity() {
+        joinCommunity(userInfo.userId, params.id);
+    }
 
     return (
         <div>
@@ -140,10 +159,9 @@ export default function CommunityPage({ params }: any) {
                 :
                 <div className="pb-16">
                     <div className="flex justify-center p-5">
-                        <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                            <a href="#">
+                        <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg' 
+                            onPress={jointoCommunity}>
                                 Join 
-                            </a>
                         </Button>
                     </div>
                     <div className="flex justify-center pt-10">

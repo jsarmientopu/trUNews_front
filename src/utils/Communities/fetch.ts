@@ -30,3 +30,19 @@ export async function getCommunityFeed(idCommunity: number) {
         return res;
     }
 }
+
+// Join community
+export async function joinCommunity(idUser: number, idCommunity: number) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/join/${idUser}/${idCommunity}`,{
+                method: 'POST',
+                headers:{'Content-Type':'application/json','authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+}
