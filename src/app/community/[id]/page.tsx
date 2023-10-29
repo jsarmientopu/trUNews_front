@@ -98,11 +98,21 @@ export default function CommunityPage({ params }: any) {
                             {community.name}
                         </p>
                     </div>
-                    <div className="flex justify-end pe-5 col-span-1">
-                        <span className="material-symbols-outlined icon_button">
-                            <a href="#">more_vert</a>
-                        </span>
-                    </div>
+                    { community.isCreator ?
+                        <div className="flex justify-end pe-5 col-span-1">
+                            <span className="material-symbols-outlined icon_button">
+                                <a href="#">settings</a>
+                            </span>
+                        </div>
+                        : community.isMember ?
+                        <div className="flex justify-end pe-5 col-span-1">
+                            <span className="material-symbols-outlined icon_button">
+                                <a href="#">more_vert</a>
+                            </span>
+                        </div>
+                        :
+                        <></>
+                    }
                 </div>
                 <div className="p-10 ps-20 pe-20">
                     <p className="text-lg text-justify">
@@ -112,58 +122,86 @@ export default function CommunityPage({ params }: any) {
                 
             </div>
             {/* End Presentation zone */}
-            <Divider className="my-4" />
-            <div className="flex justify-center p-5">
-                <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                    <a href="#" className="flex items-center gap-2">
-                        Post 
-                        <span className="material-symbols-outlined">
-                           stylus
-                        </span>
-                    </a>
-                </Button>
-            </div>
-            {/* Feed zone */}
-            <div className="py-2">
-                {articles.length !== 0 && articles.length > 1 ? (
-                    <>
-                    {articles.slice(0, visibleArticles).map((item, index) => (
-                        <div className="flex justify-center py-unit-4" key={index}>
-                        <CommunityArticleCard 
-                            imageArticle={item.image_url}
-                            profileImage={item.profile_image}
-                            autor={`${item.name} ${item.lastname}`}
-                            username={item.username}
-                            title={item.title}
-                            summary={item.sanitizedText}
-                            id={item.id_article}
-                            idWriter={item.id_writer}
-                            views={item.views}
-                            date={item.date.slice(0, 10)}
-                            categories={item.article_has_categories}
-                        />
-                        </div>
-                    ))}
-                    {visibleArticles < articles.length && (
-                        <div className="flex justify-center py-unit-4">
-                        <button onClick={handleVerMasClick} className='bg-primary text-white py-2 px-3 rounded-xl'>
-                            See more
-                        </button>
-                        </div>
-                    )}
-                    {visibleArticles >= articles.length && (
-                        <div className='text-center font-bold text-2xl p-5'>
-                            There are no more articles to see
-                        </div>
-                    )}
-                    </>)
-                :
-                    <div className='h-screen text-center font-bold text-2xl p-5'>
-                        Nothing to see
+            {community.isMember ?
+                <>
+                    <Divider className="my-4" />
+                    <div className="flex justify-center p-5">
+                        <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
+                            <a href="#" className="flex items-center gap-2">
+                                Post 
+                                <span className="material-symbols-outlined">
+                                stylus
+                                </span>
+                            </a>
+                        </Button>
                     </div>
+                </>
+                :
+                <div className="pb-16">
+                    <div className="flex justify-center p-5">
+                        <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
+                            <a href="#">
+                                Join 
+                            </a>
+                        </Button>
+                    </div>
+                    <div className="flex justify-center pt-10">
+                        <span className="material-symbols-outlined icon_xl">
+                            lock
+                        </span>
+                    </div>
+                    <div>
+                        <p className='text-center font-bold text-3xl p-5'>
+                            Join this community to see <br></br>
+                            its contents
+                        </p>
+                    </div>
+                </div>
+            }
+            {/* Feed zone */}
+            {community.isMember &&
+            
+                <div className="py-2">
+                    {articles.length !== 0 && articles.length > 1 ? (
+                        <>
+                        {articles.slice(0, visibleArticles).map((item, index) => (
+                            <div className="flex justify-center py-unit-4" key={index}>
+                            <CommunityArticleCard 
+                                imageArticle={item.image_url}
+                                profileImage={item.profile_image}
+                                autor={`${item.name} ${item.lastname}`}
+                                username={item.username}
+                                title={item.title}
+                                summary={item.sanitizedText}
+                                id={item.id_article}
+                                idWriter={item.id_writer}
+                                views={item.views}
+                                date={item.date.slice(0, 10)}
+                                categories={item.article_has_categories}
+                            />
+                            </div>
+                        ))}
+                        {visibleArticles < articles.length && (
+                            <div className="flex justify-center py-unit-4">
+                            <button onClick={handleVerMasClick} className='bg-primary text-white py-2 px-3 rounded-xl'>
+                                See more
+                            </button>
+                            </div>
+                        )}
+                        {visibleArticles >= articles.length && (
+                            <div className='text-center font-bold text-2xl p-5'>
+                                There are no more articles to see
+                            </div>
+                        )}
+                        </>)
+                    :
+                        <div className='h-screen text-center font-bold text-2xl p-5'>
+                            Nothing to see
+                        </div>
 
-                }
-            </div>
+                    }
+                </div>
+            }
             {/* End Feed zone */}
         </div>
     )
