@@ -1,4 +1,5 @@
 import { getFromLocalStorage } from "../localStorage";
+import verifyToken from "../utils";
 
 // Community by id
 export async function getCommunityById(id: number) {
@@ -16,14 +17,29 @@ export async function getCommunityById(id: number) {
 }
 
 // Feed community
-export async function getCommunityFeed() {
+export async function getCommunityFeed(idCommunity: number) {
 
     const token = getFromLocalStorage('token')
     let datos;
     
     if(token){
-        const res = await fetch(`${process.env.BACK_URL}communities/feed`,{
+        const res = await fetch(`${process.env.BACK_URL}communities/feed/?communityId=${idCommunity}`,{
                 method: 'GET',
+                headers:{'Content-Type':'application/json','authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+}
+
+export async function deleteCommunity(idCommunity: number) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/${user.userId}/delete/${idCommunity}`,{
+                method: 'DELETE',
                 headers:{'Content-Type':'application/json','authorization':token},
             }).then(response => response.json()).then(data => datos=data)
         console.log(res)

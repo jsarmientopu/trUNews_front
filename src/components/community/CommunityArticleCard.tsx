@@ -35,7 +35,7 @@ const CommunityArticleCard: React.FC<ArticleCardProps> = ({
   };
 
   return (
-    <Card className = "article_card w-[80%] p-unit-lg shadow-lg bg-[#F0F2F4]" isPressable onPress={redirectToArticle} isHoverable>
+    <Card className = "article_card w-[80%] p-unit-lg shadow-lg bg-[#dbdbdb]" isPressable onPress={redirectToArticle} isHoverable>
       <CardBody>
           <div className='sm:block md:flex lg:flex items-center'>
           <div className='flex-1'>
@@ -69,11 +69,11 @@ const CommunityArticleCard: React.FC<ArticleCardProps> = ({
               <p className='line-clamp-[4]'>{summary}</p>
             </div>
             <div className='pt-4 flex flex-wrap justify-center md:justify-end lg:justify-end row gap-3 lg:text-sm text-xs'>
-              {categories && 
+              {categories &&
                 <>
                 {categories.map((item, index) => (
                 <p key={index} className='bg-[#963ED9] text-white p-2 rounded-md'>
-                  {item.category.cat_name}
+                  {item.category_name}
                 </p>
               ))}
               </>}

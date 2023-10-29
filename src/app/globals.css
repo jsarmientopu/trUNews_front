@@ -33,3 +33,7 @@ header{
 .icon_button:hover {
   transform: scale(1.2);
 }
+
+.icon_xl {
+  font-size: 5rem !important;
+}
