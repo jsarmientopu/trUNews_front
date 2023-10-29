@@ -65,7 +65,7 @@ export default function CommunityPage({ params }: any) {
     // fetch de articulos a mostrar en el feed
     useEffect(() => {
         async function fetchData() {
-            const articlesData = await getCommunityFeed();
+            const articlesData = await getCommunityFeed(params.id);
             if(articlesData){
                 setArticles(articlesData);
                 setVisibleArticles(10);
@@ -78,37 +78,49 @@ export default function CommunityPage({ params }: any) {
         <div>
             {/* Presentation zone */}
             <div className="py-2 px-10">
-                <div className='pt-4 flex flex-wrap row gap-3 text-sm'>
-                {community.community_has_categories && 
-                    <>
-                    {community.community_has_categories.map((item: any, index: number) => (
-                    <p key={index} className='bg-[#963ED9] text-white p-2 font-bold rounded-md'>
-                    {item.category.cat_name}
-                    </p>
-                ))}
-                </>}
-                <div className='flex justify-center pt-5'>
-                    <Image src={community.banner_url} alt="Banner Community" />
-                </div> 
-                <div className="flex items-center justify-center gap-80 gap-96">
-                    <Avatar src={community.avatar_url} size="lg" />
-                    <p className="font-bold text-2xl">
-                        {community.name}
-                    </p>
-                    <span className="material-symbols-outlined icon_button">
-                        <a href="#">more_vert</a>
-                    </span>
+                <div className='pt-4 ps-14 flex flex-wrap row gap-3 text-sm'>
+                    {community.community_has_categories && 
+                        <>
+                        {community.community_has_categories.map((item: any, index: number) => (
+                        <p key={index} className='bg-[#963ED9] text-white p-2 font-bold rounded-md'>
+                        {item.category.cat_name}
+                        </p>
+                    ))}
+                    </>}
                 </div>
-                <p className="text-lg text-justify">
-                    {community.description}
-                </p>
-            </div>
+                <div className='flex justify-center p-6'>
+                    <Image src={community.banner_url} alt="Banner Community"/>
+                </div> 
+                <div className="grid  grid-cols-8 ps-20 pe-20">
+                    <div className="col-span-7 flex items-center gap-6">
+                        <Avatar src={community.avatar_url} className="w-20 h-20 text-large" isBordered/>
+                        <p className="font-bold text-4xl">
+                            {community.name}
+                        </p>
+                    </div>
+                    <div className="flex justify-end pe-5 col-span-1">
+                        <span className="material-symbols-outlined icon_button">
+                            <a href="#">more_vert</a>
+                        </span>
+                    </div>
+                </div>
+                <div className="p-10 ps-20 pe-20">
+                    <p className="text-lg text-justify">
+                        {community.description}
+                    </p>
+                </div>
+                
             </div>
             {/* End Presentation zone */}
             <Divider className="my-4" />
-            <div className="flex justify-center">
+            <div className="flex justify-center p-5">
                 <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                    <a href="#">Post</a>
+                    <a href="#" className="flex items-center gap-2">
+                        Post 
+                        <span className="material-symbols-outlined">
+                           stylus
+                        </span>
+                    </a>
                 </Button>
             </div>
             {/* Feed zone */}
