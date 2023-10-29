@@ -50,14 +50,14 @@ function page() {
                     Communities
                 </p>
 
-                <div className='p-4 bg-[#963ED9] flex gap-4 flex-wrap align-middle justify-center rounded-2xl mb-5'>
+                <div className='p-4 bg-[#963ED9] flex gap-3 flex-wrap align-middle justify-center rounded-2xl mb-5'>
                     {categoriesData?.map((category: any, index: any) => {
                         return (
-                            <div key={index}>
-                                <Checkbox color='success' onChange={(event) => event?.target?.checked ? setCheckedBoxes([...checkedBoxes, category.cat_name]) : setCheckedBoxes(checkedBoxes.filter(cat => {
+                            <div key={index} className='bg-[#7d32b7] p-1 rounded-lg flex items-center'>
+                                <Checkbox size="sm" color='success' onChange={(event) => event?.target?.checked ? setCheckedBoxes([...checkedBoxes, category.cat_name]) : setCheckedBoxes(checkedBoxes.filter(cat => {
                                     return cat !== category.cat_name
                                 }))}>
-                                    <span className='text-white font-medium'>{category.cat_name}</span>
+                                    <span className='text-white font-medium text-xs'>{category.cat_name}</span>
                                 </Checkbox>
                             </div>
                         )
