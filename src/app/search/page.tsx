@@ -7,6 +7,7 @@ import { Button, Pagination } from "@nextui-org/react";
 import UserCard from "@/components/search/UserCard";
 import { getArticleType } from "@/dto/article";
 import { getUserType } from "@/dto/users";
+import { communityInfo } from "@/dto/community";
 import { useSearchParams } from 'next/navigation';
 import { getSearch } from "@/utils/search/fetch";
 import { getLatestPosts  } from "@/utils/fetchs";
@@ -16,6 +17,7 @@ const App=()=>{
     const [filter, setFilter] = useState<[boolean,boolean,boolean]>([true,false,false])
     const [searchedArticles, setSearchedArticles]=useState<Array<getArticleType>>([{'id_article':0,'title':'','date':"",'text':'','writer':{'id_user':0,'username':''},'views':0,'image_url':'', 'category':[]}])
     const [searchedUsers, setSearchedUsers]=useState<Array<getUserType>>([{'id_user':0,'username':'benito','name':'','lastname':'', 'rol':-1, 'followersCount':0,'followingsCount':0,'isFollowing':false, 'description':'','profile_image':''}])
+    const [searchedComunnities, setSearchedCommunities]=useState<Array<communityInfo>>([{'id_community':0,'name':'','description':'','creator_id':-1, 'date':'','articlesCount':0,'avatar_url':'', 'banner_url':'','community_has_categories':[{'id_category':0,'cat_name':''}],'isCreator':false,'isMember':false,'membersCount':0}])
     const searchParams = useSearchParams().get('q')
     const [recentCarouselData, setRecentCarouselData] = useState()
     const itemsPerPage = 8;
@@ -52,6 +54,12 @@ const App=()=>{
                 }else{
                     console.log(res[1])
                     setSearchedArticles(res[1])
+                }
+                if(res[2].err){
+                    setSearchedArticles([])
+                }else{
+                    console.log(res[2])
+                    setSearchedCommunities(res[2])
                 }
             }
             const recentCarouselData2 = await getLatestPosts();
@@ -112,7 +120,30 @@ const App=()=>{
                         </div>
                     </div>
                 :
+                filter[2]&&searchedComunnities.length>0?
+                <div className="flex flex-wrap flex-row gap-8 justify-center w-full pb-20">
+                    <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
+                        {searchedArticles.filter((item:getArticleType, index)=>index%3==0&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
+                            <ArticleCard key={index} article={item}/>
+                        ))
+                        }
+                    </div>
+                    <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
+                        {searchedArticles.filter((item:getArticleType, index)=>index%3==1&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
+                            <ArticleCard key={index} article={item}/>
+                        ))
+                        }
+                    </div>
+                    <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
+                        {searchedArticles.filter((item:getArticleType, index)=>index%3==2&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
+                            <ArticleCard key={index} article={item}/>
+                        ))
+                        }
+                    </div>
+                </div>
+                :
                 <>No se encontraron resultados</>
+                
 
             }
             <div className="hidden md:flex lg:flex justify-center py-unit-4">
