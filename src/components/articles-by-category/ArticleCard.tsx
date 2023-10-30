@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, Image, User } from '@nextui-org/react';
 import '../../app/globals.css'
+import SkeletonCard from '../SkeletonCard';
 
 interface ArticleCardProps {
   imageArticle: string;
@@ -33,6 +34,11 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   const redirectToArticle = () => {
     window.location.href = `../article/${id}`;
   };
+
+  if(id==-1){
+        return <SkeletonCard mode={2}></SkeletonCard>
+    
+   }
 
   return (
     <Card className = "article_card w-[80%] p-unit-lg shadow-lg bg-[#F0F2F4]" isPressable onPress={redirectToArticle} isHoverable>

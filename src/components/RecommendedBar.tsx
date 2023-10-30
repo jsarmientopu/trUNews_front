@@ -18,13 +18,13 @@ const RecommendedBar = ({id}: any)=>{
     }, [])
 
 
-    return <div className="flex w-[25%] justify-center">
+    return <div className="flex w-full xl:w-[25%] justify-center">
         <div className="flex-col bg-[#70BBF7] w-full rounded-lg" >
             <div className="flex flex-row m-6 gap-5">
                 <BsBook size="1.5em"/>
                 <p className="font-bold text-xl w-full text-black">Related Articles</p>
             </div>
-            <div className="flex flex-col justify-center m-9 gap-8">
+            <div className="flex flex-wrap lg:flex-nowrap flex-row xl:flex-col justify-center m-9 gap-8">
             {articles?.length!==0?
                     articles?.map((item:returnArticles, index) => (
                         <RecommendedArticle key={index} id={item?.id_article} image={item?.image_url} writer={item?.username} title={item?.title} timeSincePosted={parseDate(new Date(item?.date))}/>

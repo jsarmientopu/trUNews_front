@@ -62,9 +62,9 @@ export default function PostComponent({id}: any) {
 
     return (<>
         {article? 
-        <div className="flex flex-row gap-20 p-20 w-full h-full">
-            <div className="flex flex-col gap-7 w-[75%] justify-start">
-                <div className="flex flex-row gap-4">
+        <div className="flex flex-col xl:flex-row gap-20 p-10 sm:p-20 w-full h-full">
+            <div className="flex flex-col gap-7 w-full xl:w-[75%] justify-start">
+                <div className="flex flex-wrap flex-row gap-4">
                 {article?.article_has_categories.length!==0?
                         article?.article_has_categories.map((item:article_has_categories, index) => (
                             <p key ={index} className="font-semibold text-xl text-zinc-700">{item.category.cat_name}</p>
@@ -73,7 +73,7 @@ export default function PostComponent({id}: any) {
                     :
                         <>No hay Articulos socio</>
                 }
-                <div className="flex grow justify-end">
+                <div className="flex grow w-full md:w-auto md:justify-end">
                     {userInfo.userId==article?.id_writer || userInfo.rol==Roles.admin?
                     <Button size='sm' className="mb-2 bg-red-700 text-white" isIconOnly onClick={() => alert('question','The article will be deleted.','',()=>{deletePost(id); confirm();})}>
                     <MdDelete/>
@@ -95,7 +95,7 @@ export default function PostComponent({id}: any) {
             </div>   
                 <p className="font-bold text-3xl">{article?.title}</p>
                 <p className="font-semibold text-xl text-zinc-700">Author: <Link href={`/profile/${article?.id_writer}`}><p className="font-semibold text-xl text-zinc-700 underline">{article?.username}</p></Link></p>
-                <div className="flex flex-row gap-60">
+                <div className="flex flex-wrap flex-row md:gap-60">
                 <p className="font-medium text-lg text-zinc-700">{parseDate(article?.date)}</p>
                     <div className="flex grow justify-end">
                     <ShareOptions/>
