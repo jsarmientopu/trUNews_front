@@ -7,6 +7,7 @@ import { Button, Pagination } from "@nextui-org/react";
 import UserCard from "@/components/search/UserCard";
 import { getArticleType } from "@/dto/article";
 import { getUserType } from "@/dto/users";
+import { communityInfo } from "@/dto/community";
 import { useSearchParams } from 'next/navigation';
 import { getSearch } from "@/utils/search/fetch";
 import { getLatestPosts  } from "@/utils/fetchs";
@@ -54,6 +55,12 @@ const App=()=>{
                 }else{
                     console.log(res[1])
                     setSearchedArticles(res[1])
+                }
+                if(res[2].err){
+                    setSearchedArticles([])
+                }else{
+                    console.log(res[2])
+                    setSearchedCommunities(res[2])
                 }
             }
             const recentCarouselData2 = await getLatestPosts();

@@ -21,6 +21,12 @@ export const getSearch=async(param:string)=>{
         }).then(response => response.json()).then(data => datos=data)
         console.log(resArticle);
         resT.push(resArticle);
+        const resCategory = await fetch(`${process.env.BACK_URL}communities/find/${param}`,{
+            method: 'GET',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(resCategory);
+        resT.push(resCategory);
         return resT;
     }
 }

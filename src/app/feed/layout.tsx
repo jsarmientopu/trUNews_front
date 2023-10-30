@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'TrUNews Feed',
-  description: 'Feed de TrUNews',
+  description: 'Feed TrUNews',
 }
 
 export default function Layout ({children}:{
