@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter, Image} from "@nextui-org/react"
 import Link from "next/link"
 export default function RecommendedArticle({ id, image, writer, title, timeSincePosted }: any) {
     return (
-        <div className="flex flex-col justify-center w-full h-auto">
+        <div className="flex flex-col justify-center w-full md:w-[80%] lg:w-full h-auto">
 
             <Link href={`${id}`} className="flex flex-col w-full h-auto">
             <Card className="flex flex-col w-full">

@@ -206,7 +206,7 @@ export default function App(this: any) {
                     </NavbarItem>
                 ))}
                 <NavbarItem>
-                <Link className='text-white' color="foreground" href="#">
+                <Link className='text-white' color="foreground" href="/communities">
                     Communities
                 </Link>
                 </NavbarItem>

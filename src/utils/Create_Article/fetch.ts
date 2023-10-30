@@ -2,7 +2,8 @@ import { createArticleType} from "@/dto/article";
 import { alert } from "../alertHandeler";
 
 export async function getTitleCategories(formData:createArticleType){
-    if(formData.text!=''){
+    if(formData.text!='' && formData.text.split(' ').length>=300){
+        console.log(formData.text.split(' ').length);
         let datos;
         const res = await fetch(`${process.env.BACK_URL}articles/aiModel`,{
         // const res = await fetch(`http://localhost:3005/articles/aiModel`,{
@@ -13,11 +14,10 @@ export async function getTitleCategories(formData:createArticleType){
         console.log(res);
         if (res.err ) {
             alert('error', 'Failed models generation!', '', ()=>{})
-
         }
         return res
     }else{
-        alert('error', 'Failed title and categories generation!', 'Incorrect information', ()=>{})
+            alert('error', 'Failed title and categories generation!', 'Too short text (minimun 300 words)', ()=>{})
     }
     return {'titulos':[], 'categorias':[]}
 
@@ -34,6 +34,7 @@ export async function createArticle(formData:createArticleType, categories:Array
         }).then(response => response.json()).then(data => datos=data)
         console.log(res);
         if (res.err || res.error) {
+            console.log(res.err)
             alert('error', 'Failed article creation!', res.err, ()=>{})
         }else{
             const category = await fetch(`${process.env.BACK_URL}articles/create/categories`,{
@@ -50,7 +51,11 @@ export async function createArticle(formData:createArticleType, categories:Array
 
         }
     }else{
-        alert('error', 'Failed article creation!', 'Incorrect information', ()=>{})
+        if(categories.length<=0){
+            alert('error', 'Failed article creation!', 'Select at least one category', ()=>{})
+        }else{
+            alert('error', 'Failed article creation!', 'Add your text', ()=>{})
+        }
     }
 
 }
