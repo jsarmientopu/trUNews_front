@@ -9,7 +9,10 @@ import { getCommunities } from '@/utils/fetchs';
 import CommunityCard from '@/components/communities-panel/CommunityCard';
 import { Button } from '@nextui-org/react';
 
+
 function page() {
+
+    
 
     const [categoriesData, setCategoriesData] = useState<any[]>()
     const [communitiesData, setCommunitiesData] = useState<any[]>([])
@@ -80,7 +83,7 @@ function page() {
 
                             return (
                                 <div key={index}>
-                                    <CommunityCard title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
+                                    <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
                                 </div>
                             )
                         } else {
