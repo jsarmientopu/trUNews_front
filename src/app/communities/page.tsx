@@ -43,17 +43,26 @@ function page() {
     let currentCommunities = []
 
     return (
-        <div id="container" className='bg-[#C1D6E8] h-screen'>
-            <div className='p-3 bg-[#C1D6E8]'>
+        <div id="container" className='bg-white h-screen'>
+            <div className='p-3 bg-white'>
 
                 <p className='text-black font-bold text-5xl lg:text-7xl flex justify-center mb-3'>
                     Communities
                 </p>
 
-                <div className='p-4 bg-[#963ED9] flex gap-3 flex-wrap align-middle justify-center rounded-2xl mb-5'>
+                <div id="divider" className="flex justify-center">
+                    <div className="w-[90%] h-0.5 bg-gray-200 mb-3 rounded-full">
+                    </div>
+                </div>
+
+                <p className='text-black font-medium text-xl flex justify-center text-center mb-3'>
+                    Use the checkbox below to discover communities on the topics that may interest you!
+                </p>
+
+                <div className='p-4 bg-[#0079DC] flex gap-3 flex-wrap align-middle justify-center rounded-2xl mb-5 shadow-lg'>
                     {categoriesData?.map((category: any, index: any) => {
                         return (
-                            <div key={index} className='bg-[#7d32b7] p-1 rounded-lg flex items-center'>
+                            <div key={index} className='bg-[#296bb7] p-1 rounded-lg flex items-center'>
                                 <Checkbox size="sm" color='success' onChange={(event) => event?.target?.checked ? setCheckedBoxes([...checkedBoxes, category.cat_name]) : setCheckedBoxes(checkedBoxes.filter(cat => {
                                     return cat !== category.cat_name
                                 }))}>

@@ -21,8 +21,8 @@ function CommunityCard({title, profile_image, cats, members, description}:any) {
     return (
         <div onClick={() => set(state => !state)} className='relative mb-2'>
             <a.div
-
-                className={`backside cursor-pointer absolute top-0 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-purple-800 via-purple-600 to-indigo-600 ${flipped ? "z-10" : ''}`}
+            
+                className={`backside cursor-pointer absolute top-0 left-0 p-4 flex flex-col items-center justify-center gap-3 h-[29rem] w-72 rounded-3xl drop-shadow-[0_0px_10px_rgba(0,0,0,0.17)] bg-gradient-to-tr from-purple-800 via-purple-600 to-indigo-600 ${flipped ? "z-10" : ''}`}
                 style={{
                     opacity,
                     transform,
@@ -36,12 +36,12 @@ function CommunityCard({title, profile_image, cats, members, description}:any) {
                 </div>
 
                 <div className='flex justify-center'>
-                    <Button className='w-52 h-10 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1 z-50'>
+                    <Button className='w-56 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-2 z-50'>
 
-                        <p className='text-center text-white font-medium text-2xl'>
+                        <p className='text-center text-white font-medium text-xl'>
                             Read more
                         </p>
-                        <BsHandIndexThumb color="white" size="2em" className="rotate-[-45deg]" />
+                        <BsHandIndexThumb color="white" size="1.8em" className="rotate-[-45deg]" />
                     </Button>
                 </div>
 
@@ -49,7 +49,7 @@ function CommunityCard({title, profile_image, cats, members, description}:any) {
 
             </a.div>
 
-            <a.div className='frontside cursor-pointer p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl shadow-2xl bg-gradient-to-tr from-blue-400 via-sky-400 to-cyan-500 z-50' style={{ opacity: opacity.to(o => 1 - o), transform }}>
+            <a.div className='frontside cursor-pointer p-4 flex flex-col justify-between h-[29rem] w-72 rounded-3xl drop-shadow-[0_0px_10px_rgba(0,0,0,0.17)] bg-white z-50' style={{ opacity: opacity.to(o => 1 - o), transform }}>
 
                 <div className='break-words'>
                     <p className='text-center font-bold text-2xl line-clamp-2 select-none'>
@@ -76,12 +76,12 @@ function CommunityCard({title, profile_image, cats, members, description}:any) {
                     </p>
                 </div>
                 <div className='flex justify-center'>
-                    <Button className='w-30 h-10 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1'>
+                    <Button className='w-30 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1'>
 
-                        <p className='text-center text-white font-medium text-2xl'>
+                        <p className='text-center text-white font-medium text-xl'>
                             Join
                         </p>
-                        <BsHandIndexThumb color="white" size="2em" className="rotate-[-45deg]" />
+                        <BsHandIndexThumb color="white" size="1.8em" className="rotate-[-45deg]" />
                     </Button>
                 </div>
 
