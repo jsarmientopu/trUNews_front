@@ -9,6 +9,8 @@ import verifyToken from '@/utils/utils'
 import '../../globals.css'
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { SlOptionsVertical } from "react-icons/sl";
+import { LiaEditSolid } from "react-icons/lia";
+import PostCommunityButton from "@/components/community/PostCommunityButton";
 
 export default function CommunityPage({ params }: any) {
 
@@ -98,7 +100,7 @@ export default function CommunityPage({ params }: any) {
     }
 
     return (
-        <div>
+        <div className="relative">
             {/* Presentation zone */}
             <div className="py-2 px-10">
                 <div className='pt-4 md:ps-14 lg:ps-14 flex flex-wrap gap-3 text-xs md:text-sm lg:text-sm'>
@@ -172,15 +174,18 @@ export default function CommunityPage({ params }: any) {
             <Divider className="my-4" />
             {community.isMember ?
                 
-                <div className="flex justify-center p-5">
-                    <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                        <a href="#" className="flex items-center gap-2">
-                            Post 
-                            <span className="material-symbols-outlined">
-                            stylus
-                            </span>
-                        </a>
-                    </Button>
+                // <div className="flex justify-center p-5">
+                //     <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
+                //         <a href="#" className="flex items-center gap-2">
+                //             Post 
+                //             <span className="material-symbols-outlined">
+                //             stylus
+                //             </span>
+                //         </a>
+                //     </Button>
+                // </div>
+                <div className="fixed bottom-14 right-20">
+                    <PostCommunityButton/>
                 </div>
                 :
                 <div className="pb-16">
