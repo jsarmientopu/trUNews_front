@@ -7,7 +7,7 @@ export interface communityInfo{
     articlesCount: Number,
     avatar_url: String,
     banner_url: String,
-    community_has_categories: Array<{id_category:Number, cat_name:String}>,
+    community_has_categories: Array<{category:{id_category:Number, cat_name:String}}>,
     isCreator: false,
     isMember: false,
     membersCount: 0

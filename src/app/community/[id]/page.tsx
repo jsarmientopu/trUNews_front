@@ -97,6 +97,7 @@ export default function CommunityPage({ params }: any) {
     // fetch unirse a una comunidad
     function jointoCommunity() {
         joinCommunity(userInfo.userId, params.id);
+        window.location.reload();
     }
 
     return (

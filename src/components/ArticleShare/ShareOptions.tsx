@@ -40,7 +40,7 @@ const ShareOptions=()=>{
         })
 
     return ( 
-    <div className='flex flex-row justify-center items-center gap-1'> 
+    <div className='flex flex-wrap flex-row justify-center items-center gap-1'> 
       <FacebookShareButton 
         blankTarget
         url={process.env.FRONT_URL+pathname} > 

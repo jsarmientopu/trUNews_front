@@ -10,7 +10,7 @@ export default function ArticlesByCategoryPage({ params }: any) {
 
     const [articles, setArticles] = useState<Array<any>>([{
         'date':'',
-        'id_article': 0,
+        'id_article': -1,
         'id_writer': 0,
         'image_url': '',
         'lastname': '',
