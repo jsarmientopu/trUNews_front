@@ -170,7 +170,7 @@ export default function CommunityPage({ params }: any) {
                                     <DropdownItem
                                         key="leave"
                                         description="Leave the community"
-                                        startContent={<AiFillEdit/>}>
+                                        startContent={<span className="material-symbols-outlined">logout</span>}>
                                         Leave Community
                                         </DropdownItem>
                                 </DropdownMenu>
