@@ -43,6 +43,7 @@ export async function joinCommunity(idUser: number, idCommunity: number) {
                 headers:{'Content-Type':'application/json','authorization':token},
             })
         console.log(res)
+        location.reload();
         return res;
     }
 }
@@ -58,6 +59,7 @@ export async function leaveCommunity(idUser: number, idCommunity: number) {
                 headers:{'Content-Type':'application/json','authorization':token},
             })
         console.log(res)
+        location.reload();
         return res;
     }
 }
