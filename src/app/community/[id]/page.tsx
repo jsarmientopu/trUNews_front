@@ -11,6 +11,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { SlOptionsVertical } from "react-icons/sl";
 import { LiaEditSolid } from "react-icons/lia";
 import PostCommunityButton from "@/components/community/PostCommunityButton";
+import { redirect } from "next/navigation";
 
 export default function CommunityPage({ params }: any) {
 
@@ -97,7 +98,6 @@ export default function CommunityPage({ params }: any) {
     // fetch unirse a una comunidad
     function jointoCommunity() {
         joinCommunity(userInfo.userId, params.id);
-        window.location.reload();
     }
 
     return (
