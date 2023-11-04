@@ -1,7 +1,7 @@
 'use client'
 
 import React, {useState, useEffect} from "react";
-import { deleteCommunity, getCommunityById, getCommunityFeed, joinCommunity } from "@/utils/Communities/fetch"
+import { deleteCommunity, getCommunityById, getCommunityFeed, joinCommunity, leaveCommunity } from "@/utils/Communities/fetch"
 import CommunityArticleCard from "@/components/community/CommunityArticleCard";
 import { Image, Avatar, Divider, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, cn } from '@nextui-org/react';
 import { decryptedJWT } from '@/dto/users';
@@ -11,7 +11,6 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { SlOptionsVertical } from "react-icons/sl";
 import { LiaEditSolid } from "react-icons/lia";
 import PostCommunityButton from "@/components/community/PostCommunityButton";
-import { redirect } from "next/navigation";
 
 export default function CommunityPage({ params }: any) {
 
@@ -100,6 +99,11 @@ export default function CommunityPage({ params }: any) {
         joinCommunity(userInfo.userId, params.id);
     }
 
+    // fetch dejar una comunidad
+    function leaveACommunity() {
+        leaveCommunity(userInfo.userId, params.id);
+    }
+
     return (
         <div className="relative">
             {/* Presentation zone */}
@@ -156,9 +160,21 @@ export default function CommunityPage({ params }: any) {
                         </div>
                         : community.isMember ?
                         <div className="flex justify-end pe-5 col-span-1 items-center">
-                            <span className="material-symbols-outlined icon_button">
-                                <a href="#">more_vert</a>
-                            </span>
+                            <Dropdown>
+                                <DropdownTrigger>
+                                    <Button className="material-symbols-outlined icon_button bg-white">
+                                        more_vert
+                                    </Button>
+                                </DropdownTrigger>
+                                <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{if(key=='leave'){leaveACommunity()}}}>
+                                    <DropdownItem
+                                        key="leave"
+                                        description="Leave the community"
+                                        startContent={<AiFillEdit/>}>
+                                        Leave Community
+                                        </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
                         </div>
                         :
                         <></>
