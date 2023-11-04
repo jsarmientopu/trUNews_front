@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import { deleteCommunity, getCommunityById, getCommunityFeed, joinCommunity, leaveCommunity } from "@/utils/Communities/fetch"
 import CommunityArticleCard from "@/components/community/CommunityArticleCard";
-import { Image, Avatar, Divider, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, cn } from '@nextui-org/react';
+import { Image, Avatar, Divider, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import { decryptedJWT } from '@/dto/users';
 import verifyToken from '@/utils/utils'
 import '../../globals.css'
@@ -11,6 +11,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { SlOptionsVertical } from "react-icons/sl";
 import { LiaEditSolid } from "react-icons/lia";
 import PostCommunityButton from "@/components/community/PostCommunityButton";
+import ShowModal from "@/components/community/Modal";
 
 export default function CommunityPage({ params }: any) {
 
@@ -99,11 +100,6 @@ export default function CommunityPage({ params }: any) {
         joinCommunity(userInfo.userId, params.id);
     }
 
-    // fetch dejar una comunidad
-    function leaveACommunity() {
-        leaveCommunity(userInfo.userId, params.id);
-    }
-
     return (
         <div className="relative">
             {community.id_community > 0 ?
@@ -162,21 +158,10 @@ export default function CommunityPage({ params }: any) {
                                 </div>
                                 : community.isMember ?
                                 <div className="flex justify-end pe-5 col-span-1 items-center">
-                                    <Dropdown>
-                                        <DropdownTrigger>
-                                            <Button className="material-symbols-outlined icon_button bg-white">
-                                                more_vert
-                                            </Button>
-                                        </DropdownTrigger>
-                                        <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{if(key=='leave'){leaveACommunity()}}}>
-                                            <DropdownItem
-                                                key="leave"
-                                                description="Leave the community"
-                                                startContent={<span className="material-symbols-outlined">logout</span>}>
-                                                Leave Community
-                                                </DropdownItem>
-                                        </DropdownMenu>
-                                    </Dropdown>
+                                    <ShowModal 
+                                        user_id={userInfo.userId} 
+                                        community_id={params.id}
+                                    />
                                 </div>
                                 :
                                 <></>
