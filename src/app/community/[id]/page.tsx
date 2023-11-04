@@ -106,170 +106,178 @@ export default function CommunityPage({ params }: any) {
 
     return (
         <div className="relative">
-            {/* Presentation zone */}
-            <div className="py-2 px-10">
-                <div className='pt-4 md:ps-14 lg:ps-14 flex flex-wrap gap-3 text-xs md:text-sm lg:text-sm'>
-                    {community.community_has_categories && 
-                        <>
-                        {community.community_has_categories.map((item: any, index: number) => (
-                        <p key={index} className='bg-[#963ED9] text-white p-2 font-bold rounded-md'>
-                        {item.category.cat_name}
-                        </p>
-                    ))}
-                    </>}
-                </div>
-                <div className='flex justify-center md:p-6 lg:p-6 pt-6 pb-6'>
-                    <Image src={community.banner_url} alt="Banner Community"/>
-                </div> 
-                <div className="grid  grid-cols-8 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20">
-                    <div className="col-span-1 flex items-center">
-                        <Avatar src={community.avatar_url} className="w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24" isBordered/>
-                    </div>
-                    <div className="col-span-6 flex items-center ps-6">
-                        <p className="font-bold text-2xl md:text-3xl lg:text-4xl">
-                            {community.name}
-                        </p>
-                    </div>
-                    { community.isCreator ?
-                        <div className="flex justify-end pe-5 col-span-1 items-center">
-                            <Dropdown>
-                        <DropdownTrigger>
-                            <Button isIconOnly variant="light">
-                                <SlOptionsVertical/>
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{key=='edit'? setEdit(true): deleteCommunity(params.id)}}>
-                            <DropdownItem
-                            key="edit"
-                            description="Edit the community"
-                            startContent={<AiFillEdit/>}
-                            >
-                            Edit Community
-                            </DropdownItem>
-                            <DropdownItem
-                            key="delete"
-                            className="text-danger"
-                            color="danger"
-                            description="Permanently delete the community"
-                            startContent={<AiFillDelete/>}
-                            >
-                            Delete Community
-                            </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
+            {community.id_community > 0 ?
+                <>
+                    {/* Presentation zone */}
+                    <div className="py-2 px-10">
+                        <div className='pt-4 md:ps-14 lg:ps-14 flex flex-wrap gap-3 text-xs md:text-sm lg:text-sm'>
+                            {community.community_has_categories && 
+                                <>
+                                {community.community_has_categories.map((item: any, index: number) => (
+                                <p key={index} className='bg-[#963ED9] text-white p-2 font-bold rounded-md'>
+                                {item.category.cat_name}
+                                </p>
+                            ))}
+                            </>}
                         </div>
-                        : community.isMember ?
-                        <div className="flex justify-end pe-5 col-span-1 items-center">
-                            <Dropdown>
+                        <div className='flex justify-center md:p-6 lg:p-6 pt-6 pb-6'>
+                            <Image src={community.banner_url} alt="Banner Community"/>
+                        </div> 
+                        <div className="grid  grid-cols-8 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20">
+                            <div className="col-span-1 flex items-center">
+                                <Avatar src={community.avatar_url} className="w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24" isBordered/>
+                            </div>
+                            <div className="col-span-6 flex items-center ps-6">
+                                <p className="font-bold text-2xl md:text-3xl lg:text-4xl">
+                                    {community.name}
+                                </p>
+                            </div>
+                            { community.isCreator ?
+                                <div className="flex justify-end pe-5 col-span-1 items-center">
+                                    <Dropdown>
                                 <DropdownTrigger>
-                                    <Button className="material-symbols-outlined icon_button bg-white">
-                                        more_vert
+                                    <Button isIconOnly variant="light">
+                                        <SlOptionsVertical/>
                                     </Button>
                                 </DropdownTrigger>
-                                <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{if(key=='leave'){leaveACommunity()}}}>
+                                <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{key=='edit'? setEdit(true): deleteCommunity(params.id)}}>
                                     <DropdownItem
-                                        key="leave"
-                                        description="Leave the community"
-                                        startContent={<span className="material-symbols-outlined">logout</span>}>
-                                        Leave Community
-                                        </DropdownItem>
+                                    key="edit"
+                                    description="Edit the community"
+                                    startContent={<AiFillEdit/>}
+                                    >
+                                    Edit Community
+                                    </DropdownItem>
+                                    <DropdownItem
+                                    key="delete"
+                                    className="text-danger"
+                                    color="danger"
+                                    description="Permanently delete the community"
+                                    startContent={<AiFillDelete/>}
+                                    >
+                                    Delete Community
+                                    </DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
+                                </div>
+                                : community.isMember ?
+                                <div className="flex justify-end pe-5 col-span-1 items-center">
+                                    <Dropdown>
+                                        <DropdownTrigger>
+                                            <Button className="material-symbols-outlined icon_button bg-white">
+                                                more_vert
+                                            </Button>
+                                        </DropdownTrigger>
+                                        <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{if(key=='leave'){leaveACommunity()}}}>
+                                            <DropdownItem
+                                                key="leave"
+                                                description="Leave the community"
+                                                startContent={<span className="material-symbols-outlined">logout</span>}>
+                                                Leave Community
+                                                </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
+                                </div>
+                                :
+                                <></>
+                            }
+                        </div>
+                        <div className="pt-5 md:p-10 lg:p-10 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20 ">
+                            <p className="text-lg text-justify">
+                                {community.description}
+                            </p>
+                        </div>
+                        
+                    </div>
+                    {/* End Presentation zone */}
+                    <Divider className="my-4" />
+                    {community.isMember ?
+                        
+                        // <div className="flex justify-center p-5">
+                        //     <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
+                        //         <a href="#" className="flex items-center gap-2">
+                        //             Post 
+                        //             <span className="material-symbols-outlined">
+                        //             stylus
+                        //             </span>
+                        //         </a>
+                        //     </Button>
+                        // </div>
+                        <div className="fixed bottom-14 right-20">
+                            <PostCommunityButton/>
                         </div>
                         :
-                        <></>
-                    }
-                </div>
-                <div className="pt-5 md:p-10 lg:p-10 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20 ">
-                    <p className="text-lg text-justify">
-                        {community.description}
-                    </p>
-                </div>
-                
-            </div>
-            {/* End Presentation zone */}
-            <Divider className="my-4" />
-            {community.isMember ?
-                
-                // <div className="flex justify-center p-5">
-                //     <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                //         <a href="#" className="flex items-center gap-2">
-                //             Post 
-                //             <span className="material-symbols-outlined">
-                //             stylus
-                //             </span>
-                //         </a>
-                //     </Button>
-                // </div>
-                <div className="fixed bottom-14 right-20">
-                    <PostCommunityButton/>
-                </div>
-                :
-                <div className="pb-16">
-                    <div className="flex justify-center p-5">
-                        <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg' 
-                            onPress={jointoCommunity}>
-                                Join 
-                        </Button>
-                    </div>
-                    <div className="flex justify-center pt-10">
-                        <span className="material-symbols-outlined icon_xl">
-                            lock
-                        </span>
-                    </div>
-                    <div>
-                        <p className='text-center font-bold text-2xl md:text-3xl lg:text-3xl p-5'>
-                            Join this community to see <br></br>
-                            its contents
-                        </p>
-                    </div>
-                </div>
-            }
-            {/* Feed zone */}
-            {community.isMember &&
-            
-                <div className="py-2">
-                    {articles.length !== 0 && articles.length > 1 ? (
-                        <>
-                        {articles.slice(0, visibleArticles).map((item, index) => (
-                            <div className="flex justify-center py-unit-4" key={index}>
-                            <CommunityArticleCard 
-                                imageArticle={item.image_url}
-                                profileImage={item.profile_image}
-                                autor={`${item.name} ${item.lastname}`}
-                                username={item.username}
-                                title={item.title}
-                                summary={item.sanitizedText}
-                                id={item.id_article}
-                                idWriter={item.id_writer}
-                                views={item.views}
-                                date={item.date.slice(0, 10)}
-                                categories={item.article_has_categories}
-                            />
+                        <div className="pb-16">
+                            <div className="flex justify-center p-5">
+                                <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg' 
+                                    onPress={jointoCommunity}>
+                                        Join 
+                                </Button>
                             </div>
-                        ))}
-                        {visibleArticles < articles.length && (
-                            <div className="flex justify-center py-unit-4">
-                            <button onClick={handleVerMasClick} className='bg-primary text-white py-2 px-3 rounded-xl'>
-                                See more
-                            </button>
+                            <div className="flex justify-center pt-10">
+                                <span className="material-symbols-outlined icon_xl">
+                                    lock
+                                </span>
                             </div>
-                        )}
-                        {visibleArticles >= articles.length && (
-                            <div className='text-center font-bold text-2xl p-5'>
-                                There are no more articles to see
+                            <div>
+                                <p className='text-center font-bold text-2xl md:text-3xl lg:text-3xl p-5'>
+                                    Join this community to see <br></br>
+                                    its contents
+                                </p>
                             </div>
-                        )}
-                        </>)
-                    :
-                        <div className='h-screen text-center font-bold text-2xl p-5'>
-                            Nothing to see
                         </div>
-
                     }
+                    {/* Feed zone */}
+                    {community.isMember &&
+                    
+                        <div className="py-2">
+                            {articles.length !== 0 && articles.length > 1 ? (
+                                <>
+                                {articles.slice(0, visibleArticles).map((item, index) => (
+                                    <div className="flex justify-center py-unit-4" key={index}>
+                                    <CommunityArticleCard 
+                                        imageArticle={item.image_url}
+                                        profileImage={item.profile_image}
+                                        autor={`${item.name} ${item.lastname}`}
+                                        username={item.username}
+                                        title={item.title}
+                                        summary={item.sanitizedText}
+                                        id={item.id_article}
+                                        idWriter={item.id_writer}
+                                        views={item.views}
+                                        date={item.date.slice(0, 10)}
+                                        categories={item.article_has_categories}
+                                    />
+                                    </div>
+                                ))}
+                                {visibleArticles < articles.length && (
+                                    <div className="flex justify-center py-unit-4">
+                                    <button onClick={handleVerMasClick} className='bg-primary text-white py-2 px-3 rounded-xl'>
+                                        See more
+                                    </button>
+                                    </div>
+                                )}
+                                {visibleArticles >= articles.length && (
+                                    <div className='text-center font-bold text-2xl p-5'>
+                                        There are no more articles to see
+                                    </div>
+                                )}
+                                </>)
+                            :
+                                <div className='h-screen text-center font-bold text-2xl p-5'>
+                                    Nothing to see
+                                </div>
+
+                            }
+                        </div>
+                    }
+                    {/* End Feed zone */}
+                </>
+                :
+                <div className='h-screen text-center font-bold text-4xl pt-20 p-5'>
+                    There is no information about this community
                 </div>
             }
-            {/* End Feed zone */}
         </div>
     )
 }
