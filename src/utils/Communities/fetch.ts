@@ -43,7 +43,9 @@ export async function joinCommunity(idUser: number, idCommunity: number) {
                 headers:{'Content-Type':'application/json','authorization':token},
             })
         console.log(res)
-        location.reload();
+        if (location.pathname != "/communities"){
+            location.reload();
+        }
         return res;
     }
 }
