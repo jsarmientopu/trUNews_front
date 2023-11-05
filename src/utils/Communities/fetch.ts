@@ -1,5 +1,6 @@
 import { getFromLocalStorage } from "../localStorage";
 import verifyToken from "../utils";
+import { alert } from "../alertHandeler";
 
 // Community by id
 export async function getCommunityById(id: number) {
@@ -60,5 +61,82 @@ export async function deleteCommunity(idCommunity: number) {
             }).then(response => response.json()).then(data => datos=data)
         console.log(res)
         return res;
+    }
+}
+
+export async function getArticlesToAdd(idCommunity: number) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    const bodyData={'userId': user.userId,'communityId': idCommunity.valueOf()}
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/checkArticleToAdd`,{
+                method: 'POST',
+                headers:{'Content-Type':'application/json','authorization':token},
+                body: JSON.stringify(bodyData)
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+}
+
+export async function postArticle(idArticle: number, idCommunity: number) {
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    const bodyData={'articleId': idArticle,'communityId': idCommunity.valueOf()}
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/addArticle`,{
+            method: 'POST',
+            headers:{'Content-Type':'application/json','authorization':token},
+            body: JSON.stringify(bodyData)
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        if(res.err){
+            alert("error",res.err,"",()=>{})
+            return false
+        }else{
+            alert("success","Article posted successfully","",()=>{})
+            return true
+        }
+    }
+}
+
+export async function getArticlesToDelete(idCommunity: number) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    const bodyData={'userId': user.userId,'communityId': idCommunity.valueOf()}
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/postedOnCommunity`,{
+                method: 'POST',
+                headers:{'Content-Type':'application/json','authorization':token},
+                body: JSON.stringify(bodyData)
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+}
+
+export async function deletePostArticle(idArticle: number, idCommunity: number,) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/removeArticle/${idCommunity}/${idArticle}`,{
+                method: 'DELETE',
+                headers:{'Content-Type':'application/json','authorization':token}
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        if(res.err){
+            alert("error",res.err,"",()=>{})
+            return false
+        }else{
+            alert("success","Article deleted successfully","",()=>{})
+            return true
+        }
     }
 }
