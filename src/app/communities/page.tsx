@@ -7,12 +7,12 @@ import { useState } from 'react';
 import { getCategories } from '@/utils/fetchs';
 import { getCommunities } from '@/utils/fetchs';
 import CommunityCard from '@/components/communities-panel/CommunityCard';
-import { Button } from '@nextui-org/react';
+import {RxCross1} from 'react-icons/rx'
 
 
 function page() {
 
-    
+
 
     const [categoriesData, setCategoriesData] = useState<any[]>()
     const [communitiesData, setCommunitiesData] = useState<any[]>([])
@@ -46,7 +46,7 @@ function page() {
     let currentCommunities = []
 
     return (
-        <div id="container" className='bg-white h-screen'>
+        <div id="container" className='bg-white'>
             <div className='p-3 bg-white'>
 
                 <p className='text-black font-bold text-5xl lg:text-7xl flex justify-center mb-3'>
@@ -75,24 +75,33 @@ function page() {
                         )
                     })}
                 </div>
-
-                <div className='flex justify-center gap-12 flex-wrap'>
-                    {communitiesData?.map((com: any, index: any) => {
-                        const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
-                        if (checkedBoxes.some(element => communityCatNames.includes(element))) {
-
-                            return (
-                                <div key={index}>
-                                    <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
-                                </div>
-                            )
-                        } else {
-                            null
-                        }
-                    })}
-                </div>
-
             </div>
+            {
+                checkedBoxes.length > 0 ?
+                    <div className='flex justify-center gap-12 flex-wrap'>
+                        {
+                            communitiesData?.map((com: any, index: any) => {
+                                const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
+                                if (checkedBoxes.some(element => communityCatNames.includes(element))) {
+
+                                    return (
+                                        <div key={index}>
+                                            <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
+                                        </div>
+                                    )
+                                } else {
+                                    null
+                                }
+                            })
+
+                        }
+
+                    </div> :
+                    <div className='flex justify-center items-center flex-col h-60 gap-3'>
+                        <RxCross1 size="7em" color="black" />
+                        <p className='font-bold text-4xl'>There's no results for the current selection</p>
+                    </div>
+            }
         </div>
     );
 }
