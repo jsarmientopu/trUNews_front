@@ -1,5 +1,7 @@
+import { createCommunityType } from "@/dto/community";
 import { getFromLocalStorage } from "../localStorage";
 import verifyToken from "../utils";
+import { imageType } from "@/dto/users";
 
 // Community by id
 export async function getCommunityById(id: number) {
@@ -77,6 +79,29 @@ export async function deleteCommunity(idCommunity: number) {
                 headers:{'Content-Type':'application/json','authorization':token},
             }).then(response => response.json()).then(data => datos=data)
         console.log(res)
+        location.replace(`/communities`)
+        return res;
+    }
+}
+
+export async function createCommunity(sentData : createCommunityType, categories : number[], bannerImage : string, avatarImage : string) {
+    const token = getFromLocalStorage('token')
+    if(token){  
+        const user = await verifyToken()
+        const data = {
+            ...sentData,
+                    creator_id: user.userId,
+                    id_categories: categories,
+                    banner_url: bannerImage,
+                    avatar_url: avatarImage
+        }
+        console.log(data)
+        const res = await fetch(`${process.env.BACK_URL}communities/create`,{
+                method: 'POST',
+                headers:{'Content-Type':'application/json','authorization':token},
+                body: JSON.stringify(data)
+            })
+        location.replace(`/communities`)
         return res;
     }
 }
