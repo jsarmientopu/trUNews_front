@@ -2,6 +2,7 @@ import { createCommunityType } from "@/dto/community";
 import { getFromLocalStorage } from "../localStorage";
 import verifyToken from "../utils";
 import { imageType } from "@/dto/users";
+import { alert } from "../alertHandeler";
 
 // Community by id
 export async function getCommunityById(id: number) {

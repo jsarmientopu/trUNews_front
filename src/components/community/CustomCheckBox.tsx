@@ -1,10 +1,37 @@
 import React from "react";
-import {Checkbox, Link, User, Chip, cn} from "@nextui-org/react";
+import {
+  useCheckbox,
+  VisuallyHidden,
+  Chip,
+  tv,
+  Checkbox,
+  cn,
+} from "@nextui-org/react";
+import { getArticleType, returnArticlesCategory } from "@/dto/article";
+import { CheckIcon } from "../CheckIcon";
+import ArticleCard from "../search/ArticleCard";
 
-export const CustomCheckbox = ({ article}: {article:any}) => {
+export const CustomCheckbox = ({
+  article,
+}: {
+  article: returnArticlesCategory;
+}) => {
+  const format = (): getArticleType => {
+    return {
+      title: article.title ? article.title : "",
+      date: new Date(article.date).toISOString(),
+      text: article.text,
+      id_article: article.id_article,
+      writer: { id_user: article.id_writer, username: article.username },
+      category: article.article_has_categories,
+      views: article.views,
+      image_url: article.image_url,
+    };
+  };
+
   return (
     <Checkbox
-      aria-label={article.name}
+      className="w-[30%]"
       classNames={{
         base: cn(
           "inline-flex max-w-md w-full bg-content1 m-0",
@@ -14,24 +41,9 @@ export const CustomCheckbox = ({ article}: {article:any}) => {
         ),
         label: "w-full",
       }}
+      value={article.id_article.toString()}
     >
-      <div className="w-full flex justify-between gap-2">
-        <User
-          avatarProps={{ size: "md", src: article.avatar }}
-          description={
-            <Link isExternal href={article.url} size="sm">
-              @{article.articlename}
-            </Link>
-          }
-          name={article.name}
-        />
-        <div className="flex flex-col items-end gap-1">
-          <span className="text-tiny text-default-500">{article.role}</span>
-          <Chip size="sm" variant="flat">
-            {article.status}
-          </Chip>
-        </div>
-      </div>
+      <ArticleCard article={format()}></ArticleCard>
     </Checkbox>
   );
 };

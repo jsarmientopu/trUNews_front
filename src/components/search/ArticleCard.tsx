@@ -12,7 +12,7 @@ const ArticleCard=({article}:{'article':getArticleType})=>{
         return <SkeletonCard mode={1}></SkeletonCard>
     }
 
-    return <Link href={{pathname:`/article/${article.id_article}`}} className='w-full'>
+    return <div className='w-full'>
         <Card className="w-full">
             <div className="flex flex-col item-center items-center px-3 py-0 text-small text-default-400">
                 <div className="w-full pt-2">
@@ -47,7 +47,7 @@ const ArticleCard=({article}:{'article':getArticleType})=>{
         </Card>
         <div className="flex flex-col gap-2">
         </div>
-    </Link>
+    </div>
 }
 
 export default ArticleCard;

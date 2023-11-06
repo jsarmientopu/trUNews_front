@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, {useState, useEffect} from "react";
 import { deleteCommunity, getCommunityById, getCommunityFeed, joinCommunity, leaveCommunity } from "@/utils/Communities/fetch"
@@ -14,86 +14,92 @@ import PostCommunityButton from "@/components/community/PostCommunityButton";
 import ShowModal from "@/components/community/Modal";
 
 export default function CommunityPage({ params }: any) {
+  // info community
+  const [community, setCommunity] = useState<any>([
+    {
+      id_community: 0,
+      name: "",
+      description: "",
+      creator_id: 0,
+      date: "",
+      articlesCount: 0,
+      avatar_url: "",
+      banner_url: "",
+      community_has_categories: [],
+      isCreator: false,
+      isMember: false,
+      membersCount: 0,
+    },
+  ]);
 
-    // info community
-    const [community, setCommunity] = useState<any>([{
-        'id_community': 0,
-        'name': "",
-        'description': "",
-        'creator_id': 0,
-        'date': "",
-        'articlesCount': 0,
-        'avatar_url': "",
-        'banner_url': "",
-        'community_has_categories': [],
-        'isCreator': false,
-        'isMember': false,
-        'membersCount': 0
+  const [edit, setEdit] = useState<boolean>(false);
 
-    }]);
+  // articles feed
+  const [articles, setArticles] = useState<Array<any>>([
+    {
+      date: "",
+      id_article: 0,
+      id_writer: 0,
+      image_url: "",
+      lastname: "",
+      name: "",
+      sanitizedText: "",
+      text: "",
+      title: "",
+      username: "",
+      profile_image: "",
+      views: 0,
+      article_has_categories: [],
+    },
+  ]);
 
-    const [edit, setEdit] = useState<boolean>(false);
+  // info user
+  const [userInfo, setInfoUser] = useState<decryptedJWT>({
+    userId: -2,
+    rol: -2,
+  });
 
-    // articles feed
-    const [articles, setArticles] = useState<Array<any>>([{
-        'date':'',
-        'id_article': 0,
-        'id_writer': 0,
-        'image_url': '',
-        'lastname': '',
-        'name': '',
-        'sanitizedText': '',
-        'text': '',
-        'title': '',
-        'username': '',
-        'profile_image': '',
-        'views': 0,
-        'article_has_categories': []
-    }]);
+  // Rastreo de articulos visibles en el feed
+  const [visibleArticles, setVisibleArticles] = useState(1);
 
-    // info user
-    const [userInfo,setInfoUser] = useState<decryptedJWT>({userId:-2,rol:-2})
+  const handleVerMasClick = () => {
+    setVisibleArticles((prevVisibleArticles) => prevVisibleArticles + 10);
+  };
 
-    // Rastreo de articulos visibles en el feed
-    const [visibleArticles, setVisibleArticles] = useState(1);
-
-    const handleVerMasClick = () => {
-        setVisibleArticles(prevVisibleArticles => prevVisibleArticles + 10);
+  // fetch de communidad
+  useEffect(() => {
+    async function fetchData() {
+      const CommunityData = await getCommunityById(params.id);
+      console.log(CommunityData);
+      if (CommunityData) {
+        setCommunity(CommunityData);
+      }
     }
 
-    // fetch de communidad
-    useEffect(() => {
-        async function fetchData() {
-            const CommunityData = await getCommunityById(params.id);
-            console.log(CommunityData)
-            if(CommunityData){
-                setCommunity(CommunityData);
-            }
-        }
+    fetchData();
+  }, []);
 
-        fetchData();}, []);
-        
-
-    // fetch de articulos a mostrar en el feed
-    useEffect(() => {
-        async function fetchData() {
-            const articlesData = await getCommunityFeed(params.id);
-            if(articlesData){
-                setArticles(articlesData);
-                setVisibleArticles(10);
-            }
-        }
-
-        fetchData();}, []);
-
-    async function token(){
-        const rol =await verifyToken();
-        setInfoUser(rol);
+  // fetch de articulos a mostrar en el feed
+  useEffect(() => {
+    async function fetchData() {
+      const articlesData = await getCommunityFeed(params.id);
+      if (articlesData) {
+        setArticles(articlesData);
+        setVisibleArticles(10);
+      }
     }
-    
-    useEffect(()=>{
-        token();
-    },[]);
+
+    fetchData();
+  }, []);
+
+  async function token() {
+    const rol = await verifyToken();
+    setInfoUser(rol);
+  }
+
+  useEffect(() => {
+    token();
+  }, []);
 
     // fetch unirse a una comunidad
     function jointoCommunity() {
@@ -189,7 +195,7 @@ export default function CommunityPage({ params }: any) {
                         //     </Button>
                         // </div>
                         <div className="fixed bottom-14 right-20">
-                            <PostCommunityButton/>
+                            <PostCommunityButton idCommunity={parseInt(params.id)}/>
                         </div>
                         :
                         <div className="pb-16">

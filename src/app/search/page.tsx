@@ -89,19 +89,19 @@ const App=()=>{
                     <div className="flex flex-wrap flex-row gap-8 justify-center w-full pb-20">
                         <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
                             {searchedArticles.filter((item:getArticleType, index)=>index%3==0&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                                <ArticleCard key={index} article={item}/>
+                                <Link href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
                         <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
                             {searchedArticles.filter((item:getArticleType, index)=>index%3==1&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                                <ArticleCard key={index} article={item}/>
+                                <Link href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
                         <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
                             {searchedArticles.filter((item:getArticleType, index)=>index%3==2&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                                <ArticleCard key={index} article={item}/>
+                                <Link href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
