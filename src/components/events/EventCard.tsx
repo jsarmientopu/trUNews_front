@@ -19,11 +19,11 @@ function EventCard({ eventName, eventDescription, place, date, image, participan
 
             <Card className="article_card w-80 h-[27rem] drop-shadow-[0_0px_10px_rgba(0,0,0,0.4)]" isPressable>
                 <CardHeader className="absolute z-10 top-1 flex-col p-3 !items-start">
-                    <p className="drop-shadow-[0_1.2px_3px_rgba(0,0,0,1000)] font-bold text-white text-2xl text-left mb-1">{eventName}</p>
+                    <p className="drop-shadow-[0_1.2px_3px_rgba(0,0,0,1000)] font-bold text-white text-2xl text-left mb-1 line-clamp-2">{eventName}</p>
 
                     <div className='flex justify-center items-center gap-1 mb-1'>
                         <IoLocationSharp className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)]" size="2em" color="white" />
-                        <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-medium text-white text-xl text-left leading-5">{place}</p>
+                        <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-medium text-white text-xl text-left leading-5 line-clamp-2">{place}</p>
                     </div>
                     <div className='flex justify-center items-center gap-1 mb-1'>
                         <AiTwotoneCalendar className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)]" size="2em" color="white" />
