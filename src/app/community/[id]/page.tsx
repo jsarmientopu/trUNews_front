@@ -9,6 +9,7 @@ import verifyToken from '@/utils/utils'
 import '../../globals.css'
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { SlOptionsVertical } from "react-icons/sl";
+import Link from "next/link";
 
 export default function CommunityPage({ params }: any) {
 
@@ -123,6 +124,13 @@ export default function CommunityPage({ params }: any) {
                         <p className="font-bold text-2xl md:text-3xl lg:text-4xl">
                             {community.name}
                         </p>
+                        <Link href={`${params.id}/events/${params.id}`}>
+                            <Button className="ml-6">
+                                Eventos
+                            </Button>
+                        </Link>
+                        
+                        
                     </div>
                     { community.isCreator ?
                         <div className="flex justify-end pe-5 col-span-1 items-center">
