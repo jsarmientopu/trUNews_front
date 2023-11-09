@@ -7,7 +7,7 @@ import { AiTwotoneCalendar } from 'react-icons/ai'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { IoMdAddCircleOutline } from 'react-icons/io'
 import { AiOutlineCheck } from 'react-icons/ai'
-import {IoMdRemoveCircleOutline} from 'react-icons/io'
+import { IoMdRemoveCircleOutline } from 'react-icons/io'
 
 
 
@@ -54,15 +54,16 @@ function EventCard({ eventName, eventDescription, place, date, image, participan
                 <CardFooter className='p-3 flex justify-center items-center gap-1'>
                     {isAttendee ?
                         <>
-                            <IoMdAddCircleOutline size="1.5em" color="black" />
-                            <p className='font-bold text-xl'>
-                                Attend
-                            </p>
-                        </> :
-                        <>
                             <IoMdRemoveCircleOutline size="1.5em" color="black" />
                             <p className='font-bold text-xl'>
                                 Cancel attend
+                            </p>
+
+                        </> :
+                        <>
+                            <IoMdAddCircleOutline size="1.5em" color="black" />
+                            <p className='font-bold text-xl'>
+                                Attend
                             </p>
                         </>
                     }
