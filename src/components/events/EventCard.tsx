@@ -21,10 +21,12 @@ import { undoAttendEvent } from '@/utils/fetchs'
 
 function EventCard({id, eventName, eventDescription, place, date, image, participants, isAttendee }: any) {
 
-
+    
     const [userInfo, setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [attendeeState, setAttendeeState] = useState(isAttendee)
     const [participantsState, setParticipantsState] = useState(participants)
+    
+    
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -45,6 +47,7 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
         }else{
             if(attendeeState){
                 const undoAttend = await undoAttendEvent(userInfo.userId,id)
+                console.log(undoAttend)
                 setParticipantsState(participantsState-1)
                 if(undoAttend){
                     //alert("You have canceled your attendance to this event")
@@ -52,12 +55,14 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
 
             }else{
                 const attend = await attendEvent(userInfo.userId,id)
+                console.log(attend)
                 setParticipantsState(participantsState+1)
-                if(attendeeState){
+                if(attend){
                     //alert("You have successfully attended this event")
                 }
             }
             setAttendeeState(!attendeeState);
+            console.log(attendeeState)
         }
         
     }
@@ -102,15 +107,15 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
                 <CardFooter className='p-3 flex justify-center items-center gap-1'>
                     {attendeeState ?
                         <>
-                            <IoMdRemoveCircleOutline size="1.5em" color="black" />
-                            <p className='font-bold text-xl'>
+                            <IoMdRemoveCircleOutline size="1.5em" color="red" />
+                            <p className='font-bold text-xl text-red-600'>
                                 Cancel attend
                             </p>
 
                         </> :
                         <>
-                            <IoMdAddCircleOutline size="1.5em" color="black" />
-                            <p className='font-bold text-xl'>
+                            <IoMdAddCircleOutline size="1.5em" color="green" />
+                            <p className='font-bold text-xl text-green-700'>
                                 Attend
                             </p>
                         </>

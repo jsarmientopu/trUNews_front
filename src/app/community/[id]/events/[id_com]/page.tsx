@@ -61,7 +61,7 @@ function Page({ params }: any) {
 
                                     return (
                                         <div key={index}>
-                                            <EventCard id={event.id_event} eventName={event.name} place={event.place} date={sanitizedDate} image={event.image_url} participants={event.attendeesCount} eventDescription={event.description} />
+                                            <EventCard id={event.id_event} eventName={event.name} place={event.place} date={sanitizedDate} image={event.image_url} participants={event.attendeesCount} eventDescription={event.description} isAttendee={event.isAttendee} />
                                         </div>
                                     )
                                 })
