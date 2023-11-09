@@ -16,7 +16,10 @@ export default function PruebaArticulo() {
                     const sanitizedDate = `${year}-${month}-${day}`;
 
                     return (
-                        <EventCard eventName={event.name} place={event.place} date={sanitizedDate} image={event.image_url} participants = {event.attendeesCount} eventDescription={event.description} />
+                        <div key={index}>
+                            <EventCard id={event.id_event} eventName={event.name} place={event.place} date={sanitizedDate} image={event.image_url} participants={event.attendeesCount} eventDescription={event.description} />
+                        </div>
+
                     )
                 })
             }
