@@ -23,6 +23,8 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
 
 
     const [userInfo, setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
+    const [attendeeState, setAttendeeState] = useState(isAttendee)
+    const [participantsState, setParticipantsState] = useState(participants)
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -41,17 +43,21 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
         if(userInfo.userId === -1){
             //alert("You must be logged in to attend an event")
         }else{
-            if(isAttendee){
+            if(attendeeState){
                 const undoAttend = await undoAttendEvent(userInfo.userId,id)
+                setParticipantsState(participantsState-1)
                 if(undoAttend){
                     //alert("You have canceled your attendance to this event")
                 }
+
             }else{
                 const attend = await attendEvent(userInfo.userId,id)
-                if(attend){
+                setParticipantsState(participantsState+1)
+                if(attendeeState){
                     //alert("You have successfully attended this event")
                 }
             }
+            setAttendeeState(!attendeeState);
         }
         
     }
@@ -78,7 +84,7 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
                     </div>
                     <div className='flex justify-center items-center gap-1 mb-1'>
                         <AiOutlineCheck className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)]" size="2em" color="white" />
-                        <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-medium text-white text-xl text-left leading-5">{participants} people will attend</p>
+                        <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-medium text-white text-xl text-left leading-5">{participantsState} people will attend</p>
                     </div>
                     <div className='flex justify-center items-center mt-2'>
                         <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-normal text-white text-lg leading-5 text-justify line-clamp-[6]">{eventDescription}</p>
@@ -94,7 +100,7 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
                     src={image}
                 />
                 <CardFooter className='p-3 flex justify-center items-center gap-1'>
-                    {isAttendee ?
+                    {attendeeState ?
                         <>
                             <IoMdRemoveCircleOutline size="1.5em" color="black" />
                             <p className='font-bold text-xl'>

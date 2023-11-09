@@ -49,7 +49,7 @@ function Page({ params }: any) {
 
                         </div>
                         :
-                        <div className='flex flex-wrap gap-3'>
+                        <div className='flex justify-center flex-wrap gap-14 mt-3'>
                             {
                                 eventsData?.map((event: any, index: any) => {
                                     const eventDate = event.date
