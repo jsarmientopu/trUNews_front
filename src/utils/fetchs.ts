@@ -328,3 +328,14 @@ export async function undoAttendEvent(user_id:number, event_id:number){
     }
 }
 
+export async function getAttendedEvents(user_id: number) {
+
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}users/eventsAttended/${user_id}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    }).then(response => response.json()).then(data => datos = data)
+    console.log(res);
+    return res;
+
+}
