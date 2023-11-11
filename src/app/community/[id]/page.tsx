@@ -12,6 +12,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { LiaEditSolid } from "react-icons/lia";
 import PostCommunityButton from "@/components/community/PostCommunityButton";
 import ShowModal from "@/components/community/Modal";
+import Link from "next/link";
 
 export default function CommunityPage({ params }: any) {
   // info community
@@ -135,7 +136,8 @@ export default function CommunityPage({ params }: any) {
                                 </p>
                             </div>
                             { community.isCreator ?
-                                <div className="flex justify-end pe-5 col-span-1 items-center">
+                                <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
+                                    <Link href={`/events/${params.id}`}><Button color="primary">Eventos</Button></Link>
                                     <Dropdown>
                                 <DropdownTrigger>
                                     <Button isIconOnly variant="light">
@@ -163,7 +165,8 @@ export default function CommunityPage({ params }: any) {
                             </Dropdown>
                                 </div>
                                 : community.isMember ?
-                                <div className="flex justify-end pe-5 col-span-1 items-center">
+                                <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
+                                    <Link href={`/events/${params.id}`}><Button color="primary">Eventos</Button></Link>
                                     <ShowModal 
                                         user_id={userInfo.userId} 
                                         community_id={params.id}
@@ -194,7 +197,7 @@ export default function CommunityPage({ params }: any) {
                         //         </a>
                         //     </Button>
                         // </div>
-                        <div className="fixed bottom-14 right-20">
+                        <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50">
                             <PostCommunityButton idCommunity={parseInt(params.id)}/>
                         </div>
                         :

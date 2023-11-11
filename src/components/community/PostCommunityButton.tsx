@@ -39,6 +39,8 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
   const [groupSelected, setGroupSelected] = useState<Array<string>>([]);
 
   const getPosibbleNewArticle = async (mode:number) => {
+    setGroupSelected([]);
+    setPosiblePostArticle([]);
     let articles;
     if(mode==0){
       articles = await getArticlesToAdd(idCommunity.valueOf());
@@ -164,7 +166,7 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
                           )
                         )
                       ) : (
-                        <></>
+                        <>Your saves or written articles can´t post in this community (verify the categories)</>
                       )}
                     </div>
                   </CheckboxGroup>

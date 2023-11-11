@@ -40,7 +40,7 @@ const App=()=>{
     useEffect(()=>{
         (async()=>{
             const res = await getSearch(search)
-            if(res==undefined||(res[0].err&&res[1].err)){
+            if(res==undefined||(res[0].err&&res[1].err&&res[2].err)){
                 setFilter([false,false,false])
                 console.log('mal')
                 setSearchedArticles([])
