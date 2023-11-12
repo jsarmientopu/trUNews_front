@@ -280,7 +280,6 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                             {profileInfo.profession?<p className='text-lg'><b className="text-[#37393B]">Profession:</b> {profileInfo.profession}</p>:<></>}
                             {profileInfo.description?<p className='text-lg'><b className="text-[#37393B]">Description:</b> {profileInfo.description}</p>:<></>}
                         </div>
-                        
                     </div>
                 </div>
                     
@@ -305,7 +304,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         <>
                         <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
                             Edit <FiEdit size='1.5em' />
-                        </Button>
+                        </Button> 
                         <ModalCard user={profileInfo}></ModalCard></>
                         :<> </>
                         }

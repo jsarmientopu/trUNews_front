@@ -12,3 +12,19 @@ export interface communityInfo{
     isMember: false,
     membersCount: 0
 }
+
+export interface createCommunityType{
+    name: String,
+    creator_id: Number,
+    date: String,
+    avatar_extension: String|undefined,
+    avatar_ancho: Number|undefined,
+    avatar_ratio: String|undefined,
+    banner_extension: String|undefined,
+    banner_ancho: Number|undefined,
+    banner_ratio: String|undefined,
+    description: String,
+    avatar_url: String,
+    banner_url: String,
+    id_categories: Array<{id_category: Number}>,
+}
