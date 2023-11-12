@@ -1,15 +1,23 @@
 'use client'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useEffect } from 'react';
 import { getCommunityEvents } from '@/utils/fetchs';
 import { useState } from 'react';
-import {BsCalendarX} from 'react-icons/bs'
+import {BsCalendarX} from 'react-icons/bs';
+import {IoMdAdd} from 'react-icons/io';
 import EventCard from '@/components/events/EventCard';
+import PostCommunityButton from '@/components/community/PostCommunityButton';
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure,Input, Textarea} from "@nextui-org/react";
+import { createEventType } from '@/dto/community';
+import { createEvent } from '@/utils/Events/fetchs';
+import { FaFileUpload } from "react-icons/fa"
+import { imageType } from "@/dto/users";
+import FormEvent from '@/components/events/FormEvent';
+
 
 function Page({ params }: any) {
 
-    const [eventsData, setEventsData] = useState<any[]>()
-
+    const [eventsData, setEventsData] = useState<any[]>([])
 
     useEffect(() => {
         (async () => {
@@ -19,8 +27,6 @@ function Page({ params }: any) {
 
         })();
     }, [])
-
-
 
     return (
         <div className='p-5'>
@@ -69,6 +75,11 @@ function Page({ params }: any) {
                         </div>
                 }
             </>
+            
+            <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50">
+                <FormEvent community={parseInt(params.id_com)}></FormEvent>
+            </div>
+
 
         </div>
     )

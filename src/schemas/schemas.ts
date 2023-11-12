@@ -98,3 +98,19 @@ export const getArticleSchema = z.object({
     category: z.array(z.object({category:z.object({cat_name: z.string().optional()})}))
     // z.number({ required_error: "Debe haber ua imagen" }),
 }).strict();
+
+export const createEventSchema = z.object({
+    name: z.string({ required_error: "Debe haber un nombre de evento" }),
+    description: z.string().optional(),
+    date: z.string({
+      required_error: "Debe haber una fecha",
+    }),
+    place: z.string({ required_error: "Debe haber un lugar" }),
+    creator_id: z.number({ required_error: "Debe haber un ID de creador" }),
+    community_id: z.number({ required_error: "Debe haber un ID de comunidad" }),
+    image_url: z.any({}).refine((val: any) => val !== undefined),
+    image_extension: z.string(),
+    image_ancho: z.number(),
+    image_ratio: z.string()
+
+  }).strict();
