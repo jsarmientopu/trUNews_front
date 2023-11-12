@@ -35,7 +35,7 @@ const CommunityArticleCard: React.FC<ArticleCardProps> = ({
   };
 
   return (
-    <Card className = "article_card w-[80%] p-unit-lg shadow-lg bg-[#dbdbdb]" isPressable onPress={redirectToArticle} isHoverable>
+    <Card className = "article_card w-[80%] p-unit-lg shadow-lg bg-[#F0F2F4]" isPressable onPress={redirectToArticle} isHoverable>
       <CardBody>
           <div className='sm:block md:flex lg:flex items-center'>
           <div className='flex-1'>
