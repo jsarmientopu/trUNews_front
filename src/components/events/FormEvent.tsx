@@ -21,14 +21,14 @@ const FormEvent = ({community}:{community:number})=>{
     const createEventHandle=async()=>{
         let data=({ ...newEvent, 'image_url': infoImage?.contenido, 'image_extension': infoImage?.extension?infoImage.extension:'', 'image_ancho': infoImage?.width?Number(infoImage.width):0, 'image_ratio':'1:1.15'});
         const event = await createEvent(data);
-        if(!event.err){
+        if(event.err){
             alert('error', event.err, 'Verify the data. All fields are required', ()=>{})
+        }else{
+            alert('success', 'Event created correctly', '', ()=>{window.location.reload()})
             setEvent({'name':'','community_id':community, 'creator_id':-1, 'date':'', 'description':'', 'image_ancho':0, 'image_extension':'', 'image_ratio':'', 'image_url':'', 'place':''});
             setInfoImage(undefined)
             setFile('Upload image')
             closeRef.current.click();
-        }else{
-            alert('success', 'Event created correctly', '', ()=>{})
         }
     }
 
@@ -77,13 +77,12 @@ const FormEvent = ({community}:{community:number})=>{
     };
 
     const handleUpdate = (event:any) => {
-        // console.log(event)
         // console.log(event.target.id)
         if(event.target.name == 'date'){
             const date = event.target.value.toString();
+            console.log(date)
             setEvent({ ...newEvent, 'date':  date});
         }else{
-            console.log({ ...newEvent,  [event.target.name]: event.target.value })
             setEvent({ ...newEvent,  [event.target.name]: event.target.value });
         }
     };
@@ -120,9 +119,9 @@ const FormEvent = ({community}:{community:number})=>{
                             <Textarea name='description' type="text" label="Description" labelPlacement='outside' placeholder="Enter the event description" onChange={handleUpdate}/>
                             <div className="flex flex-row gap-12 justify-between">
                                 <Input fullWidth name='place' type="text" label="Place"  variant='underlined' labelPlacement='outside-left' placeholder="Enter the event place" onChange={handleUpdate}/>
-                                <Input fullWidth name='date' type="date" min={new Date().toISOString().split('T')[0]} label="Date"  variant='underlined' labelPlacement='outside-left' onChange={handleUpdate}/>
+                                <Input fullWidth name='date' type="datetime-local" min={new Date().toISOString().split('T')[0]+"T"+new Date().toISOString().split('T')[1].split(':')[0]+":"+new Date().toISOString().split('T')[1].split(':')[1]} label="Date"  variant='underlined' labelPlacement='outside-left' onChange={handleUpdate}/>
                             </div>
-                            <Button className='bg-gray-300' onClick={()=>{imageInputRef.current?.click()}}>
+                            <Button className='bg-gray-300' onClick={()=>{imageInputRef.current?.click()}}> 
                                 <FaFileUpload  /> {file}
                             </Button>
                             <input className='hidden' id='input_File' name='input_File' key='2' type='file' ref={imageInputRef} onChange={handleImageChange} accept='image/* '/>
@@ -134,7 +133,7 @@ const FormEvent = ({community}:{community:number})=>{
                     Close
                     </Button>
                     <Button color="primary" onClick={()=>{createEventHandle()}}>
-                    Action
+                    Create
                     </Button>
                 </ModalFooter>
                 </>

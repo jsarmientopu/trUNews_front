@@ -18,3 +18,18 @@ export async function createEvent(infoEvent: createEventType) {
         return res;
     }
 }
+
+export async function deleteEvent(community_id:number, event_id:number) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/deleteEvent/${community_id}/${event_id}`,{
+                method: 'DELETE',
+                headers:{'Content-Type':'application/json','authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+}

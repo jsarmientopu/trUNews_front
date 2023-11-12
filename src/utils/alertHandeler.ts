@@ -19,7 +19,7 @@ export const alert=async (type:SweetAlertIcon, mess:string, err:string, next:any
             mess,
             err,
             type
-        )
+        ).then(()=>{next()})
     }
 
 }

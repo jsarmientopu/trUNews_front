@@ -15,18 +15,21 @@ import verifyToken from '@/utils/utils'
 import { useEffect } from 'react'
 import { attendEvent } from '@/utils/fetchs'
 import { undoAttendEvent } from '@/utils/fetchs'
+import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
+import ArticleOption from '../profile/ArticleOption'
+import { BsThreeDotsVertical } from 'react-icons/bs'
+import { deleteEvent } from '@/utils/Events/fetchs'
+import { alert } from '@/utils/alertHandeler'
 
 
 
 
-function EventCard({id, eventName, eventDescription, place, date, image, participants, isAttendee }: any) {
+function EventCard({id, eventName, eventDescription, place, date, hour, image, participants, isAttendee, isCreator, community_id }: any) {
 
     
     const [userInfo, setUserInfo] = useState<decryptedJWT>({userId:-2,rol:-1})
     const [attendeeState, setAttendeeState] = useState(isAttendee)
     const [participantsState, setParticipantsState] = useState(participants)
-    
-    
 
     async function token(){
         const tok = getFromLocalStorage("token");
@@ -67,10 +70,20 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
         
     }
 
+    async function handleDeleteEvent() {
+        const deleted = await deleteEvent(userInfo.userId, id);
+        // const deleted = await deleteEvent(community_id, id);
+        if(deleted.err){
+            alert('error',deleted.err,'',()=>{});
+        }else{
+            alert('question', 'Your event will be deleted permanently', '', ()=>{location.reload()})
+        }
+    }
+
     return (
         <div>
 
-            <Card className="article_card w-80 h-[27rem] drop-shadow-[0_0px_10px_rgba(0,0,0,0.4)]" isPressable onPress={() => handleEvent()}>
+            <Card className="relative article_card w-80 h-[27rem] drop-shadow-[0_0px_10px_rgba(0,0,0,0.4)]" isPressable onPress={() => handleEvent()}>
                 <CardHeader className="absolute z-10 top-1 flex-col p-3 !items-start">
                     <p className="drop-shadow-[0_1.2px_3px_rgba(0,0,0,1000)] font-bold text-white text-2xl text-left mb-1 line-clamp-2">{eventName}</p>
 
@@ -85,7 +98,7 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
                     </div>
                     <div className='flex justify-center items-center gap-1 mb-1'>
                         <AiOutlineClockCircle className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)]" size="2em" color="white" />
-                        <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-medium text-white text-xl text-left leading-5">4:00pm</p>
+                        <p className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)] font-medium text-white text-xl text-left leading-5">{hour}</p>
                     </div>
                     <div className='flex justify-center items-center gap-1 mb-1'>
                         <AiOutlineCheck className="drop-shadow-[0_1.2px_2px_rgba(0,0,0,1000)]" size="2em" color="white" />
@@ -122,6 +135,31 @@ function EventCard({id, eventName, eventDescription, place, date, image, partici
                     }
 
                 </CardFooter>
+                {isCreator?
+                    <div className="absolute top-0 right-0">
+                        <Dropdown>
+                            <DropdownTrigger >
+                                <Button className="bg-transparent text-white" variant='light'
+                                isIconOnly size='lg'
+                                >
+                                <BsThreeDotsVertical size={'2em'}/> 
+                                </Button>
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Dynamic Actions">
+                                <DropdownItem
+                                    key='delete'
+                                    color='danger'
+                                    className='text-danger'
+                                    onClick={handleDeleteEvent}
+                                >
+                                    Delete
+                                </DropdownItem>
+                            </DropdownMenu>
+                            </Dropdown>
+                    </div>
+                    :
+                    <></>
+                }
 
             </Card>
 

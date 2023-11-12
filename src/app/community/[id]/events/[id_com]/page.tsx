@@ -21,7 +21,7 @@ function Page({ params }: any) {
 
     useEffect(() => {
         (async () => {
-            const eventsFetch = await getCommunityEvents(params.id)
+            const eventsFetch = await getCommunityEvents(parseInt(params.id))
             setEventsData(eventsFetch)
             console.log(eventsFetch)
 
@@ -64,10 +64,10 @@ function Page({ params }: any) {
                                     const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
                                     const day = originalDate.getDate().toString().padStart(2, '0');
                                     const sanitizedDate = `${year}-${month}-${day}`;
-
+                                    const hour = originalDate.getHours()+":"+originalDate.getMinutes()
                                     return (
                                         <div key={index}>
-                                            <EventCard id={event.id_event} eventName={event.name} place={event.place} date={sanitizedDate} image={event.image_url} participants={event.attendeesCount} eventDescription={event.description} isAttendee={event.isAttendee} />
+                                            <EventCard id={event.id_event} eventName={event.name} place={event.place} date={sanitizedDate} hour={hour} image={event.image_url} participants={event.attendeesCount} eventDescription={event.description} isAttendee={event.isAttendee} isCreator={event.isCreator} community_id={parseInt(params.id_com)}/>
                                         </div>
                                     )
                                 })

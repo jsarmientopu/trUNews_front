@@ -175,9 +175,10 @@ export default function CommunityPage({ params }: any) {
                                             </p>
                                         </Button>
                                     </Link>
-                                    <span className="material-symbols-outlined icon_button">
-                                        <a href="#">more_vert</a>
-                                    </span>
+                                    <ShowModal 
+                                        user_id={userInfo.userId} 
+                                        community_id={params.id}
+                                    />
                                 </div>
                                 :
                                 <></>
