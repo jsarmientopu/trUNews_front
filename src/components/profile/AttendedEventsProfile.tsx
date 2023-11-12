@@ -35,19 +35,22 @@ const AttendedEvents = ({ userInfo, userView }: { 'userInfo': decryptedJWT, 'use
 
         {
             attendedEventsData.length > 0 ?
-                <div className="flex flex-wrap lg:flex-wrap lg:flex-row justify-center items-center h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
+                <div className="flex flex-wrap lg:flex-wrap lg:flex-row justify-center items-center h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-20 bg-[#F0F2F4]">
                     {
 
 
-                        attendedEventsData?.map((fullEvent: any, index: any) => {
-                            const eventDate = fullEvent.event.date
+                        attendedEventsData?.map((event: any, index: any) => {
+                            const eventDate = event.date
                             const originalDate = new Date(eventDate);
                             const year = originalDate.getFullYear();
                             const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
                             const day = originalDate.getDate().toString().padStart(2, '0');
                             const sanitizedDate = `${year}-${month}-${day}`;
                             return (
-                                <EventCard id={fullEvent.event_id_attendee} eventName={fullEvent.event.name} eventDescription={fullEvent.event.description} place={fullEvent.event.place} date={sanitizedDate} image={fullEvent.event.image_url} participants={fullEvent.event.attendeesCount} isAttendee={fullEvent.event.isAttendee} />
+                                <div key={index}>
+                                    <EventCard id={event.id_event} eventName={event.name} eventDescription={event.description} place={event.place} date={sanitizedDate} image={event.image_url} participants={event.attendeesCount} isAttendee={event.isAttendee} />
+                                </div>
+
                             )
                         })
 
