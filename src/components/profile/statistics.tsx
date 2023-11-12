@@ -75,11 +75,11 @@ export default function StatisticsGraph (statistics: any) {
     return (
         <div>
             <Chart
-            options={dataSample.options}
-            series={dataSample.series}
-            type="bar"
-            width="500"
-        />
+                options={dataSample.options}
+                series={dataSample.series}
+                type="bar"
+                width="500"
+            />
         </div> 
     );
 }
