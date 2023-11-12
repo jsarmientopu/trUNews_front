@@ -13,6 +13,7 @@ import { removeFromLocalStorage } from "@/utils/localStorage";
 import { redirect, useRouter } from "next/navigation";
 import { set } from "zod";
 import { Roles } from "@/utils/rolDefinition";
+import "../../app/globals.css"
 
 
 const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFollows, setArticleWriter, articlesPage, setArticlesPage}:{'edit':any, 'setEdit':any , 'followp':any, 'setFollow':any, 'userInfo':decryptedJWT, 'userView':number, 'fixFollows':any, 'setArticleWriter':any, 'articlesPage':any, 'setArticlesPage':any})=>{
@@ -280,7 +281,6 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                             {profileInfo.profession?<p className='text-lg'><b className="text-[#37393B]">Profession:</b> {profileInfo.profession}</p>:<></>}
                             {profileInfo.description?<p className='text-lg'><b className="text-[#37393B]">Description:</b> {profileInfo.description}</p>:<></>}
                         </div>
-                        
                     </div>
                 </div>
                     
@@ -303,9 +303,14 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                         <div className="flex flex-col justify-center items-center gap-4 w-full lg:w-auto h-auto">
                         {profileInfo.id_user==userInfo.userId?
                         <>
-                        <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
-                            Edit <FiEdit size='1.5em' />
-                        </Button>
+                        <div className="flex gap-6 items-center">
+                            <Button className="bg-[#963ED9] text-[#F8F8F8] shadow-2xl" onClick={()=>{setEdit(true); setNewImage(image)}}>
+                                Edit <FiEdit size='1.5em' />
+                            </Button> 
+                            <span className="material-symbols-outlined icon_button" title="My Statistics">
+                                finance
+                            </span>  
+                        </div>
                         <ModalCard user={profileInfo}></ModalCard></>
                         :<> </>
                         }
