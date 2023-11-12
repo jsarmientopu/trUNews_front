@@ -3,6 +3,7 @@ import { getFromLocalStorage } from "./localStorage";
 import { getUserType, imageType, updateUserType, updatePasswordType} from "@/dto/users";
 import { user } from "@nextui-org/react";
 import { parseArgs } from "util";
+import { alert } from "./alertHandeler";
 
 export const getProfile=async(userView:number)=>{
     const token = getFromLocalStorage('token')
@@ -294,6 +295,10 @@ export async function getCommunityEvents(id:number) {
             body: JSON.stringify(datos)
         }).then(response => response.json()).then(data => datos=data)
         console.log(res)
+        if(res.err){
+            alert('error',res.err, "", ()=>{})
+            return []
+        }
         return res;
     }
 }
