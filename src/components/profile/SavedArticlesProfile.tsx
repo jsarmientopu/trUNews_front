@@ -37,6 +37,7 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
             views: 0
         },
     ]);
+
     
      // fetch statistics
     useEffect(() => {
@@ -71,16 +72,18 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
                 {articlesPage?
                     <>
                         <p className="text-2xl">Written Articles</p>
-                        <span className="flex material-symbols-outlined icon_button justify-end" title="My Statistics" onClick={ViewStatistics}>
-                            finance
-                        </span>  
+                        { userView == userInfo.userId && 
+                            <span className="flex material-symbols-outlined icon_button justify-end" title="My Statistics" onClick={ViewStatistics}>
+                                finance
+                            </span>  
+                        }
                     </>
                 :
                     <p className="text-2xl">Saved Articles</p>
                 }
             </div>
             <div>
-                {statisticsView && 
+                { statisticsView &&
                     <>
                         <StatisticsGraph statistics={statistics} />
                         <Divider className="my-4" />
