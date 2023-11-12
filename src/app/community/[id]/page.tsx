@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { deleteCommunity, getCommunityById, getCommunityFeed, joinCommunity, leaveCommunity } from "@/utils/Communities/fetch"
 import CommunityArticleCard from "@/components/community/CommunityArticleCard";
 import { Image, Avatar, Divider, Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
@@ -14,8 +14,12 @@ import PostCommunityButton from "@/components/community/PostCommunityButton";
 import ShowModal from "@/components/community/Modal";
 import Link from "next/link";
 
+
+;
+
 export default function CommunityPage({ params }: any) {
   // info community
+  const ref = useRef<any>();
   const [community, setCommunity] = useState<any>([
     {
       id_community: 0,
@@ -137,6 +141,7 @@ export default function CommunityPage({ params }: any) {
                             </div>
                             { community.isCreator ?
                                 <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
+                                    <Link ref={ref} href={{pathname: '/community-settings',query: { type: 'edit', id: params.id }}}></Link>
                                     <Link href={`/events/${params.id}`}><Button color="primary">Eventos</Button></Link>
                                     <Dropdown>
                                 <DropdownTrigger>
@@ -144,11 +149,12 @@ export default function CommunityPage({ params }: any) {
                                         <SlOptionsVertical/>
                                     </Button>
                                 </DropdownTrigger>
-                                <DropdownMenu variant="faded" aria-label="Dropdown menu with description" onAction={(key)=>{key=='edit'? setEdit(true): deleteCommunity(params.id)}}>
+                                <DropdownMenu variant="faded" aria-label="Dropdown menu with description">
                                     <DropdownItem
                                     key="edit"
                                     description="Edit the community"
                                     startContent={<AiFillEdit/>}
+                                    onPress={()=>{location.replace(`/community-settings?type=edit&id=${params.id}`)}}
                                     >
                                     Edit Community
                                     </DropdownItem>
@@ -158,6 +164,7 @@ export default function CommunityPage({ params }: any) {
                                     color="danger"
                                     description="Permanently delete the community"
                                     startContent={<AiFillDelete/>}
+                                    onPress={()=>{deleteCommunity(params.id)}}
                                     >
                                     Delete Community
                                     </DropdownItem>
