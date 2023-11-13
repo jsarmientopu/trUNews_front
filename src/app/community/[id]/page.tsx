@@ -143,7 +143,14 @@ export default function CommunityPage({ params }: any) {
                             { community.isCreator ?
                                 <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
                                     <Link ref={ref} href={{pathname: '/community-settings',query: { type: 'edit', id: params.id }}}></Link>
-                                    <Link href={`/events/${params.id}`}><Button color="primary">Eventos</Button></Link>
+                                    <Link href={`${params.id}/events/${params.id}`}>
+                                        <Button className="mr-6 bg-sky-600 flex gap-2 justify-center items-center">
+                                            <AiTwotoneCalendar size="1.7em" color="white" />
+                                            <p className="text-white font-medium text-base">
+                                                Events
+                                            </p>
+                                        </Button>
+                                    </Link>
                                     <Dropdown>
                                 <DropdownTrigger>
                                     <Button isIconOnly variant="light">
