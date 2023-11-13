@@ -275,14 +275,18 @@ export async function getCategoryById(id: number) {
 }
 
 export async function getCommunities() {
+    const token = getFromLocalStorage('token')
+    const user = await verifyToken()
     let datos;
-    const res = await fetch(`${process.env.BACK_URL}communities`,{
-        method: 'GET',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(datos)
-    }).then(response => response.json()).then(data => datos=data)
-    console.log(res)
-    return res;
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities`,{
+            method: 'GET',
+            headers:{'Content-Type':'application/json', 'authorization':token}
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+    return []
 }
 
 export async function getCommunityEvents(id:number) {

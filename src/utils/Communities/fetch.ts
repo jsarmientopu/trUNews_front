@@ -142,7 +142,7 @@ export async function postArticle(idArticle: number, idCommunity: number) {
             alert("error",res.err,"",()=>{})
             return false
         }else{
-            alert("success","Article posted successfully","",()=>{})
+            alert("success","Article posted successfully","",()=>{window.location.reload()})
             return true
         }
     }
@@ -180,7 +180,7 @@ export async function deletePostArticle(idArticle: number, idCommunity: number,)
             alert("error",res.err,"",()=>{})
             return false
         }else{
-            alert("success","Article deleted successfully","",()=>{})
+            alert("success","Article deleted successfully","",()=>{window.location.reload()})
             return true
         }
     }

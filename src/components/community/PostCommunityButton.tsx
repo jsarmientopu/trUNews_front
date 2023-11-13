@@ -146,7 +146,7 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Modal Title
+                Post Menu
               </ModalHeader>
               <ModalBody>
                 <div className="flex flex-col gap-5 w-full">
