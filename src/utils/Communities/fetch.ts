@@ -105,8 +105,28 @@ export async function createCommunity(sentData : createCommunityType, categories
         location.replace(`/communities`)
         return res;
     }
+}
 
-
+export async function editCommunity(sentData : createCommunityType, communityId: number, categories : number[], bannerImage : string, avatarImage : string) {
+    const token = getFromLocalStorage('token')
+    if(token){  
+        const user = await verifyToken()
+        const data = {
+            ...sentData,
+                    creator_id: user.userId,
+                    id_categories: categories,
+                    banner_url: bannerImage,
+                    avatar_url: avatarImage
+        }
+        console.log(data)
+        const res = await fetch(`${process.env.BACK_URL}communities/update/${user.userId}/${communityId}`,{
+                method: 'PUT',
+                headers:{'Content-Type':'application/json','authorization':token},
+                body: JSON.stringify(data)
+            })
+        location.replace(`/community/${communityId}`)
+        return res;
+    }
 }
 
 export async function getArticlesToAdd(idCommunity: number) {
