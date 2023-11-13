@@ -10,9 +10,10 @@ import verifyToken from '@/utils/utils';
 import { joinCommunity } from '@/utils/Communities/fetch';
 import { decryptedJWT } from '@/dto/users';
 import Link from 'next/link';
+import { AiOutlineCheck } from 'react-icons/ai';
 
 
-function CommunityCard({ id_com, title, profile_image, cats, members, description }: any) {
+function CommunityCard({ id_com, title, profile_image, cats, members, description, isMember }: any) {
 
     const [flipped, set] = useState(false)
     const { transform, opacity } = useSpring({
@@ -97,13 +98,22 @@ function CommunityCard({ id_com, title, profile_image, cats, members, descriptio
                     </p>
                 </div>
                 <div className='flex justify-center'>
-                    <Button className='w-30 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1' onPress={jointoCommunity}>
+                    {!isMember?
+                        <Button className='w-30 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1' onPress={jointoCommunity}>
 
-                        <p className='text-center text-white font-medium text-xl'>
-                            Join
-                        </p>
-                        <BsHandIndexThumb color="white" size="1.8em" className="rotate-[-45deg]" />
-                    </Button>
+                            <p className='text-center text-white font-medium text-xl'>
+                                Join
+                            </p>
+                            <BsHandIndexThumb color="white" size="1.8em" className="rotate-[-45deg]" />
+                        </Button>
+                    :
+                        <Button className='w-30 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1' disabled>
+
+                            <p className='text-center text-white font-medium text-xl'>
+                                Joined 
+                            </p>
+                            <AiOutlineCheck color="white" size="1.8em"></AiOutlineCheck>
+                        </Button>}
                 </div>
 
 

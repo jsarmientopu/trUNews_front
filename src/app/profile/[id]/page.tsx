@@ -9,6 +9,7 @@ import ProfileInfo from "@/components/profile/ProfileInfo";
 import SavedArticles from "@/components/profile/SavedArticlesProfile";
 import FollowersPage from "@/components/profile/FollowersProfile";
 import { useSearchParams } from 'next/navigation'
+import AttendedEvents from "@/components/profile/AttendedEventsProfile";
 
 export default function App({ params }: any) {
 
@@ -63,8 +64,13 @@ export default function App({ params }: any) {
             setArticlesPage={setArticlesPage}
         />
 
-        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {search}/>:<SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage}/>
+        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {search}/>:
+        <>
+        <SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage}/>
+        <AttendedEvents userInfo = {userInfo} userView = {search} />
+        </>
         }
+        
 
     </div>
 

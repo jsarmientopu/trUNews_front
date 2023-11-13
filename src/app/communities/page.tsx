@@ -86,7 +86,7 @@ function page() {
 
                                     return (
                                         <div key={index}>
-                                            <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} />
+                                            <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} isMember={com.isMember} />
                                         </div>
                                     )
                                 } else {

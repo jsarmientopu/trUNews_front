@@ -128,7 +128,7 @@ const App=()=>{
                             <div className="flex flex-wrap gap-5 w-full justify-center">
                                 {searchedCommunities.map((item:communityInfo, index) => (
                                     <div key={index}>
-                                        <CommunityCard title={item.name} profile_image={item.avatar_url} cats={item.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name)} members={item.membersCount} description={item.description} />
+                                        <CommunityCard title={item.name} profile_image={item.avatar_url} cats={item.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name)} members={item.membersCount} description={item.description} isMember={item.isMember}/>
                                     </div>
                                 ))
                                 }

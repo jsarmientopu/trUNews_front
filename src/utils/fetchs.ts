@@ -3,6 +3,7 @@ import { getFromLocalStorage } from "./localStorage";
 import { getUserType, imageType, updateUserType, updatePasswordType} from "@/dto/users";
 import { user } from "@nextui-org/react";
 import { parseArgs } from "util";
+import { alert } from "./alertHandeler";
 
 export const getProfile=async(userView:number)=>{
     const token = getFromLocalStorage('token')
@@ -274,12 +275,76 @@ export async function getCategoryById(id: number) {
 }
 
 export async function getCommunities() {
+    const token = getFromLocalStorage('token')
+    const user = await verifyToken()
     let datos;
-    const res = await fetch(`${process.env.BACK_URL}communities`,{
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities`,{
+            method: 'GET',
+            headers:{'Content-Type':'application/json', 'authorization':token}
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        return res;
+    }
+    return []
+}
+
+export async function getCommunityEvents(id:number) {
+    const token = getFromLocalStorage('token')
+    let datos;
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/communityEvents/${id}`,{
+            method: 'GET',
+            headers:{'Content-Type':'application/json','authorization':token},
+            body: JSON.stringify(datos)
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res)
+        if(res.err){
+            alert('error',res.err, "", ()=>{})
+            return []
+        }
+        return res;
+    }
+}
+
+export async function attendEvent(user_id:number, event_id:number){
+    const token = getFromLocalStorage('token')
+    console.log(user_id, event_id)
+
+    if(token){
+        let datos;
+        const res = await fetch(`${process.env.BACK_URL}communities/attend/${user_id}/${event_id}`,{
+            method: 'POST',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export async function undoAttendEvent(user_id:number, event_id:number){
+    const token = getFromLocalStorage('token')
+    console.log(user_id, event_id)
+
+    if(token){
+        let datos;
+        const res = await fetch(`${process.env.BACK_URL}communities/undoAttend/${user_id}/${event_id}`,{
+            method: 'POST',
+            headers:{'Content-Type':'application/json', 'authorization':token},
+        }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}
+
+export async function getAttendedEvents(user_id: number) {
+
+    let datos;
+    const res = await fetch(`${process.env.BACK_URL}users/eventsAttended/${user_id}`, {
         method: 'GET',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(datos)
-    }).then(response => response.json()).then(data => datos=data)
-    console.log(res)
+        headers: { 'Content-Type': 'application/json' },
+    }).then(response => response.json()).then(data => datos = data)
+    console.log(res);
     return res;
+
 }

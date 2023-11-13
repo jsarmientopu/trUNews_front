@@ -1,3 +1,8 @@
+import { z } from 'zod'
+import { createEventSchema} from '../schemas/schemas'
+
+export type createEventType = z.infer<typeof createEventSchema>;
+
 export interface communityInfo{
     id_community: Number,
     name: String,
