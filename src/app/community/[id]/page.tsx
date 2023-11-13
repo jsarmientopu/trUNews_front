@@ -247,7 +247,7 @@ export default function CommunityPage({ params }: any) {
                     {community.isMember &&
                     
                         <div className="py-2">
-                            {articles.length !== 0 && articles.length > 1 ? (
+                            {articles.length !== 0 && articles.length >= 1 ? (
                                 <>
                                 {articles.slice(0, visibleArticles).map((item, index) => (
                                     <div className="flex justify-center py-unit-4" key={index}>
