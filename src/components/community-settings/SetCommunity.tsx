@@ -23,7 +23,19 @@ const [userDecrypted, setUserDecrypted] = useState<any>({});
 const [selectedKeys, setSelectedKeys] = useState(new Set<string>());
 const bannerInputRef = useRef<HTMLInputElement>(null);
 const avatarInputRef = useRef<HTMLInputElement>(null);
-const [community, setCommunity] = useState<communityInfo>();
+const [community, setCommunity] = useState<communityInfo>({
+    id_community: -1,
+    name: '',
+    creator_id: 0,
+    date: '',
+    description: '',
+    avatar_url: '',
+    banner_url: '',
+    isCreator: false,
+    articlesCount: 0,
+    isMember: false,
+    membersCount: 0,
+    community_has_categories: [{category:{id_category:-1, cat_name:''}}],})
 const [formData, setFormData] = useState<createCommunityType>({
     name: '',
     creator_id: 0,
@@ -38,7 +50,6 @@ const [formData, setFormData] = useState<createCommunityType>({
     avatar_url: '',
     banner_url: '',
     id_categories: [],
-
 });
 const [categories, setCategories] = useState<Array<any>>([{
     'id_category': 0,
@@ -130,7 +141,7 @@ const submitEdit=async (event:any)=>{
         'name':tar.name.value,
         'description':tar.description.value,
     } as createCommunityType
-    var res = await editCommunity(sentData, id, cats, newBanner, newAvatar);
+    var res = await editCommunity(sentData, id, cats, newBanner==bannerImage?'':newBanner, newAvatar==avatarImage?'':newAvatar);
     console.log(res)
 }
  
@@ -144,6 +155,8 @@ useEffect(() => {
         if (CommunityData) {
             const categories = CommunityData.community_has_categories as Array<any>;
           setCommunity(CommunityData);
+          setAvatarImage(CommunityData.avatar_url as string);
+          setBannerImage(CommunityData.banner_url as string);
           setNewAvatar(CommunityData.avatar_url as string);
           setNewBanner(CommunityData.banner_url as string);
           setSelectedKeys(new Set<string>(categories.map((cat)=>cat.category.cat_name))); 
@@ -376,7 +389,7 @@ useEffect(() => {
                             placeholder="Description"
                             name='description'
                             color="primary"
-                            defaultValue={community?.description.toString()}
+                            defaultValue={community.description==null?'':community.description.toString()}
                             />
                     </div>
 

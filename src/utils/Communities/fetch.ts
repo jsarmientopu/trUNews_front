@@ -124,6 +124,8 @@ export async function editCommunity(sentData : createCommunityType, communityId:
                 headers:{'Content-Type':'application/json','authorization':token},
                 body: JSON.stringify(data)
             })
+        console.log(res)
+        console.log(`${process.env.BACK_URL}communities/update/${user.userId}/${communityId}`)
         location.replace(`/community/${communityId}`)
         return res;
     }
