@@ -31,7 +31,7 @@ export const CustomCheckbox = ({
 
   return (
     <Checkbox
-      className="w-[30%]"
+      className="w-[100%] sm:w-[50%] lg:w-[30%]"
       classNames={{
         base: cn(
           "inline-flex max-w-md w-full bg-content1 m-0",

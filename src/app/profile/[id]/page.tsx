@@ -17,7 +17,7 @@ export default function App({ params }: any) {
     const [edit, setEdit] = useState<boolean>(false);
     const [followp, setFollow] = useState<[boolean,boolean]>([false,false]);
     const [articleWriter, setArticleWriter]= useState();
-    const [articlesPage, setArticlesPage]=useState<boolean>(false);
+    const [articlesPage, setArticlesPage]=useState<[boolean,boolean]>([false,false]);
     let search=params.id;
 
     async function token(){
@@ -65,8 +65,11 @@ export default function App({ params }: any) {
         />
 
         {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {search}/>:
+        !articlesPage[1]?
         <>
-        <SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage}/>
+        <SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage[0]}/>
+        </>
+        :<>
         <AttendedEvents userInfo = {userInfo} userView = {search} />
         </>
         }

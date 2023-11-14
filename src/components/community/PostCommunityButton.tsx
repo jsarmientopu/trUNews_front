@@ -158,7 +158,7 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
                       base: "w-full h-full",
                     }}
                   >
-                    <div className="flex flex-row flex-wrap gap-4">
+                    <div className="flex flex-row flex-wrap gap-4 justify-center items-center">
                       {posiblePostArticle.length > 0 ? (
                         posiblePostArticle?.map(
                           (item: returnArticlesCategory, index: number) => (

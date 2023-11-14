@@ -290,14 +290,15 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
         <div className={`flex flex-row bg-[#F0F2F4] w-full rounded-2xl justify-center lg:h-full shadow-lg`} >
             <div className=" flex flex-wrap lg:flex-col items-center justify-center gap-4 md:gap-8 lg:gap-4 w-full sm:w-[90%] py-10">
 
-                        <div className=" flex flex-wrap md:flex-row items-center justify-center gap-4 2xl:gap-6 min-h-[20%]">
+                        <div className=" flex flex-wrap md:flex-row items-center justify-center gap-3 2xl:gap-5 min-h-[20%]">
                             {profileInfo.rol==Roles.escritor?
-                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage(!articlesPage);setFollow([false,false])}}>{articlesPage? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage?'Saves':'Articles'}</a></p>
+                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user writings" onClick={()=>{setArticlesPage([!articlesPage[0], false]);setFollow([false,false])}}>{articlesPage[0]? 'Your':profileInfo.articlesByUser?.length}  <a>{articlesPage[0]?'Saves':'Articles'}</a></p>
                             :
-                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setFollow([false,false])}}>Your<a>Articles</a></p>
+                                <p className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' title="View user saved articles" onClick={()=>{setArticlesPage([!articlesPage[0], false]);setFollow([false,false])}}>Your<a>Articles</a></p>
                             }
                             <p id = "0" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
                             <p id = "1" title="View users user follows" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
+                            <p id = "2" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={()=>{setFollow([false,false]);setArticlesPage([articlesPage[0], !articlesPage[1]])}}>Attended  <a id = "0">Events</a></p>
                         </div>
                         <div className="flex flex-col justify-center items-center gap-4 w-full lg:w-auto h-auto">
                         {profileInfo.id_user==userInfo.userId?
