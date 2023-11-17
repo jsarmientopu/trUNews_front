@@ -3,7 +3,7 @@ import {Avatar, Divider, Button, Dropdown, DropdownItem, DropdownMenu, DropdownT
 import CategoryChip from "@/components/CreateCommunity/CategoryChip";
 import { getCategories, squareImage } from "@/utils/fetchs";
 import { titleCase } from "@/utils/Navbar/utils";
-import { imageType } from "@/dto/users";
+import { decryptedJWT, imageType } from "@/dto/users";
 import { set } from "zod";
 import {Image as NextImage} from '@nextui-org/react' ;
 import { communityInfo, createCommunityType } from "@/dto/community";
@@ -19,7 +19,7 @@ const SetCommunityPage=() => {
 const searchParams = useSearchParams();
 const type = searchParams.get('type')
 const id = searchParams.get('id') ? parseInt(searchParams.get('id') as string) : -1;
-const [userDecrypted, setUserDecrypted] = useState<any>({});
+const [userDecrypted, setUserDecrypted] = useState<decryptedJWT>({userId:-1,rol:-1});
 const [selectedKeys, setSelectedKeys] = useState(new Set<string>());
 const bannerInputRef = useRef<HTMLInputElement>(null);
 const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -146,32 +146,37 @@ const submitEdit=async (event:any)=>{
 }
  
 useEffect(() => {
-    if(type === 'edit' && id !== -1){
-        fetchComm();
-    }
+    
     async function fetchComm() {
         const CommunityData = await getCommunityById(id) as communityInfo;
         console.log(CommunityData);
         if (CommunityData) {
-            const categories = CommunityData.community_has_categories as Array<any>;
+          const categories = CommunityData.community_has_categories as Array<any>;
           setCommunity(CommunityData);
           setAvatarImage(CommunityData.avatar_url as string);
           setBannerImage(CommunityData.banner_url as string);
           setNewAvatar(CommunityData.avatar_url as string);
           setNewBanner(CommunityData.banner_url as string);
-          setSelectedKeys(new Set<string>(categories.map((cat)=>cat.category.cat_name))); 
-        }
+          console.log(new Set<string>(categories.map((cat)=>cat.category.cat_name)));
+          setSelectedKeys(new Set<string>(categories.map((cat)=>cat.category.cat_name)));
       }
+    }
 
     async function fetchData() {
         const categoriesData = await getCategories();
         if(categoriesData){
             setCategories(categoriesData);
             console.log(categoriesData)
-            setSelectedKeys(new Set<string>([categoriesData[0].cat_name]))
+            if(type === 'edit' && id !== -1){
+                fetchComm();
+            }
+            else{
+                setSelectedKeys(new Set<string>([categoriesData[0].cat_name]))
+            }
         }
     }
-    fetchData();}, []);
+    fetchData()
+    }, []);
 
     const getImageMeta = async (
         file: File
@@ -235,9 +240,11 @@ useEffect(() => {
     },[infoAvatar])
 
     if(type == 'new'){
-    return (
-        <div className="flex flex-col items-center w-full">
-            <div className="flex flex-col w-[80%] py-10 gap-5">
+    return (<>
+        
+            {userDecrypted?.userId > 0 ? <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col w-[80%] py-10 gap-7">
+                <h1 className="text-4xl font-bold">Creating a new community</h1>
                     <NextImage 
                     src={newBanner}
                     width={1500}
@@ -317,13 +324,16 @@ useEffect(() => {
                         </Button>
                     </div>
                 </form>
-            </div>
-        </div>
+            </div> </div>: 
+            <h1>You have to be logged in to create a community.</h1>
+            }
+            </>
     );
 } else if(type == 'edit' && id !== -1 && community?.creator_id == userDecrypted?.userId){
     return (
         <div className="flex flex-col items-center w-full">
-            <div className="flex flex-col w-[80%] py-10 gap-5">
+            <div className="flex flex-col w-[80%] py-10 gap-7">
+            <h1 className="text-4xl font-bold">Editing community</h1>
                     <NextImage 
                     src={newBanner}
                     width={1500}
@@ -410,7 +420,7 @@ useEffect(() => {
 } else {
     return (
         <div>
-            <h1>No es tu comunidad</h1>
+            <h1>You cannot edit this community.</h1>
         </div>
     )
 }
