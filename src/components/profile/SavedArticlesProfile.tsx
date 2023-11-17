@@ -68,14 +68,16 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
     },[articlesPage])
 
     return <animated.div className="flex flex-col bg-[#F0F2F4] md:w-[80%] rounded-2xl justify-center items-center shadow-xl" style={ani}>
-            <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full lg:w-[95%] py-5 px-5 sm:px-16 sm:pt-10 gap-2 bg-[#F0F2F4]">
+            <div className="flex flex-wrap sm:flex-row justify-between items-center h-[50%] sm:h-full lg:w-[95%] py-5 px-5 sm:px-16 sm:pt-10 gap-2 bg-[#F0F2F4]">
                 {articlesPage?
                     <>
                         <p className="text-2xl">Written Articles</p>
                         { userView == userInfo.userId && 
-                            <span className="flex material-symbols-outlined icon_button justify-end" title="My Statistics" onClick={ViewStatistics}>
-                                finance
-                            </span>  
+                            <>
+                                <span className="flex material-symbols-outlined icon_button justify-end" title="My Statistics" onClick={ViewStatistics}>
+                                    finance
+                                </span> 
+                            </>
                         }
                     </>
                 :
@@ -86,7 +88,7 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
                 { statisticsView &&
                     <>
                         <StatisticsGraph statistics={statistics} />
-                        <Divider className="my-4" />
+                        <Divider className="my-10" />
                     </>
                 }
             </div>
