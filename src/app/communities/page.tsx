@@ -1,13 +1,18 @@
 'use client'
 
 import React from 'react';
-import { Checkbox } from '@nextui-org/react';
+import { Button, Checkbox } from '@nextui-org/react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { getCategories } from '@/utils/fetchs';
 import { getCommunities } from '@/utils/fetchs';
 import CommunityCard from '@/components/communities-panel/CommunityCard';
 import {RxCross1} from 'react-icons/rx'
+import PostCommunityButton from '@/components/community/PostCommunityButton';
+import verifyToken from '@/utils/utils';
+import { set } from 'zod';
+import { UserInfo } from 'os';
+import { decryptedJWT } from '@/dto/users';
 
 
 const Page=()=> {
@@ -15,6 +20,7 @@ const Page=()=> {
     const [categoriesData, setCategoriesData] = useState<any[]>()
     const [communitiesData, setCommunitiesData] = useState<any[]>([])
     const [checkedBoxes, setCheckedBoxes] = useState<any[]>([])
+    const [user, setUser] = useState<decryptedJWT>({userId:-1,rol:-1})
     const test = [
         {
             name: "Comm1",
@@ -41,6 +47,16 @@ const Page=()=> {
         })();
     }, [])
 
+    useEffect(() => {
+        (async () => {
+            const user = await verifyToken();
+            console.log("se viene el user");
+            console.log(user);
+            setUser(user);
+        })();
+    },[])
+
+
     return (
         <div id="container" className='bg-white'>
             <div className='p-3 bg-white'>
@@ -48,6 +64,14 @@ const Page=()=> {
                 <p className='text-black font-bold text-5xl lg:text-7xl flex justify-center mb-3'>
                     Communities
                 </p>
+                {user.userId > 0 ? 
+                <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50">
+                    <Button variant='solid' size='md' radius='md' color='primary' spinner onPress={()=>location.replace(`/community-settings?type=new`)}>
+                        Create Community
+                    </Button>
+                </div> : 
+                <></>}
+                
 
                 <div id="divider" className="flex justify-center">
                     <div className="w-[90%] h-0.5 bg-gray-200 mb-3 rounded-full">
