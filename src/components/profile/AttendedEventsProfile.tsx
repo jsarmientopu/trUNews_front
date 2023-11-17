@@ -58,7 +58,7 @@ const AttendedEvents = ({ userInfo, userView }: { 'userInfo': decryptedJWT, 'use
 
                 </div> :
                 <div className="flex flex-wrap lg:flex-wrap lg:flex-row h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
-                    You haven't attended any events yet
+                    You haven´t attended any events yet
                 </div>
         }
 

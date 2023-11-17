@@ -50,7 +50,7 @@ function Page({ params }: any) {
                         <div className='flex flex-col justify-center items-center h-[50vh] gap-4'>
                             <BsCalendarX size='7em' color='black'/>
                             <p className='text-black font-normal text-3xl'>
-                                There's no scheduled events yet
+                                There´s no scheduled events yet
                             </p>
 
                         </div>

@@ -10,9 +10,7 @@ import CommunityCard from '@/components/communities-panel/CommunityCard';
 import {RxCross1} from 'react-icons/rx'
 
 
-function page() {
-
-
+const Page=()=> {
 
     const [categoriesData, setCategoriesData] = useState<any[]>()
     const [communitiesData, setCommunitiesData] = useState<any[]>([])
@@ -42,8 +40,6 @@ function page() {
             console.log(categoriesData);
         })();
     }, [])
-
-    let currentCommunities = []
 
     return (
         <div id="container" className='bg-white'>
@@ -99,11 +95,11 @@ function page() {
                     </div> :
                     <div className='flex justify-center items-center flex-col h-60 gap-3'>
                         <RxCross1 size="7em" color="black" />
-                        <p className='font-bold text-4xl'>There's no results for the current selection</p>
+                        <p className='font-bold text-4xl'>There´s no results for the current selection</p>
                     </div>
             }
         </div>
     );
 }
 
-export default page;
+export default Page;
