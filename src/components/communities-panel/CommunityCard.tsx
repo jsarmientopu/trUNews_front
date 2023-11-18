@@ -33,8 +33,11 @@ function CommunityCard({ id_com, title, profile_image, cats, members, descriptio
         token();
     }, []);
 
-    function jointoCommunity() {
-        joinCommunity(userInfo.userId, id_com);
+    async function jointoCommunity() {
+        const joined =await joinCommunity(userInfo.userId, id_com);
+        if(joined){
+            isMember=true;
+        }
     }
 
 
