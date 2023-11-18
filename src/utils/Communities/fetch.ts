@@ -207,3 +207,18 @@ export async function deletePostArticle(idArticle: number, idCommunity: number,)
         }
     }
 }
+
+export async function getRecommended() {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    const user = await verifyToken()
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/recommended`,{
+                method: 'GET',
+                headers:{'Content-Type':'application/json','authorization':token}
+            }).then(response => response.json()).then(data => datos=data)
+        return res
+    }
+    return []
+}
