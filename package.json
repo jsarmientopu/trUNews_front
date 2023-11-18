@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 80",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -14,6 +14,7 @@
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
+    "apexcharts": "^3.44.0",
     "autoprefixer": "10.4.15",
     "embla-carousel-react": "^8.0.0-rc13",
     "eslint": "8.48.0",
@@ -24,6 +25,7 @@
     "next-share": "^0.27.0",
     "postcss": "8.4.29",
     "react": "18.2.0",
+    "react-apexcharts": "^1.4.1",
     "react-collapsed": "^4.0.4",
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",

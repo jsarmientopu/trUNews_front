@@ -28,6 +28,7 @@ const ModalCard=({user}:{'user':getUserType})=>{
             alert('error','Data invalid','Confirm your current password and the new password',()=>{})
         }
         setUpdatePassword({'username':user.username,'newPassword':'','currentPassword':''})
+        alert('success', 'Password changed successfully','Password updated', ()=>{})
     }
 
     return <>

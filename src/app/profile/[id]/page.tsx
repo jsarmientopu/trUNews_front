@@ -9,6 +9,7 @@ import ProfileInfo from "@/components/profile/ProfileInfo";
 import SavedArticles from "@/components/profile/SavedArticlesProfile";
 import FollowersPage from "@/components/profile/FollowersProfile";
 import { useSearchParams } from 'next/navigation'
+import AttendedEvents from "@/components/profile/AttendedEventsProfile";
 
 export default function App({ params }: any) {
 
@@ -16,7 +17,7 @@ export default function App({ params }: any) {
     const [edit, setEdit] = useState<boolean>(false);
     const [followp, setFollow] = useState<[boolean,boolean]>([false,false]);
     const [articleWriter, setArticleWriter]= useState();
-    const [articlesPage, setArticlesPage]=useState<boolean>(false);
+    const [articlesPage, setArticlesPage]=useState<[boolean,boolean]>([false,false]);
     let search=params.id;
 
     async function token(){
@@ -63,8 +64,16 @@ export default function App({ params }: any) {
             setArticlesPage={setArticlesPage}
         />
 
-        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {search}/>:<SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage}/>
+        {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {search}/>:
+        !articlesPage[1]?
+        <>
+        <SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage[0]}/>
+        </>
+        :<>
+        <AttendedEvents userInfo = {userInfo} userView = {search} />
+        </>
         }
+        
 
     </div>
 

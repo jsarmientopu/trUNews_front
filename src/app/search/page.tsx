@@ -7,15 +7,20 @@ import { Button, Pagination } from "@nextui-org/react";
 import UserCard from "@/components/search/UserCard";
 import { getArticleType } from "@/dto/article";
 import { getUserType } from "@/dto/users";
+import { communityInfo } from "@/dto/community";
 import { useSearchParams } from 'next/navigation';
 import { getSearch } from "@/utils/search/fetch";
 import { getLatestPosts  } from "@/utils/fetchs";
+import { getFromLocalStorage } from "@/utils/localStorage";
+import Link from "next/link";
+import CommunityCard from "@/components/communities-panel/CommunityCard";
 
 const App=()=>{   
 
     const [filter, setFilter] = useState<[boolean,boolean,boolean]>([true,false,false])
-    const [searchedArticles, setSearchedArticles]=useState<Array<getArticleType>>([{'id_article':0,'title':'','date':"",'text':'','writer':{'id_user':0,'username':''},'views':0,'image_url':'', 'category':[]}])
-    const [searchedUsers, setSearchedUsers]=useState<Array<getUserType>>([{'id_user':0,'username':'benito','name':'','lastname':'', 'rol':-1, 'followersCount':0,'followingsCount':0,'isFollowing':false, 'description':'','profile_image':''}])
+    const [searchedArticles, setSearchedArticles]=useState<Array<getArticleType>>([{'id_article':-1,'title':'','date':"",'text':'','writer':{'id_user':0,'username':''},'views':0,'image_url':'', 'category':[]}])
+    const [searchedUsers, setSearchedUsers]=useState<Array<getUserType>>([{'id_user':-1,'username':'benito','name':'','lastname':'', 'rol':-1, 'followersCount':0,'followingsCount':0,'isFollowing':false, 'description':'','profile_image':''}])
+    const [searchedCommunities, setSearchedCommunities]=useState<Array<communityInfo>>([{'id_community':0, 'name':'', 'description':'', 'creator_id':0, 'date':'', 'articlesCount':0, 'avatar_url':'', 'banner_url':'', 'community_has_categories':[{'category':{'id_category':0, 'cat_name':''}}], 'isCreator':false, 'isMember':false, 'membersCount':0}])
     const searchParams = useSearchParams().get('q')
     const [recentCarouselData, setRecentCarouselData] = useState()
     const itemsPerPage = 8;
@@ -35,7 +40,7 @@ const App=()=>{
     useEffect(()=>{
         (async()=>{
             const res = await getSearch(search)
-            if(res==undefined||(res[0].err&&res[1].err)){
+            if(res==undefined||(res[0].err&&res[1].err&&res[2].err)){
                 setFilter([false,false,false])
                 console.log('mal')
                 setSearchedArticles([])
@@ -52,6 +57,12 @@ const App=()=>{
                 }else{
                     console.log(res[1])
                     setSearchedArticles(res[1])
+                }
+                if(res[2].err){
+                    setSearchedArticles([])
+                }else{
+                    console.log(res[2])
+                    setSearchedCommunities(res[2])
                 }
             }
             const recentCarouselData2 = await getLatestPosts();
@@ -75,44 +86,59 @@ const App=()=>{
                 {/* <p className="text-lg">Page {currentPage}</p> */}
             </div>
             {filter[0]&&searchedArticles.length>0?
-                <div className="flex flex-wrap flex-row gap-8 justify-center w-full pb-20">
-                    <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
-                        {searchedArticles.filter((item:getArticleType, index)=>index%3==0&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                            <ArticleCard key={index} article={item}/>
-                        ))
-                        }
-                    </div>
-                    <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
-                        {searchedArticles.filter((item:getArticleType, index)=>index%3==1&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                            <ArticleCard key={index} article={item}/>
-                        ))
-                        }
-                    </div>
-                    <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
-                        {searchedArticles.filter((item:getArticleType, index)=>index%3==2&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                            <ArticleCard key={index} article={item}/>
-                        ))
-                        }
-                    </div>
-                </div>
-            :
-                filter[1]&&searchedUsers.length>0?
-                    <div className="flex flex-wrap flex-row gap-16 justify-center w-full pb-20">
-                        <div className="flex flex-col gap-5 w-[80%] md:w-[35%] justify-center">
-                            {searchedUsers.filter((item:getUserType, index)=>index%2==0&&(index<currentPage*itemsPerPage*2&&(currentPage-1)*itemsPerPage*2<=index)).map((item:getUserType, index) => (
-                            <UserCard key={index} user={item}/>
+                    <div className="flex flex-wrap flex-row gap-8 justify-center w-full pb-20">
+                        <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
+                            {searchedArticles.filter((item:getArticleType, index)=>index%3==0&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
+                                <Link key={index} href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
-                        <div className="flex flex-col gap-5 w-[80%] md:w-[35%] justify-start">
-                            {searchedUsers.filter((item:getUserType, index)=>index%2==1&&(index<currentPage*itemsPerPage*2&&(currentPage-1)*itemsPerPage*2<=index)).map((item:getUserType, index) => (
-                            <UserCard key={index} user={item}/>
+                        <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
+                            {searchedArticles.filter((item:getArticleType, index)=>index%3==1&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
+                                <Link key={index} href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
+                            ))
+                            }
+                        </div>
+                        <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
+                            {searchedArticles.filter((item:getArticleType, index)=>index%3==2&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
+                                <Link key={index} href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
                     </div>
                 :
-                <>No se encontraron resultados</>
+                    filter[1]&&searchedUsers.length>0?
+                        <div className="flex flex-wrap flex-row gap-16 justify-center w-full pb-20">
+                            <div className="flex flex-col gap-5 w-[80%] md:w-[35%] justify-center">
+                                {searchedUsers.filter((item:getUserType, index)=>index%2==0&&(index<currentPage*itemsPerPage*2&&(currentPage-1)*itemsPerPage*2<=index)).map((item:getUserType, index) => (
+                                <UserCard key={index} user={item}/>
+                                ))
+                                }
+                            </div>
+                            <div className="flex flex-col gap-5 w-[80%] md:w-[35%] justify-start">
+                                {searchedUsers.filter((item:getUserType, index)=>index%2==1&&(index<currentPage*itemsPerPage*2&&(currentPage-1)*itemsPerPage*2<=index)).map((item:getUserType, index) => (
+                                <UserCard key={index} user={item}/>
+                                ))
+                                }
+                            </div>
+                        </div>
+                    :
+                    filter[2]&&searchedCommunities.length>0?
+                        <div className="flex flex-wrap flex-row gap-8 justify-center w-full pb-20">
+                            <div className="flex flex-wrap gap-5 w-full justify-center">
+                                {searchedCommunities.map((item:communityInfo, index) => (
+                                    <div key={index}>
+                                        <CommunityCard title={item.name} profile_image={item.avatar_url} cats={item.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name)} members={item.membersCount} description={item.description} isMember={item.isMember}/>
+                                    </div>
+                                ))
+                                }
+                            </div>
+                        </div>
+                    :
+                        getFromLocalStorage('token')==null?
+                            <p>Register <Link href={'/register'} className="text-[#4272F4] font-bold underline">here</Link> to view the result</p>
+                        :
+                            <>No results found</>
 
             }
             <div className="hidden md:flex lg:flex justify-center py-unit-4">

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'TrUNews Categoria',
-  description: 'Articulos por categoria',
+  title: 'TrUNews Category',
+  description: 'Articles by category',
 }
 
 export default function Layout ({children}:{
