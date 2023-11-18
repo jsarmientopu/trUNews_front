@@ -18,7 +18,7 @@ const AttendedEvents = ({ userInfo, userView }: { 'userInfo': decryptedJWT, 'use
 
     useEffect(() => {
         (async () => {
-            const attendedEventsFetch = await getAttendedEvents(userInfo.userId)
+            const attendedEventsFetch = await getAttendedEvents(userView)
             setAttendedEventsData(attendedEventsFetch)
             console.log(attendedEventsFetch)
         })();
