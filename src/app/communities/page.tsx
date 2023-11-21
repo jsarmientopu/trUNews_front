@@ -49,8 +49,8 @@ const Page=()=> {
                     Communities
                 </p>
                 {user.userId > 0 ? 
-                <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50">
-                    <Button variant='solid' size='md' radius='md' color='primary' spinner onPress={()=>location.replace(`/community-settings?type=new`)}>
+                <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50 shadow-2xl">
+                    <Button variant='solid' size='md' radius='md' color='primary' spinner onPress={()=>location.replace(`/community-settings?type=new`)} className='shadow-2xl'>
                         Create Community
                     </Button>
                 </div> : 

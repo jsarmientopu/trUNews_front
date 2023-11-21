@@ -211,17 +211,6 @@ export default function CommunityPage({ params }: any) {
                     {/* End Presentation zone */}
                     <Divider className="my-4" />
                     {community.isMember ?
-                        
-                        // <div className="flex justify-center p-5">
-                        //     <Button className='bg-[#FF6624] text-white py-2 px-3 rounded-xl text-lg'>
-                        //         <a href="#" className="flex items-center gap-2">
-                        //             Post 
-                        //             <span className="material-symbols-outlined">
-                        //             stylus
-                        //             </span>
-                        //         </a>
-                        //     </Button>
-                        // </div>
                         <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50">
                             <PostCommunityButton idCommunity={parseInt(params.id)}/>
                         </div>
