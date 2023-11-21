@@ -108,8 +108,11 @@ export default function CommunityPage({ params }: any) {
   }, []);
 
     // fetch unirse a una comunidad
-    function jointoCommunity() {
-        joinCommunity(userInfo.userId, params.id);
+    async function jointoCommunity() {
+        const joined = await joinCommunity(userInfo.userId, params.id);
+        if(joined){
+            window.location.reload();
+        }
     }
 
     return (

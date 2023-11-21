@@ -82,6 +82,7 @@ export default function App(this: any) {
     const menuItems = [
         {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Feed","ref":"/feed"},
         {"rol":[Roles.escritor, Roles.admin],"label":"New Article","ref":"/createArticle"},
+        {"rol":[Roles.escritor, Roles.admin, Roles.lector],"label":"Communities","ref":"/communities"},
         {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Profile","ref":"/profile",'query':userInfo.userId},
         {"rol":[-1,-2],"label":"Sign Up","ref":"/register"},
         {"rol":[-1,-2],"label":"Log In","ref":"/login"},
@@ -91,6 +92,7 @@ export default function App(this: any) {
     const menuSections = [
         {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Feed","ref":"/feed"},
         {"rol":[Roles.escritor, Roles.admin],"label":"New Article","ref":"/createArticle"},
+        {"rol":[Roles.escritor, Roles.admin, Roles.lector],"label":"Communities","ref":"/communities"}
     ]
 
     // redireccion de articulos por categoria
@@ -115,7 +117,7 @@ export default function App(this: any) {
                         width={35}
                         height={35}
                     />
-                    <p className="flex flex-col justify-center font-bold text-2xl">TrUNews</p>
+                    <p className="flex flex-col justify-center font-bold text-2xl text-white">TrUNews</p>
                     </Link>
                 </NavbarBrand>
 
@@ -206,9 +208,6 @@ export default function App(this: any) {
                     </NavbarItem>
                 ))}
                 <NavbarItem>
-                <Link className='text-white' color="foreground" href="/communities">
-                    Communities
-                </Link>
                 </NavbarItem>
             </NavbarContent>
 
@@ -311,20 +310,43 @@ export default function App(this: any) {
                 />
             </NavbarContent>
              <NavbarMenu className='flex flex-col items-end gap-4'>
+                <Dropdown placement='left-start'>
+                    <NavbarItem isActive={selected=='Categorias'? true:false}>
+                        <DropdownTrigger>
+                            <Link className='w-full justify-end'  color={"foreground"} onClick={()=>setSelected('Categorias')} href="#">
+                                <p>{'Categories'}</p>
+                            </Link>
+                        </DropdownTrigger>
+                    </NavbarItem>
+
+                    <DropdownMenu
+                        aria-label="News Categories"
+                        className="w-[15rem] dropdown-menu-scroll flex flex-col items-center"
+                        itemClasses={{
+                            base: "gap-4",
+                        }}
+                        onAction={(key) => redirectToCategory(parseInt(key.toString()) + 1)}>
+                        {categories.map((category, index) => (
+                            <DropdownItem key={index} description={`${label()} ${titleCase(category.cat_name)}`}>
+                                {titleCase(category.cat_name)}
+                            </DropdownItem>
+                        ))}
+                    </DropdownMenu>
+                </Dropdown>
                 {menuItems.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                 <NavbarMenuItem key={`${index}`} className='p-4 text-2xl'>
                     {item.ev?
                         <Link  className="w-full justify-end" color='warning' href="#" onClick={item.ev}>
-                            {item.label}
+                            <p>{item.label}</p>
                         </Link>
                     :   
                         item.query?
                         <Link className='w-full justify-end'  color={"foreground"}  href={`${item.ref}/${userInfo.userId}`}>
-                            {item.label}
+                            <p>{item.label}</p>
                         </Link>
                         :
                         <Link className='w-full justify-end'  color={"foreground"}  href={{pathname:item.ref}}>
-                            {item.label}
+                            <p>{item.label}</p>
                         </Link>
                     }
                 </NavbarMenuItem>

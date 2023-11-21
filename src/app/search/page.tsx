@@ -55,13 +55,11 @@ const App=()=>{
                 if(res[1].err){
                     setSearchedArticles([])
                 }else{
-                    console.log(res[1])
                     setSearchedArticles(res[1])
                 }
                 if(res[2].err){
-                    setSearchedArticles([])
+                    setSearchedCommunities([])
                 }else{
-                    console.log(res[2])
                     setSearchedCommunities(res[2])
                 }
             }
