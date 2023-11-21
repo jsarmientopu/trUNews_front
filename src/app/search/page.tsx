@@ -45,6 +45,7 @@ const App=()=>{
                 console.log('mal')
                 setSearchedArticles([])
                 setSearchedUsers([])
+                setSearchedCommunities([])
             }else{
                 console.log(res)
                 if(res[0].err){

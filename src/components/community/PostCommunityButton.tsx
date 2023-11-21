@@ -28,7 +28,6 @@ import { deletePostArticle, getArticlesToAdd, getArticlesToDelete, postArticle }
 import { RiSurroundSoundLine } from "react-icons/ri";
 
 const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
-  const [visible, setVisible] = useState(true);
   const [mode, setMode] = useState(-1);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const ref = useRef<HTMLButtonElement>(null);
@@ -70,34 +69,21 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
 
   useEffect(()=>{
     let newSelect = groupSelected.at(groupSelected.length-1);
-    if(newSelect==undefined){newSelect=""}
-    setGroupSelected([newSelect])
+    if(newSelect==undefined){
+      newSelect=""
+    }else{
+      setGroupSelected([newSelect])
+    }
   },[groupSelected])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      setVisible(scrollTop > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
-    <>
+    <div>
       <Dropdown backdrop="blur" placement="left-end">
         <DropdownTrigger hidden>
           <Button
             color="primary"
             variant="shadow"
-            className={`capitalize p-1.5 m-5 drop-shadow-2xl ${
-              visible ? "" : "hidden"
-            }`}
+            className={`capitalize p-1.5 m-5 drop-shadow-2xl`}
             size="lg"
             isIconOnly
             aria-label="Post menu"
@@ -116,8 +102,6 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
           >
             New post
           </DropdownItem>
-          {/* <DropdownItem key="copy">Copy link</DropdownItem>
-          <DropdownItem key="edit">Edit file</DropdownItem> */}
           <DropdownItem
             key="delete"
             className="text-danger"
@@ -176,7 +160,7 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
                 <Button color="danger" ref={refClose} variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={postArticleSelected}>
+                <Button color="primary" onPress={postArticleSelected} isDisabled={groupSelected.length>0?false:true}>
                   {mode==0?"Post":"Delete"}
                 </Button>
               </ModalFooter>
@@ -184,7 +168,7 @@ const PostCommunityButton = ({ idCommunity }: {idCommunity: number}) => {
           )}
         </ModalContent>
       </Modal>
-    </>
+    </div>
   );
 };
 
