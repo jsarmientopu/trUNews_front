@@ -33,10 +33,12 @@ const SignUp=()=>{
 
 
     return <>
-        <div className="grid place-items-center h-screen bg-[#0079DC] ">
-            <HomeBubble/>
-            <SignUpCard/>
+        <div className="grid place-items-center bg-[#0079DC] w-full min-h-full py-10">
+            <div className="flex flex-col items-center gap-4 justify-center">
+                <HomeBubble/>
+                <SignUpCard/>
             </div>
+        </div>
     </>
 
 }

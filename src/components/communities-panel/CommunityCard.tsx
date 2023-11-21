@@ -21,7 +21,7 @@ function CommunityCard({ id_com, title, profile_image, cats, members, descriptio
         transform: `perspective(600px) rotateY(${flipped ? 180 : 0}deg)`,
         config: { mass: 5, tension: 500, friction: 80 },
     })
-
+    const [isMembberState, setIsMemberState] = useState<boolean>(isMember)
     const [userInfo, setInfoUser] = useState<decryptedJWT>({ userId: -2, rol: -2 })
 
     async function token() {
@@ -37,6 +37,7 @@ function CommunityCard({ id_com, title, profile_image, cats, members, descriptio
         const joined =await joinCommunity(userInfo.userId, id_com);
         if(joined){
             isMember=true;
+            setIsMemberState(true);
         }
     }
 
@@ -101,7 +102,7 @@ function CommunityCard({ id_com, title, profile_image, cats, members, descriptio
                     </p>
                 </div>
                 <div className='flex justify-center'>
-                    {!isMember?
+                    {!isMembberState?
                         <Button className='w-30 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-1' onPress={jointoCommunity}>
 
                             <p className='text-center text-white font-medium text-xl'>
