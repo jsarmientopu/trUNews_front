@@ -24,6 +24,8 @@ const FollowersPage=({follows,fixFollows, userView} : any)=>{
         'rol':0
     }])
 
+    const [counter, setCounter]=useState<number>(1);
+
     const handleChange=async()=>{
         console.log(userView)
         const users = await getFollower(userView, follows);
@@ -58,11 +60,20 @@ const FollowersPage=({follows,fixFollows, userView} : any)=>{
                 } 
             </div>
             
-            <div className="flex flex-wrap sm:flex-row justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 sm:px-16 sm:pb-10 pt-0 gap-6 bg-[#F0F2F4]">
+            <div className="flex flex-wrap sm:flex-row justify-center h-[50%] sm:h-full w-[95%] py-5 px-5 sm:px-16 sm:pb-10 pt-0 gap-6 bg-[#F0F2F4]">
                 {followers.length!==0?
-                    followers.map((item:getFollowerType, index) => (
+                    <>
+                    {followers.filter((element:getFollowerType, index)=>index<counter*10).map((item:getFollowerType, index) => (
                         <FollowersCard key={index} data={item} />
-                    ))
+                    ))}
+                    {followers.length>counter*10?
+                    <button onClick={()=>{setCounter(counter+1)}} className='bg-primary text-white py-2 px-3 rounded-xl'>
+                        See more
+                    </button>
+                    :
+                    <></>
+                    }
+                    </>
                 :
                     follows[0]?
                         <>You don´t have followers</>

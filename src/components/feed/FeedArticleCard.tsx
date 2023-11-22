@@ -69,7 +69,7 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
             </div>
             {saved &&
               <div className='hidden md:flex ld:flex justify-center py-4 text-sm'>
-                <p className='text-center'>Guardado por: {savedUsername}</p>
+                <p className='text-center'>Saved byr: {savedUsername}</p>
               </div>
             }
           </div>
@@ -94,7 +94,7 @@ const FeedArticleCard: React.FC<FeedArticleCardProps> = ({
             </div>
             {saved &&
               <div className='flex md:hidden ld:hidden justify-center py-4 text-sm'>
-                <p className='text-center'>Guardado por: {savedUsername}</p>
+                <p className='text-center'>Saved by: {savedUsername}</p>
               </div>
             }
             <p className='pt-4 flex justify-end text-sm'>
