@@ -40,17 +40,6 @@ const Page = () => {
         })();
     }, [])
 
-    function handleCheckboxClick(event: any, cat_name: string) {
-        if (event?.target?.checked) {
-            setCheckedBoxes([...checkedBoxes, cat_name])
-        } else {
-            setCheckedBoxes(checkedBoxes.filter(cat => {
-                return cat !== cat_name
-            }))
-        }
-
-    }
-
     return (
         <div id="container" className='bg-white'>
             <div className='p-3 bg-white'>
