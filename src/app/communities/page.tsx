@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { getCategories } from '@/utils/fetchs';
 import { getCommunities } from '@/utils/fetchs';
 import CommunityCard from '@/components/communities-panel/CommunityCard';
-import {RxCross1} from 'react-icons/rx'
+import { RxCross1 } from 'react-icons/rx'
 import PostCommunityButton from '@/components/community/PostCommunityButton';
 import verifyToken from '@/utils/utils';
 import { set } from 'zod';
@@ -16,13 +16,14 @@ import { decryptedJWT } from '@/dto/users';
 import { getRecommended } from '@/utils/Communities/fetch';
 
 
-const Page=()=> {
+const Page = () => {
 
     const [categoriesData, setCategoriesData] = useState<any[]>([])
     const [communitiesData, setCommunitiesData] = useState<any[]>([])
     const [communitiesRecommend, setCommunitiesRecommend] = useState<any[]>([])
     const [checkedBoxes, setCheckedBoxes] = useState<any[]>([])
-    const [user, setUser] = useState<decryptedJWT>({userId:-1,rol:-1})
+    const [user, setUser] = useState<decryptedJWT>({ userId: -1, rol: -1 })
+    const [noResults, setNoResults] = useState<boolean>(false)
 
     useEffect(() => {
         (async () => {
@@ -32,14 +33,23 @@ const Page=()=> {
             setCommunitiesData(communities);
             setCategoriesData(categories);
             setUser(user);
-            if(user.userId>=0){
+            if (user.userId >= 0) {
                 const recommendedCommunities = await getRecommended();
                 setCommunitiesRecommend(recommendedCommunities);
             }
         })();
     }, [])
 
+    function handleCheckboxClick(event: any, cat_name: string) {
+        if (event?.target?.checked) {
+            setCheckedBoxes([...checkedBoxes, cat_name])
+        } else {
+            setCheckedBoxes(checkedBoxes.filter(cat => {
+                return cat !== cat_name
+            }))
+        }
 
+    }
 
     return (
         <div id="container" className='bg-white'>
@@ -48,14 +58,14 @@ const Page=()=> {
                 <p className='text-black font-bold text-5xl lg:text-7xl flex justify-center mb-3'>
                     Communities
                 </p>
-                {user.userId > 0 ? 
-                <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50 shadow-2xl">
-                    <Button variant='solid' size='md' radius='md' color='primary' spinner onPress={()=>location.replace(`/community-settings?type=new`)} className='shadow-2xl'>
-                        Create Community
-                    </Button>
-                </div> : 
-                <></>}
-                
+                {user.userId > 0 ?
+                    <div className="fixed bottom-14 right-0 md:right-14 lg:right-14 xl:right-14  2xl:right-14 z-50 shadow-2xl">
+                        <Button variant='solid' size='md' radius='md' color='primary' spinner onPress={() => location.replace(`/community-settings?type=new`)} className='shadow-2xl'>
+                            Create Community
+                        </Button>
+                    </div> :
+                    <></>}
+
 
                 <div id="divider" className="flex justify-center">
                     <div className="w-[90%] h-0.5 bg-gray-200 mb-3 rounded-full">
@@ -84,45 +94,46 @@ const Page=()=> {
                 checkedBoxes.length > 0 ?
                     <div className='flex justify-center gap-12 flex-wrap'>
                         {
-                            communitiesData?.map((com: any, index: any) => {
-                                const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
-                                if (checkedBoxes.some(element => communityCatNames.includes(element))) {
 
+                            communitiesData?.filter(com => checkedBoxes.some(element => com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name).includes(element))).length > 0 ?
+
+                                communitiesData?.filter(com => checkedBoxes.some(element => com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name).includes(element))).map((com: any, index: any) => {
+                                    return (
+                                        <div key={index}>
+                                            <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name)} members={com.followerCount} description={com.description} isMember={com.isMember} />
+                                        </div>
+                                    )
+
+                                }) : <div className='flex justify-center items-center flex-col h-60 gap-3'>
+                                    <RxCross1 size="7em" color="black" />
+                                    <p className='font-bold text-4xl'>There´s no results for the current selection</p>
+                                </div>
+
+                        }
+
+                    </div> :
+                    communitiesRecommend.length == 0 ?
+                        <div className='flex justify-center items-center flex-col h-60 gap-3'>
+                            <RxCross1 size="7em" color="black" />
+                            <p className='font-bold text-4xl'>There´s no results for the current selection</p>
+                        </div>
+                        :
+                        <div className='flex flex-col justify-center items-center gap-8'>
+                            <>
+                                <p className='font-bold text-5xl'>For you</p>
+                                <p className='text-3xl'>Communities recommended specially for you</p>
+                            </>
+                            <div className='flex justify-center gap-12 flex-wrap'>
+                                {communitiesRecommend.map((com: any, index: any) => {
+                                    const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
                                     return (
                                         <div key={index}>
                                             <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} isMember={com.isMember} />
                                         </div>
                                     )
-                                }else {
-                                    null
-                                }
-                            })
-
-                        }
-
-                    </div> :
-                        communitiesRecommend.length==0?
-                            <div className='flex justify-center items-center flex-col h-60 gap-3'>
-                                <RxCross1 size="7em" color="black" />
-                                <p className='font-bold text-4xl'>There´s no results for the current selection</p>
+                                })}
                             </div>
-                        :
-                            <div className='flex flex-col justify-center items-center gap-8'>
-                                <>
-                                <p className='font-bold text-5xl'>For you</p>
-                                <p className='text-3xl'>Communities recommended specially for you</p>
-                                </>
-                                <div className='flex justify-center gap-12 flex-wrap'>
-                                    {communitiesRecommend.map((com: any, index: any) => {
-                                        const communityCatNames = com.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name);
-                                        return (
-                                            <div key={index}>
-                                                <CommunityCard id_com={com.id_community} title={com.name} profile_image={com.avatar_url} cats={communityCatNames} members={com.followerCount} description={com.description} isMember={com.isMember} />
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
+                        </div>
             }
         </div>
     );
