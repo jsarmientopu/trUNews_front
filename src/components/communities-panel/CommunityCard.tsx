@@ -61,7 +61,7 @@ function CommunityCard({ id_com, title, profile_image, cats, members, descriptio
 
                 <div className='flex justify-center'>
                     <Button className='w-56 h-8 bg-[#FF461F] flex items-center justify-center rounded-lg gap-2 z-50'>
-                        <Link href={`community/${id_com}`}>
+                        <Link href={{pathname:`/community/${id_com}`}}>
                             <p className='text-center text-white font-medium text-xl'>
                                 Read more
                             </p>
