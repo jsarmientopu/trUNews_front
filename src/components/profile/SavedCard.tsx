@@ -5,7 +5,7 @@ import { getArticleType } from "@/dto/article";
 import Link from "next/link";
 import ArticleOption from "./ArticleOption";
 
-const SavedCard = ({data, mode, userInfo, userView, articles, setArticles}:{data:getArticleType, mode:boolean, userInfo:any, userView:number, articles:any, setArticles:any})=>{
+const SavedCard = ({data, mode, userInfo, userView, articles, setArticles}:{data:getArticleType, mode:boolean, userInfo:any, userView:number, articles:Array<getArticleType>, setArticles:any})=>{
             console.log(userView, userInfo)
 
     return <>

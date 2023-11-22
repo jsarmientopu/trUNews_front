@@ -5,8 +5,10 @@ import { alert } from "@/utils/alertHandeler";
 import { unsaveArticle } from "@/utils/Profile/fetch";
 import Swal from 'sweetalert2';
 import { usePathname } from 'next/navigation'
+import { deletePost } from "@/utils/fetchs";
+import { getArticleType } from "@/dto/article";
 
-export default function ArticleOption({mode, article, articles, setArticles}:{'mode':boolean, article:any, articles:any, setArticles:any}) {
+export default function ArticleOption({mode, article, articles, setArticles}:{'mode':boolean, article:any, articles:Array<getArticleType>, setArticles:any}) {
 
     const Toast = Swal.mixin({
         toast: true,
@@ -20,12 +22,19 @@ export default function ArticleOption({mode, article, articles, setArticles}:{'m
       }
       })
 
-    const handleEvent=async(ev:any)=>{
-      console.log(ev)
-        if(ev.target.textContent.includes('Unsave')){
+    const handleEvent=async(mode:Number)=>{
+        if(mode==0){
           alert('question','You will delete this article from your saves', '', ()=>{unsaveArticle(article.id_article, articles, setArticles)})
-        }else if(ev.target.key=='delete'){
-          console.log('delete')
+        }else if(mode==1){
+          alert('question','You will delete this article from your saves', '', async ()=>{
+            const res = await deletePost(article.id_article);
+            if(res.err){
+              alert('error','Your article can´t be deleted', 'Try again later', ()=>{})
+            }else{
+              setArticles(articles.filter((item:getArticleType)=>item.id_article!=article.id_article));
+            }
+          }
+            )
         }else{
           navigator.clipboard.writeText(`${process.env.FRONT_URL}/article/${article.id_article}`)
           Toast.fire({
@@ -35,8 +44,6 @@ export default function ArticleOption({mode, article, articles, setArticles}:{'m
         }
     
     }
-
-
 
     const items = [
         {
@@ -70,7 +77,7 @@ export default function ArticleOption({mode, article, articles, setArticles}:{'m
             key={item.key}
             color={item.key === "delete" ? "danger" : "default"}
             className={item.key === "delete" ? "text-danger" : ""}
-            onClick={handleEvent}
+            onClick={()=>{handleEvent(item.mode)}}
           >
             {item.label}
           </DropdownItem>
