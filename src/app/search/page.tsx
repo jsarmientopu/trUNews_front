@@ -45,6 +45,7 @@ const App=()=>{
                 console.log('mal')
                 setSearchedArticles([])
                 setSearchedUsers([])
+                setSearchedCommunities([])
             }else{
                 console.log(res)
                 if(res[0].err){
@@ -55,13 +56,11 @@ const App=()=>{
                 if(res[1].err){
                     setSearchedArticles([])
                 }else{
-                    console.log(res[1])
                     setSearchedArticles(res[1])
                 }
                 if(res[2].err){
-                    setSearchedArticles([])
+                    setSearchedCommunities([])
                 }else{
-                    console.log(res[2])
                     setSearchedCommunities(res[2])
                 }
             }
@@ -89,19 +88,19 @@ const App=()=>{
                     <div className="flex flex-wrap flex-row gap-8 justify-center w-full pb-20">
                         <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
                             {searchedArticles.filter((item:getArticleType, index)=>index%3==0&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                                <Link href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
+                                <Link key={index} href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
                         <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
                             {searchedArticles.filter((item:getArticleType, index)=>index%3==1&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                                <Link href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
+                                <Link key={index} href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
                         <div className="flex flex-col gap-5 w-[80%] sm:w-[45%] lg:w-[28%] justify-start">
                             {searchedArticles.filter((item:getArticleType, index)=>index%3==2&&(index<currentPage*itemsPerPage*3&&(currentPage-1)*itemsPerPage*3<=index)).map((item:getArticleType, index) => (
-                                <Link href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
+                                <Link key={index} href={{pathname:`/article/${item.id_article}`}}><ArticleCard key={index} article={item}/></Link>
                             ))
                             }
                         </div>
@@ -128,7 +127,7 @@ const App=()=>{
                             <div className="flex flex-wrap gap-5 w-full justify-center">
                                 {searchedCommunities.map((item:communityInfo, index) => (
                                     <div key={index}>
-                                        <CommunityCard title={item.name} profile_image={item.avatar_url} cats={item.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name)} members={item.membersCount} description={item.description} isMember={item.isMember}/>
+                                        <CommunityCard id_com={item.id_community} title={item.name} profile_image={item.avatar_url} cats={item.community_has_categories.map((item: { category: { cat_name: any; }; }) => item.category.cat_name)} members={item.membersCount} description={item.description} isMember={item.isMember}/>
                                     </div>
                                 ))
                                 }

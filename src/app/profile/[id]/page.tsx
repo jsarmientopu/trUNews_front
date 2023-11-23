@@ -8,8 +8,7 @@ import verifyToken from "@/utils/utils";
 import ProfileInfo from "@/components/profile/ProfileInfo";
 import SavedArticles from "@/components/profile/SavedArticlesProfile";
 import FollowersPage from "@/components/profile/FollowersProfile";
-import { useSearchParams } from 'next/navigation'
-import AttendedEvents from "@/components/profile/AttendedEventsProfile";
+import CommunityPanel from "@/components/profile/AttendedEventsProfile";
 
 export default function App({ params }: any) {
 
@@ -17,7 +16,7 @@ export default function App({ params }: any) {
     const [edit, setEdit] = useState<boolean>(false);
     const [followp, setFollow] = useState<[boolean,boolean]>([false,false]);
     const [articleWriter, setArticleWriter]= useState();
-    const [articlesPage, setArticlesPage]=useState<[boolean,boolean]>([false,false]);
+    const [articlesPage, setArticlesPage]=useState<[boolean,boolean, boolean]>([false,false,false]);
     let search=params.id;
 
     async function token(){
@@ -38,7 +37,7 @@ export default function App({ params }: any) {
         }
         newFollows[index] = true;
         setFollow(newFollows as [boolean,boolean]);
-
+        setArticlesPage([false,false,false])
     }
 
     useEffect(()=>{
@@ -49,7 +48,7 @@ export default function App({ params }: any) {
     if(userInfo.userId==-1) redirect('/');
 //#D8DCFF- 
   return (<>
-    <div className="grid grid-rows-1 grid-cols-1 place-items-center  min-w-full min-h-full bg-[#C1D6E8] gap-4 py-10">
+    <div className="flex flex-col justify-center items-center min-w-full min-h-full bg-[#C1D6E8] gap-8 py-10">
 
         <ProfileInfo
             edit={edit}
@@ -65,12 +64,13 @@ export default function App({ params }: any) {
         />
 
         {edit? <></>:followp.includes(true)? <FollowersPage follows = {followp} fixFollows = {fixFollows} userView = {search}/>:
-        !articlesPage[1]?
+        !articlesPage[1]&&!articlesPage[2]?
         <>
-        <SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage[0]}/>
+            <SavedArticles userInfo = {userInfo} userView = {search} articleWriter={articleWriter} articlesPage={articlesPage[0]}/>
         </>
-        :<>
-        <AttendedEvents userInfo = {userInfo} userView = {search} />
+        :
+        <>
+            <CommunityPanel userInfo = {userInfo} userView = {search} mode={articlesPage}/>
         </>
         }
         

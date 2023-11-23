@@ -82,6 +82,7 @@ export default function App(this: any) {
     const menuItems = [
         {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Feed","ref":"/feed"},
         {"rol":[Roles.escritor, Roles.admin],"label":"New Article","ref":"/createArticle"},
+        {"rol":[Roles.escritor, Roles.admin, Roles.lector],"label":"Communities","ref":"/communities"},
         {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Profile","ref":"/profile",'query':userInfo.userId},
         {"rol":[-1,-2],"label":"Sign Up","ref":"/register"},
         {"rol":[-1,-2],"label":"Log In","ref":"/login"},
@@ -91,6 +92,7 @@ export default function App(this: any) {
     const menuSections = [
         {"rol":[Roles.escritor,Roles.lector,Roles.admin],"label":"Feed","ref":"/feed"},
         {"rol":[Roles.escritor, Roles.admin],"label":"New Article","ref":"/createArticle"},
+        {"rol":[Roles.escritor, Roles.admin, Roles.lector],"label":"Communities","ref":"/communities"}
     ]
 
     // redireccion de articulos por categoria
@@ -115,21 +117,15 @@ export default function App(this: any) {
                         width={35}
                         height={35}
                     />
-                    <p className="flex flex-col justify-center font-bold text-2xl">TrUNews</p>
+                    <p className="flex flex-col justify-center font-bold text-2xl text-white">TrUNews</p>
                     </Link>
                 </NavbarBrand>
-
-                {/* <NavbarItem mr-8>
-                    <Input startContent={
-                        <AiOutlineSearch size="1.5rem" />
-                    } placeholder="Buscar artículos..." />
-                </NavbarItem> */}
             </NavbarContent>
 
-            <NavbarContent className="flex gap-4 w-[50%] sm:w-[35%] " justify="center">
+            <NavbarContent className="flex gap-4 w-full lg:w-[35%]" justify="center">
             <Input
                 classNames={{
-                    base: "max-w-full h-10 mr-4",
+                    base: "max-w-[90%] lg:max-w-full h-10 mr-4",
                     mainWrapper: "h-full",
                     input: "text-small",
                     inputWrapper: "h-full font-normal text-default-500 bg-white ",
@@ -143,36 +139,7 @@ export default function App(this: any) {
             />
             <Link target='_parent' href={{pathname:'/search', query:{q:serach}}} ref={ref}/>
             </NavbarContent>
-            {/* <NavbarContent className="hidden md:flex  gap-4 " justify="center"> */}
-                {/* <Dropdown>
-                    <NavbarItem isActive={userInfo.rol==-1?false:true}>
-                        <DropdownTrigger>
-                            <Link
-                                className='text-white font-bold' href="#"                          >
-                                Features
-                            </Link>
-                        </DropdownTrigger>
-                    </NavbarItem>
-
-                    <DropdownMenu
-                        aria-label="ACME features"
-                        className="w-[15rem]"
-                        itemClasses={{
-                            base: "gap-4",
-                        }}
-                    >
-                        <DropdownItem
-                            key="autoscaling"
-                            description="Noticias de deportes"
-                        //startContent={icons.scale}
-                        >
-                            Deportes
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-            </NavbarContent> */}
-            
-            <NavbarContent className="hidden md:flex  gap-4" justify="center">
+            <NavbarContent className="hidden lg:flex  gap-4" justify="center">
                 <Dropdown>
                     <NavbarItem isActive={selected=='Categorias'? true:false}>
                         <DropdownTrigger>
@@ -206,79 +173,9 @@ export default function App(this: any) {
                     </NavbarItem>
                 ))}
                 <NavbarItem>
-                <Link className='text-white' color="foreground" href="/communities">
-                    Communities
-                </Link>
                 </NavbarItem>
             </NavbarContent>
-
-            {/* <NavbarContent className="hidden sm:flex gap-4" justify="center">
-            </NavbarContent> */}
-
-            {/* <NavbarContent className="hidden sm:flex gap-4" justify='center'>
-
-                <Dropdown>
-                    <NavbarItem>
-                        <DropdownTrigger>
-                            <Button
-                                disableRipple
-                                className="p-0 bg-transparent data-[hover=true]:bg-transparent text-lg font-bold"
-                                //endContent={icons.chevron}
-                                radius="sm"
-                                variant="light"
-                            >
-                                Categorías
-                            </Button>
-                        </DropdownTrigger>
-                    </NavbarItem>
-
-                    <DropdownMenu
-                        aria-label="ACME features"
-                        className="w-full"
-                        itemClasses={{
-                            base: "gap-4",
-                        }}
-                    >
-                        <DropdownItem
-                            key="autoscaling"
-                            description="Noticias de deportes"
-                        //startContent={icons.scale}
-                        >
-                            Deportes
-                        </DropdownItem>
-                        <DropdownItem
-                            key="usage_metrics"
-                            description="Noticias de economía"
-                        //startContent={icons.activity}
-                        >
-                            Economía
-                        </DropdownItem>
-                        <DropdownItem
-                            key="production_ready"
-                            description="Noticias de realidad social"
-                        //startContent={icons.flash}
-                        >
-                            Realidad social
-                        </DropdownItem>
-                        <DropdownItem
-                            key="99_uptime"
-                            description="Noticias de salud"
-                        //startContent={icons.server}
-                        >
-                            Salud
-                        </DropdownItem>
-                        <DropdownItem
-                            key="supreme_support"
-                            description="Noticias de entretenimiento"
-                        //startContent={icons.user}
-                        >
-                            Entretenimiento
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
-
-            </NavbarContent> */}
-            <NavbarContent className='hidden md:flex flex-row' justify='end'>
+            <NavbarContent className='hidden lg:flex flex-row' justify='end'>
                 {menuButtons.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                         <NavbarItem key={`${item.label}-${index}`}>
                             {userInfo.rol==-2?
@@ -305,26 +202,49 @@ export default function App(this: any) {
                         </NavbarItem>
                 ))}
             </NavbarContent>
-            <NavbarContent className="flex md:hidden " justify="end">
+            <NavbarContent className="flex lg:hidden " justify="end">
                 <NavbarMenuToggle
                     aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 />
             </NavbarContent>
              <NavbarMenu className='flex flex-col items-end gap-4'>
+                <Dropdown placement='left-start'>
+                    <NavbarMenuItem>
+                        <DropdownTrigger className='p-4 text-2xl'>
+                            <Link className='w-full justify-end'  color={"foreground"} onClick={()=>setSelected('Categorias')} href="#">
+                                <p>{'Categories'}</p>
+                            </Link>
+                        </DropdownTrigger>
+                    </NavbarMenuItem>
+
+                    <DropdownMenu
+                        aria-label="News Categories"
+                        className="w-[15rem] dropdown-menu-scroll flex flex-col items-center"
+                        itemClasses={{
+                            base: "gap-4",
+                        }}
+                        onAction={(key) => redirectToCategory(parseInt(key.toString()) + 1)}>
+                        {categories.map((category, index) => (
+                            <DropdownItem key={index} description={`${label()} ${titleCase(category.cat_name)}`}>
+                                {titleCase(category.cat_name)}
+                            </DropdownItem>
+                        ))}
+                    </DropdownMenu>
+                </Dropdown>
                 {menuItems.filter(item => item.rol.includes(userInfo.rol)).map((item, index) => (
                 <NavbarMenuItem key={`${index}`} className='p-4 text-2xl'>
                     {item.ev?
                         <Link  className="w-full justify-end" color='warning' href="#" onClick={item.ev}>
-                            {item.label}
+                            <p>{item.label}</p>
                         </Link>
                     :   
                         item.query?
                         <Link className='w-full justify-end'  color={"foreground"}  href={`${item.ref}/${userInfo.userId}`}>
-                            {item.label}
+                            <p>{item.label}</p>
                         </Link>
                         :
                         <Link className='w-full justify-end'  color={"foreground"}  href={{pathname:item.ref}}>
-                            {item.label}
+                            <p>{item.label}</p>
                         </Link>
                     }
                 </NavbarMenuItem>

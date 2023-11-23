@@ -40,3 +40,18 @@ export async function getStatistics(id: number) {
         return res;
     }
 }
+
+// mMyCommunities
+export async function getMyCommunities(id: number) {
+
+    const token = getFromLocalStorage('token')
+    let datos;
+    if(token){
+        const res = await fetch(`${process.env.BACK_URL}communities/myCommunities/${id}`,{
+                method: 'GET',
+                headers:{'Content-Type':'application/json','authorization':token},
+            }).then(response => response.json()).then(data => datos=data)
+        console.log(res);
+        return res;
+    }
+}

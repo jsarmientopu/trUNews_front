@@ -7,7 +7,7 @@ import { getArticleType } from "@/dto/article";
 import { useViewportScroll } from "framer-motion";
 import "../../app/globals.css"
 import { getStatistics } from "@/utils/Profile/fetch";
-import { Divider } from '@nextui-org/react';
+import { Button, Divider } from '@nextui-org/react';
 import StatisticsGraph from "./statistics";
 
 
@@ -27,6 +27,8 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
         'writer':{'id_user':0,'username':''},
         'category':[]
     }])
+
+    const [counter, setCounter] = useState<number>(1);
 
     const [statisticsView, setStatisticsView] = useState<boolean>(false);
 
@@ -59,10 +61,18 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
         (async () => {
             console.log(userView, userInfo)
             if(articlesPage){
-                setSavedArticles(articleWriter)
+                if(articleWriter){
+                    setSavedArticles(articleWriter)
+                }else{
+                    setSavedArticles([])
+                }
             }else{
                 const articles = await getSaved(userView);
-                setSavedArticles(articles); 
+                if(!articles.err){
+                    setSavedArticles(articles); 
+                }else{
+                    setSavedArticles([]);
+                }
             }
         })();
     },[articlesPage])
@@ -98,9 +108,9 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
                     </>
                 }
             </div>
-            <div className="flex flex-col lg:flex-wrap lg:flex-row justify-center items-center md:justify-between h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
+            <div className="flex flex-col lg:flex-wrap lg:flex-row justify-center items-center md:justify-center h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-4 bg-[#F0F2F4]">
                 {savedArticles.length!==0?
-                    savedArticles.map((item:getArticleType, index) => (
+                    savedArticles.filter((element:getArticleType, index)=>index<counter*6).map((item:getArticleType, index) => (
                         <SavedCard key={index} data={item} mode={articlesPage} userInfo={userInfo} userView={userView} articles={savedArticles} setArticles={setSavedArticles}/>
                     ))
                 :
@@ -110,7 +120,13 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
                         <>You haven´t saved any articles</>
 
                 }
-
+                {savedArticles.length>counter*6?
+                    <button onClick={()=>{setCounter(counter+1)}} className='bg-primary text-white py-2 px-3 rounded-xl'>
+                        See more
+                    </button>
+                    :
+                    <></>
+                    }
             </div>
         </animated.div>
 }

@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import { createUserSchema } from "@/schemas/schemas";
 import { createUserType } from "@/dto/users";
 import { useRouter } from "next/navigation";
-import { json } from "node:stream/consumers";
 
 const RegisterInputs=()=>{
     
@@ -27,8 +26,8 @@ const RegisterInputs=()=>{
     async function sendData() {
         if(formData.password!==cpassword){
             Swal.fire(
-            'No coinciden las contraseñas',
-            'Verifique sus datos',
+            'Passwords don\'t match',
+            'Verify your data',
             'error'
             )
             return
@@ -38,15 +37,12 @@ const RegisterInputs=()=>{
             let datos;
             console.log(formData)
             const res = await fetch(`${process.env.BACK_URL}users/create`,{
-            // const res = await fetch( 'http://localhost:3005/users/create',{
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
                 body:JSON.stringify(formData),
              }).then(response => response.json()).then(data => datos=data)
             console.log(res);
              if (res.err) {
-                // This will activate the closest `error.js` Error Boundary
-                // throw new Error('Failed to fetch data')
                 Swal.fire(
                 'Failed user register',
                 res.err,

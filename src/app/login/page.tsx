@@ -32,8 +32,10 @@ const Login=()=> {
     return (
         <>
             <div className="grid place-items-center bg-[#0079DC] w-full min-h-full py-10">
-                <HomeBubble/>
-                <LoginCard/> 
+                <div className="flex flex-col gap-8">
+                    <HomeBubble/>
+                    <LoginCard/> 
+                </div>
             </div>
         </>
         
