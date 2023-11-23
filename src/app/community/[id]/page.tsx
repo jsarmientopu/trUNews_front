@@ -134,69 +134,78 @@ export default function CommunityPage({ params }: any) {
                         <div className='flex justify-center md:p-6 lg:p-6 pt-6 pb-6'>
                             <Image src={community.banner_url} alt="Banner Community"/>
                         </div> 
-                        <div className="grid  grid-cols-8 md:ps-20 md:pe-20 lg:ps-20 lg:pe-20">
+                        <div className="grid  grid-cols-8 md:ps-15 md:pe-15 lg:ps-20 lg:pe-20">
                             <div className="col-span-1 flex items-center">
                                 <Avatar src={community.avatar_url} className="w-12 h-12 md:w-20 md:h-20 lg:w-24 lg:h-24" isBordered/>
                             </div>
-                            <div className="col-span-6 flex items-center ps-6">
+                            <div className="col-span-5 lg:col-span-4 flex items-center ps-6">
                                 <p className="font-bold text-2xl md:text-3xl lg:text-4xl">
                                     {community.name}
                                 </p>
                             </div>
                             { community.isCreator ?
-                                <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
-                                    <Link ref={ref} href={{pathname: '/community-settings',query: { type: 'edit', id: params.id }}}></Link>
-                                    <Link href={`${params.id}/events/${params.id}`}>
-                                        <Button className="mr-6 bg-sky-600 flex gap-2 justify-center items-center">
-                                            <AiTwotoneCalendar size="1.7em" color="white" />
-                                            <p className="text-white font-medium text-base">
-                                                Events
-                                            </p>
-                                        </Button>
-                                    </Link>
-                                    <Dropdown>
-                                <DropdownTrigger>
-                                    <Button isIconOnly variant="light">
-                                        <SlOptionsVertical/>
-                                    </Button>
-                                </DropdownTrigger>
-                                <DropdownMenu variant="faded" aria-label="Dropdown menu with description">
-                                    <DropdownItem
-                                    key="edit"
-                                    description="Edit the community"
-                                    startContent={<AiFillEdit/>}
-                                    onPress={()=>{location.replace(`/community-settings?type=edit&id=${params.id}`)}}
-                                    >
-                                    Edit Community
-                                    </DropdownItem>
-                                    <DropdownItem
-                                    key="delete"
-                                    className="text-danger"
-                                    color="danger"
-                                    description="Permanently delete the community"
-                                    startContent={<AiFillDelete/>}
-                                    onPress={()=>{deleteCommunity(params.id)}}
-                                    >
-                                    Delete Community
-                                    </DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                                </div>
+                                <>
+                                    <div className="flex justify-end col-span-1 lg:col-span-2 items-center gap-2">
+                                        <Link ref={ref} href={{pathname: '/community-settings',query: { type: 'edit', id: params.id }}}></Link>
+                                        <Link className="hidden lg:flex" href={`${params.id}/events/${params.id}`}>
+                                            <Button className="mr-6 bg-sky-600 flex gap-2 justify-center items-center">
+                                                <AiTwotoneCalendar size="1.7em" color="white" />
+                                                <p className="text-white font-medium text-base">
+                                                    Events
+                                                </p>
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                    <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
+                                        <Dropdown>
+                                            <DropdownTrigger>
+                                                <Button isIconOnly variant="light">
+                                                    <SlOptionsVertical/>
+                                                </Button>
+                                            </DropdownTrigger>
+                                            <DropdownMenu variant="faded" aria-label="Dropdown menu with description">
+                                                <DropdownItem
+                                                    key="edit"
+                                                    description="Edit the community"
+                                                    startContent={<AiFillEdit/>}
+                                                    onPress={()=>{location.replace(`/community-settings?type=edit&id=${params.id}`)}}
+                                                    >
+                                                    Edit Community
+                                                    </DropdownItem>
+                                                    <DropdownItem
+                                                    key="delete"
+                                                    className="text-danger"
+                                                    color="danger"
+                                                    description="Permanently delete the community"
+                                                    startContent={<AiFillDelete/>}
+                                                    onPress={()=>{deleteCommunity(params.id)}}
+                                                    >
+                                                    Delete Community
+                                                </DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </div>
+                                </> 
                                 : community.isMember ?
-                                <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
-                                    <Link href={`${params.id}/events/${params.id}`}>
-                                        <Button className="mr-6 bg-sky-600 flex gap-2 justify-center items-center">
-                                            <AiTwotoneCalendar size="1.7em" color="white" />
-                                            <p className="text-white font-medium text-base">
-                                                Events
-                                            </p>
-                                        </Button>
-                                    </Link>
-                                    <ShowModal 
-                                        user_id={userInfo.userId} 
-                                        community_id={params.id}
-                                    />
-                                </div>
+                                <>
+                                    <div className="flex justify-end col-span-1 lg:col-span-2 items-center gap-2">
+                                        <Link ref={ref} href={{pathname: '/community-settings',query: { type: 'edit', id: params.id }}}></Link>
+                                        <Link className="hidden lg:flex" href={`${params.id}/events/${params.id}`}>
+                                            <Button className="mr-6 bg-sky-600 flex gap-2 justify-center items-center">
+                                                <AiTwotoneCalendar size="1.7em" color="white" />
+                                                <p className="text-white font-medium text-base">
+                                                    Events
+                                                </p>
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                    <div className="flex justify-end pe-5 col-span-1 items-center gap-2">
+                                        <ShowModal 
+                                            user_id={userInfo.userId} 
+                                            community_id={params.id}
+                                        />
+                                    </div>
+                                </>
                                 :
                                 <></>
                             }
@@ -206,6 +215,19 @@ export default function CommunityPage({ params }: any) {
                                 {community.description}
                             </p>
                         </div>
+
+                        {community.isMember &&
+                            <div className="flex justify-center p-5">
+                                <Link className="flex lg:hidden" href={`${params.id}/events/${params.id}`}>
+                                    <Button className="mr-6 bg-sky-600 flex gap-2 justify-center items-center">
+                                        <AiTwotoneCalendar size="1.7em" color="white" />
+                                        <p className="text-white font-medium text-base">
+                                            Events
+                                        </p>
+                                    </Button>
+                                </Link>
+                            </div>
+                        }
                         
                     </div>
                     {/* End Presentation zone */}
