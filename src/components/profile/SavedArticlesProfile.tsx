@@ -86,8 +86,14 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
             </div>
             <div>
                 { statisticsView &&
-                    <>
-                        <StatisticsGraph statistics={statistics} />
+                    <>  {statistics[0] ?
+                            <StatisticsGraph statistics={statistics} />
+                            :
+                            <p>
+                                There are no statistics to show
+                            </p>
+                        }
+                        
                         <Divider className="my-10" />
                     </>
                 }
