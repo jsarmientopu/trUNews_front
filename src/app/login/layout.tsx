@@ -6,8 +6,8 @@ import { Providers } from '../providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'trUNews',
-  description: 'trUNews is a news site',
+  title: 'Login TrUNews',
+  description: 'TrUNews Login',
 }
 
 export default function Layout({

@@ -8,6 +8,11 @@ import { useRouter } from 'next/navigation'
 import { useState,useEffect } from 'react'
 import { Roles } from '@/utils/rolDefinition';
 
+export const metadata: Metadata = {
+  title: 'TrUNews Create Article',
+  description: 'Create an Article in TrUNews',
+}
+
 export default function Layout({
     children,
 }: {

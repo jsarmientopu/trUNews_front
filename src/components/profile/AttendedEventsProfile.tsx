@@ -54,7 +54,7 @@ const CommunityPanel = ({ userInfo, userView, mode }: { 'userInfo': decryptedJWT
         </div>
 
         {
-            mode[1]?attendedEventsData.length > 0: myCommunities.length > 0?
+            (mode[1]? (attendedEventsData.length > 0): (myCommunities.length > 0))?
                 <div className="flex flex-wrap lg:flex-wrap lg:flex-row justify-center items-center h-[50%] sm:h-full w-[95%] py-5 px-5 lg:px-14 sm:pb-10 pt-0 gap-20 bg-[#F0F2F4]">
                     {mode[1]?
                         attendedEventsData?.filter((element:any, index)=>index<counter*6).map((event: any, index: any) => {

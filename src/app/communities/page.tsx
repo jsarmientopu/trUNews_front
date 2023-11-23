@@ -95,7 +95,7 @@ const Page = () => {
 
                                 }) : <div className='flex justify-center items-center flex-col h-60 gap-3'>
                                     <RxCross1 size="7em" color="black" />
-                                    <p className='font-bold text-4xl'>There´s no results for the current selection</p>
+                                    <p className='font-bold text-4xl'>{'There\'s no results for the current selection'}</p>
                                 </div>
 
                         }
@@ -104,7 +104,7 @@ const Page = () => {
                     communitiesRecommend.length == 0 ?
                         <div className='flex justify-center items-center flex-col h-60 gap-3'>
                             <RxCross1 size="7em" color="black" />
-                            <p className='font-bold text-4xl'>There´s no results for the current selection</p>
+                            <p className='font-bold text-4xl'>{'There\'s no results for the current selection'}</p>
                         </div>
                         :
                         <div className='flex flex-col justify-center items-center gap-8'>

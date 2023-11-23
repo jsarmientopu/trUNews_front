@@ -107,9 +107,9 @@ const SavedArticles=({userInfo, userView, articleWriter,articlesPage}:{'userInfo
                     ))
                 :
                     articlesPage?
-                        <>You haven´t written any articles</>
+                        <>{'You haven\'t written any articles'}</>
                     :
-                        <>You haven´t saved any articles</>
+                        <>{'You haven\'t saved any articles'}</>
 
                 }
                 {savedArticles.length>counter*6?

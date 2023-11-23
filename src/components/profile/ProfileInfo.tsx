@@ -299,7 +299,7 @@ const   ProfileInfo=({edit,setEdit,followp,setFollow, userInfo, userView,fixFoll
                             <p id = "0" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={fixFollows}>{profileInfo.followingsCount}  <a id = "0">Followers</a></p>
                             <p id = "1" title="View users user follows" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer' onClick={fixFollows}>{profileInfo.followersCount}<a id = "1"> Following</a></p>
                             <p id = "2" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={()=>{setFollow([false,false]);setArticlesPage([articlesPage[0], !articlesPage[1], false])}}>Attended <a>Events</a></p>
-                            <p id = "2" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={()=>{setFollow([false,false]);setArticlesPage([articlesPage[0], false, !articlesPage[2]])}}>{userView==userInfo.userId?"My":"Followed"} <a>Comunitties</a></p>
+                            <p id = "2" title="View user followers" className='text-lg font-sans flex flex-col text-center hover:text-blue-500 cursor-pointer ' onClick={()=>{setFollow([false,false]);setArticlesPage([articlesPage[0], false, !articlesPage[2]])}}>{userView==userInfo.userId?"My":"Followed"} <a>Communities</a></p>
                         </div>
                         <div className="flex flex-col justify-center items-center gap-4 w-full lg:w-auto h-auto">
                         {profileInfo.id_user==userInfo.userId?
