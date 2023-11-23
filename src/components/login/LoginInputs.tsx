@@ -52,9 +52,9 @@ export default function LoginInputs() {
     return(
         <div className='flex flex-col justify-center mx-7'>
             <p className='justify-start text-sm my-2'>User</p>
-            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='username' type='text' radius = {"md"} placeholder='Write your username' isRequired onChange={handleChange}/>
+            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='username' type='text' radius = {"md"} placeholder='Write your username' isRequired onChange={handleChange} onKeyDown={(event)=>{event.key == 'Enter'?sendData():""}}/>
             <p className='content-start text-sm my-2'>Password</p>
-            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='password' type='password' placeholder='Write your password' isRequired  onChange={handleChange}/>
+            <Input className="w-[100%] mr-8 border-2 border-sky-600 rounded-xl" name='password' type='password' placeholder='Write your password' isRequired  onChange={handleChange} onKeyDown={(event)=>{event.key == 'Enter'?sendData():""}}/>
             <div className='flex justify-center'>
                 <Button className='content-center my-4 bg-[#963ED9]' color='primary' onClick={sendData}>Log In</Button>
             </div>
