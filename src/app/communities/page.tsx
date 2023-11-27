@@ -102,15 +102,15 @@ const Page = () => {
 
                     </div> :
                     communitiesRecommend.length == 0 ?
-                        <div className='flex justify-center items-center flex-col h-60 gap-3'>
+                        <div className='flex justify-center items-center flex-col h-60 gap-3 p-3'>
                             <RxCross1 size="7em" color="black" />
-                            <p className='font-bold text-4xl'>{'There\'s no results for the current selection'}</p>
+                            <p className='font-bold text-4xl text-center'>{'There\'s no results for the current selection'}</p>
                         </div>
                         :
                         <div className='flex flex-col justify-center items-center gap-8'>
                             <>
                                 <p className='font-bold text-5xl'>For you</p>
-                                <p className='text-3xl'>Communities recommended specially for you</p>
+                                <p className='text-3xl p-3 text-center'>Communities recommended specially for you</p>
                             </>
                             <div className='flex justify-center gap-12 flex-wrap'>
                                 {communitiesRecommend.map((com: any, index: any) => {
