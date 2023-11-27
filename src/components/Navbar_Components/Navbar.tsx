@@ -11,11 +11,12 @@ import {
     NavbarMenu,
     NavbarMenuItem,
     NavbarMenuToggle,
+    Image,
     user,
 } from "@nextui-org/react";
 import {getFromLocalStorage, removeFromLocalStorage} from '@/utils/localStorage';
 import { Dropdown,DropdownItem, DropdownTrigger, DropdownMenu } from '@nextui-org/react';
-import Image from "next/image";
+// import Image from "next/image";
 import verifyToken from '@/utils/utils'
 import Link from 'next/link'
 import { decryptedJWT } from '@/dto/users';
@@ -62,11 +63,9 @@ export default function App(this: any) {
     const logOut=()=>{
         const tok = getFromLocalStorage("token");
         if(tok){
-            removeFromLocalStorage("token")
+             removeFromLocalStorage("token")
         }
-        router.refresh()
-        router.push("/")
-        window.location.reload();
+        router.push("/");
         token()
     }
 
@@ -109,15 +108,18 @@ export default function App(this: any) {
         <Navbar id ="nav_conatiner" className="flex justify-between bg-[#0079DC] max-w-full w-full shadow-xl" onMenuOpenChange={setIsMenuOpen}>
             
             <NavbarContent id='logo' justify='start'>
-                <NavbarBrand className='mr-8'>
-                    <Link className='flex flex-row ' href={'/'}>
-                    <Image
-                        src="/images/logo.png"
-                        alt="App Logo"
-                        width={35}
-                        height={35}
-                    />
-                    <p className="flex flex-col justify-center font-bold text-2xl text-white">TrUNews</p>
+                <NavbarBrand className='mr-2 md:mr-8'>
+                    <Link className='flex flex-row justify-center items-center gap-2' href={'/'}>
+                    <div className='w-16 h-16'>
+                        <Image
+                            className='h-full w-auto'
+                            src="/images/logo.png"
+                            alt="App Logo"
+                            width={'100%'}
+                            height={'100%'}
+                        />
+                    </div>
+                    <p className="hidden md:flex flex-col justify-center items-center font-bold text-2xl text-white">TrUNews</p>
                     </Link>
                 </NavbarBrand>
             </NavbarContent>
@@ -143,10 +145,10 @@ export default function App(this: any) {
                 <Dropdown>
                     <NavbarItem isActive={selected=='Categorias'? true:false}>
                         <DropdownTrigger>
-                            <Link onClick={()=>setSelected('Categorias')}
-                                className='text-white' href="#" aria-current="page"                            >
+                            <div onClick={()=>setSelected('Categorias')}
+                                className='text-white'  aria-current="page"                            >
                                 Categories
-                            </Link>
+                            </div>
                         </DropdownTrigger>
                     </NavbarItem>
 

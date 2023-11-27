@@ -70,16 +70,86 @@ export default function StatisticsGraph (statistics: any) {
             data: views,
         },
         ],
+        options2: {
+            chart: {
+                id: "basic-bar"
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: false,
+                    columnWidth: '55%',
+                    endingShape: 'rounded',
+                    dataLabels: {
+                        position: 'top'
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                formatter: function (val: number) {
+                    return Math.floor(val*100 / totalViews) + "%";
+                },
+                offsetY: -20,
+                style: {
+                    fontSize: '8px',
+                    colors: ["#304758"]
+                }
+            },
+            stroke: {
+                show: true,
+                width: 2,
+                colors: ['transparent']
+            },
+            xaxis: {
+                categories: categories,
+                title: {
+                    text: 'Categories'
+                },
+                labels: {
+                    style: {
+                        fontSize: '8px',
+                    },
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Views'
+                }
+            },
+            fill: {
+                opacity: 1
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val: number) {
+                        return val + " views"
+                    }
+                }
+            },
+            theme: {
+                palette: 'palette2'
+            }
+        },
     });
 
     return (
-        <div>
-            <Chart
-                options={dataSample.options}
-                series={dataSample.series}
-                type="bar"
-                width="500"
-            />
-        </div> 
+        <>
+            <div className="hidden md:flex lg:flex">
+                <Chart
+                    options={dataSample.options}
+                    series={dataSample.series}
+                    type="bar"
+                    width="500"
+                />
+            </div> 
+            <div className="flex md:hidden lg:hidden">
+                <Chart
+                    options={dataSample.options2}
+                    series={dataSample.series}
+                    type="bar"
+                    width="100%"
+                />
+            </div> 
+        </>
     );
 }

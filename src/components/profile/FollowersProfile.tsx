@@ -76,9 +76,9 @@ const FollowersPage=({follows,fixFollows, userView} : any)=>{
                     </>
                 :
                     follows[0]?
-                        <>You don´t have followers</>
+                        <>{'You don\'t have followers'}</>
                     :
-                        <>You don´t follow anyone</>
+                        <>{'You don\'t follow anyone'}</>
 
                 }
             </div>

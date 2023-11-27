@@ -29,7 +29,7 @@ export default function ArticleOption({mode, article, articles, setArticles}:{'m
           alert('question','You will delete this article from your saves', '', async ()=>{
             const res = await deletePost(article.id_article);
             if(res.err){
-              alert('error','Your article can´t be deleted', 'Try again later', ()=>{})
+              alert('error','Your article can\'t be deleted', 'Try again later', ()=>{})
             }else{
               setArticles(articles.filter((item:getArticleType)=>item.id_article!=article.id_article));
             }

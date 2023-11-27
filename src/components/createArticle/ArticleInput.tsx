@@ -66,7 +66,7 @@ const ArticleInput=({userInfo}:any)=>{
           Image
         </p>
         <p className='text-base mb-2'>
-          Add articles´s main image
+          {'Add articles\'s main image'}
         </p>
         <div className='flex items-center'>
 
