@@ -93,9 +93,9 @@ const Page = () => {
                                         </div>
                                     )
 
-                                }) : <div className='flex justify-center items-center flex-col h-60 gap-3'>
+                                }) : <div className='flex justify-center items-center flex-col h-60 gap-3 p-3'>
                                     <RxCross1 size="7em" color="black" />
-                                    <p className='font-bold text-4xl'>{'There\'s no results for the current selection'}</p>
+                                    <p className='font-bold text-4xl text-center'>{'There\'s no results for the current selection'}</p>
                                 </div>
 
                         }
