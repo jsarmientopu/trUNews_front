@@ -24,7 +24,7 @@ const ModelInput=({formData, generated, setGenerated, setFormData, setCategory, 
         console.log(data.text)
         setLoading(true)
         const res = await getTitleCategories(data)
-        if(res.categorias.length>0 && res.title.length>0){
+        if(res.categorias.length>0 && res.titulos.length>0){
           setTitle(res.titulos)
           setCategory(res.categorias)
           setGroupSelected([res.categorias[0].label])

@@ -92,7 +92,7 @@ const RegisterInputs=()=>{
             <Input className=" mr-8 border-2 border-sky-600 rounded-xl" type='password' name="cpassword" placeholder='Confirm Password' onChange={handleChangeConfirm} isRequired />
             <Select 
                 labelPlacement="outside"
-                label="Seleccione el rol" 
+                label="Select role" 
                 name='rol'
                 className="border-2 border-sky-600 rounded-xl my-3"
                 onChange={handleChange} 
